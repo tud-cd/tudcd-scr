@@ -72,7 +72,6 @@
 % \end{codesyntax}
 % Mittels dieser Steckdose wird die Seitengeometrie festgelegt. Es wird ein Standardstecker bereitgestellt,
 % es können aber auch andere Stecker hier eingesteckt werden.
-% Es wird dabei das Papierformat im ersten Argument übergeben.
 %    \begin{macrocode}
 \NewSocket{tudcd/pagearea}{0}
 %    \end{macrocode}
@@ -103,6 +102,19 @@
 % Die Bezeichnungen leiten sich dabei aus dem Leitfaden ab.
 % \end{codedescribe}
 %
+% \begin{codedescribe}[
+% macro,
+% new=0.5.1]{%
+%  \iftudcd@usemargin%
+% }
+% \begin{codesyntax}
+% \tstudocif{tudcd@usemargin}
+% \end{codesyntax}
+% Dieser Schalter gibt an, ob eine Marginalie im Dokument verwendet werden soll.
+%    \begin{macrocode}
+\newif\iftudcd@usemargin%
+%    \end{macrocode}
+% \end{codedescribe}
 %
 % \begin{codedescribe}[
 % plug,
@@ -111,10 +123,27 @@
 % \tstuddocplug{tudcd/pagearea}{usecdgeometry}
 % \end{codesyntax}
 % Anschließend wird der Standardstecker \tsobj[plug]{usecdgeometry} definiert
-% dafür bedarf es dem Paket \tsobj[pkg]{geometry}.
 %    \begin{macrocode}
 \NewSocketPlug{tudcd/pagearea}{usecdgeometry}{
+%    \end{macrocode}
+% dafür bedarf es dem Paket \tsobj[pkg]{geometry}.
+%    \begin{macrocode}
   \RequirePackage{geometry}%
+%    \end{macrocode}
+% In Abhängigkeit vom Schalter \tsobj[macro]{tudcd@usemargin} wird \tsobj[pkg]{geometry} direkt
+% die Einstellung der Marginalie mitgegeben.
+%    \begin{macrocode}
+  \iftudcd@usemargin% true
+  \geometry{%
+    includemp,%
+    reversemp,%
+    paper=\tudcd@selectedpaperformat,%
+    inner=\tudcd@innermargin,%
+    outer=\tudcd@outermargin,%
+    top=\tudcd@outermargin,%
+    bottom=\tudcd@bottommargin%
+  }
+  \else% false
   \geometry{%
     paper=\tudcd@selectedpaperformat,%
     inner=\tudcd@innermargin,%
@@ -122,6 +151,7 @@
     top=\tudcd@outermargin,%
     bottom=\tudcd@bottommargin%
   }
+  \fi%
 }
 %    \end{macrocode}
 % Da der Stecker \tsobj[plug]{usecdgeometry} dem Standardvorgehen entspricht wird dieser standardmäßig eingesteckt
@@ -151,6 +181,18 @@
   {a3}{3},{a3paper}{3}%
 }
 %    \end{macrocode}
+%
+% \begin{codedescribe}[
+% key,
+% new=0.5.1]{usemargin}
+% \begin{codesyntax}
+% \tsobj{\TUDCDoption}\{usemargin\}\tsargs[marg]{Wahrheitswert}
+% \end{codesyntax}
+% Der Schlüssel zur Wahl der Marginalie setzt bei Bearbeitung den Schalter \tsobj[macro]{\iftudcd@usemargin}.
+%    \begin{macrocode}
+\tudcd@BoolKey{usemargin}{tudcd@usemargin}
+%    \end{macrocode}
+% \end{codedescribe}
 % Anschließend werden über \tsobj[macro]{\geometry} die Maße ausgewählten Formats als Standardgeometrie festgelegt.
 % Da die Option erst spät verarbeitet wird,
 % wird die Einstellung der Seitengeometrie an den Haken \tsobj[hook]{begindocument/before} gehangen.
@@ -166,8 +208,12 @@
     \setlength\tudcd@logoheight{22.5mm}%
     \setlength\tudcd@secondlogoheight{15mm}%
     \setlength\tudcd@exclusionheight{5mm}%
-    \setlength\tudcd@bottommargin{23.767mm}
+    \setlength\tudcd@bottommargin{23.767mm}%
     \setlength\tudcd@qrheight{15mm}%
+    %
+    \setlength\marginparwidth{32mm}%
+    \setlength\marginparsep{6mm}%
+    %
     \renewcommand\tudcd@selectedpaperformat{a4paper}%
     \FamilyKeyStateProcessed%
   }
@@ -189,6 +235,16 @@ Illegal paper format '\tudcd@paperselection' given!%
 \UseSocket{tudcd/pagearea}%
 }
 %    \end{macrocode}
+%
+%
+% \subsection{Abfangen von Dokumentoptionen}
+%
+% Um \emph{klassische} Optionen abzufangen werden diese hier definiert.
+%
+% \begin{codedescribe}[
+% option,
+% new=0.5.1]{}
+%
 % \iffalse
 %</option&class>
 % \fi
