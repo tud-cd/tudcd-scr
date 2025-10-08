@@ -108,6 +108,35 @@
 %
 % \section{Besondere Makros für die Dokumentation}
 %
+% \begin{codedescribe}[
+% macro,
+% new=0.5.1]{\tstuddocif}
+% \begin{codesyntax}
+% \tsmacro{\tstuddocif}{Schaltername}
+% \end{codesyntax}
+% Für die Dokumentation von Schaltern wird für die Umgebung \tsobj[env]{condesyntax} eine
+% Standarddokumentation erzeugt.
+%    \begin{macrocode}
+\newcommand\tstudocif[1]{
+\tsobj[macro]{\ #1true}%
+
+\tsobj[macro]{\ #1false}%
+
+\dots%
+
+\tsobj[macro]{\if#1}%
+
+\dots%
+
+\tsobj[macro]{\else}%
+
+\dots%
+
+\tsobj[macro]{\fi}%
+}
+%    \end{macrocode}
+% \end{codedescribe}
+%
 % \begin{codedescribe}[macro,new=0.5.0]{\tstudcdsocket,\tstudcdplug}
 % \begin{codesyntax}
 % \tsmacro{\tstuddocsocket}{Steckdosenname}

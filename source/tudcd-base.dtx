@@ -117,8 +117,34 @@
 % Beim Verarbeiten des Schlüssels wird der Wert im Makro \tsobj[macro]{\Makroname} gespeichert.
 % Es ist ein Wrapper von \KOMAScript s \tsobj[macro]{\FamilyNumericalKey}.
 %    \begin{macrocode}
-\newcommand\tudcd@NumericalKey[1][.\@currname.\@currext]{%
+\newcommand*\tudcd@NumericalKey[1][.\@currname.\@currext]{%
  \FamilyNumericalKey[{#1}]{TUDCD}%
+}
+%    \end{macrocode}
+% \end{codedescribe}
+%
+% \begin{codedescribe}[
+% macro,
+% new=0.5.1]{\tudcd@BoolKey}
+% \begin{codesyntax}
+% \tsobj[macro]{\tudcd@BoolKey}\tsargs[oarg]{Mitglied}\tsargs[marg]{Schlüssel,Schaltername}
+% \tsobj[macro]{\if}\tsobj[marg]{Schaltername}
+% \dots
+% \tsobj[macro]{\else}
+% \dots
+% \tsobj[macro]{\fi}
+% \end{codesyntax}
+% Mit \tsobj[macro]{\tudcd@BoolKey} wird ein Schlüssel mit dem Namen \tsobj[marg]{Schlüssel} definiert,
+% welcher standardmäßig auf \tsobj[code]{false} gesetzt ist.
+% Der erstellte Schlüssel setzt \tsobj[macro]{Schaltername} auf \begin{describelist*}{key}
+%   \describe{true}{bei Argumenten \tsobj[keyval]{true,on,yes}}
+%   \describe{false}{bei Argumenten \tsobj[keyval]{false,off,no}}
+% \end{describelist*}
+% Beim Verarbeiten des Schlüssels wird der Wert im Schalter \tsobj[macro]{Schaltername} gespeichert.
+% Es ist ein Wrapper von \KOMAScript s \tsobj[macro]{\FamilyBoolKey}.
+%    \begin{macrocode}
+\newcommand*\tudcd@BoolKey[1][.\@currname.\@currext]{%
+ \FamilyBoolKey[{#1}]{TUDCD}%
 }
 %    \end{macrocode}
 % \end{codedescribe}
