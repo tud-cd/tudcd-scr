@@ -1,4 +1,4 @@
-\documentclass[a4paper,twoside,useseriffont=false]{tudcdartcl}
+\documentclass[a4paper,twoside,fontsize=12pt]{tudcdartcl}
 \usepackage[T1]{fontenc}
 \usepackage[ngerman=ngerman-x-latest]{hyphsubst}
 
@@ -13,6 +13,10 @@
 \usepackage{marginnote}
 
 %\usepackage{tudcdfonts}
+
+\makeatletter
+\newcommand\getfontsize{\f@size}%
+\makeatother
 
 \begin{document}
 
@@ -129,22 +133,33 @@ dreizehn S, sieben T, sieben U, fünf V, vier W, einem X, einem Y, zehn Z, einem
 %fünfundzwanzig I, einem J, einem K, zwei L, elf M, achtundzwanzig N, einem O, einem P, einem Q, sieben R,
 %dreizehn S, sieben T, sieben U, fünf V, vier W, einem X, einem Y, zehn Z, einem Ä, einem Ö, vier Ü und einem ß.}
 
-{
-\fontsize{22pt}{24pt}\selectfont\hfill
-The end is never the end is never the end is never the end is never
-the end is never the end is never the end is never the end is never
-the end is never the end is never the end is never the end is never
-the end is never the end is never the end is never the end is never
-the end is never the end is never the end is never the end is never
-the end is never the end is never the end is never the end is never
-the end is never the end is never the end is never the end is never
-the end is never the end is never the end is never the end is never
-the end is never the end is never the end is never the end is never
-the end is never the end is never the end is never the end \par
-}
 
-{
-\fontsize{22pt}{24pt}\selectfont \textbf{Ich bin eine H1 Überschrift}
-}
+\begin{multicols}{2}
+{\tiny Ich bin \verb|\tiny| mit \getfontsize,\the\baselineskip{}
+Eine Schüssel mit kaltem Wasser füllen, Kartoffeln schälen und 2/3 der Kartoffeln g in das Wasser reiben (so bleiben die Kartoffeln hell und werden nicht so schnell braun). \par}
+
+{\scriptsize Ich bin \verb|\scriptsize| mit \getfontsize,\the\baselineskip\par}
+
+{\footnotesize Ich bin \verb|\footnotesize| mit \getfontsize,\the\baselineskip\par}
+
+{\small Ich bin \verb|\small| mit \getfontsize,\the\baselineskip\par}
+
+{\normalsize Ich bin \verb|\normalsize| mit \getfontsize,\the\baselineskip\par}
+
+{\large Ich bin \verb|\large| mit \getfontsize,\the\baselineskip\par}
+
+{\Large Ich bin \verb|\Large| mit \getfontsize,\the\baselineskip\par}
+
+{\LARGE Ich bin \verb|\LARGE| mit \getfontsize,\the\baselineskip\par}
+
+{\huge Ich bin \verb|\huge| mit \getfontsize,\the\baselineskip\par}
+\end{multicols}
+
+\pagebreak
+
+\HUGE\textrm{\textcdl{\textit{Zitat – Noto serif
+light italic 57 pt
+Zeilenabstand 60 pt,
+schwarz oder farbig}}}
 
 \end{document}

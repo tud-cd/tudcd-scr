@@ -172,4 +172,86 @@
 %    \end{macrocode}
 % \end{codedescribe}
 %
+% \begin{codedescribe}[option,new=0.5.2]{fontsize}
+% \begin{codesyntax}
+%    \tstuddocglobaloption{fontsize}
+% \end{codesyntax}
+% Um die Schriftgrößen der \TUD{} einzustellen, wird der Schlüssel \doptionglobal{fontsize} von \KOMAScript abgefangen und überladen.
+% Damit kann einerseits die Schriftgröße auf einen beliebigen Wert eingestellt werden, andererseits kann auf die Größen des CD
+% zugegriffen werden.
+%    \begin{macrocode}
+\newcommand\tudcd@font@fontsizesetting{cdfont}%
+\AddToHook{@tudcd/beforeOptionsProcessed}[fonts-fontsize-redirect]{
+  \tudcd@NumericalKey{fontsize}[cdfontsize]{tudcd@font@fontsizesetting}{
+    {cdfontsize}{cdfont}
+  }
+}
+
+\AddToHook{@tudcd/afterOptionsProcessed}[fonts-fontsize-processing]{
+  \tudcd@switchcase{string}{\tudcd@font@fontsizesetting}{
+    {cdfont}{ % "DeclareRobustCommand" redefines everything, even if command exists
+      \AddToHook{@tudcd/afterBaseClassLoaded}{
+      \let\normalsize\@undefined
+      \DeclareRobustCommand\normalsize{
+        \@setfontsize\normalsize{9pt}{12pt}%
+        \abovedisplayskip 9pt plus 2pt minus 5pt%
+        \abovedisplayshortskip 9pt plus 2pt minus 2pt%
+        \belowdisplayshortskip 9pt plus 3.5pt minus 3pt%
+        \belowdisplayskip\abovedisplayskip%
+        \let\@listi\@listI
+      }%
+      \let\small\@undefined
+      \DeclareRobustCommand\small{
+        \@setfontsize\small{8pt}{10pt}%
+        \abovedisplayskip 9pt plus 2pt minus 5pt%
+        \abovedisplayshortskip 9pt plus 2pt minus 2pt%
+        \belowdisplayshortskip 9pt plus 3.5pt minus 3pt%
+        \belowdisplayskip\abovedisplayskip%
+        \def\@listi{\leftmargin\leftmargini
+          \topsep 4pt plus 2pt minus 2pt
+          \parsep 2pt plus 1pt minus 1pt
+          \itemsep \parsep}%
+      }
+      \let\footnotesize\@undefined
+      \DeclareRobustCommand\footnotesize{%
+        \@setfontsize\footnotesize{7pt}{9pt}%
+        \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+        \abovedisplayshortskip \z@ \@plus\p@
+        \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+        \def\@listi{\leftmargin\leftmargini
+          \topsep 3\p@ \@plus\p@ \@minus\p@
+          \parsep 2\p@ \@plus\p@ \@minus\p@
+          \itemsep \parsep}%
+      }
+      %
+      \def\@listi{\leftmargin\leftmargini
+            \parsep 4\p@ \@plus2\p@ \@minus\p@
+            \topsep 8\p@ \@plus2\p@ \@minus4\p@
+            \itemsep4\p@ \@plus2\p@ \@minus\p@}
+      %
+      \let\scriptsize\@undefined
+      \DeclareRobustCommand\scriptsize{\@setfontsize\scriptsize{6pt}{7pt}}
+      \let\tiny\@undefined
+      \DeclareRobustCommand\tiny{\@setfontsize\tiny {5pt} {6pt}}
+      \let\large\@undefined
+      \DeclareRobustCommand\large{\@setfontsize\large {11pt}{15pt}}
+      \let\Large\@undefined
+      \DeclareRobustCommand\Large{\@setfontsize\Large {12pt}{15pt}}
+      \let\LARGE\@undefined
+      \DeclareRobustCommand\LARGE{\@setfontsize\LARGE {15pt}{18pt}}
+      \let\huge\@undefined
+      \DeclareRobustCommand\huge{\@setfontsize\huge {18pt}{22pt}}
+      \let\Huge\@undefined
+      \DeclareRobustCommand\Huge{\@setfontsize\Huge {22pt}{24pt}}
+      \let\HUGE\@undefined
+      \DeclareRobustCommand\HUGE{\@setfontsize\HUGE {57pt}{60pt}}
+    }
+    }
+  }{
+    \PassOptionsToClass{fontsize=\tudcd@font@fontsizesetting}{\tudcd@baseclass}%
+  }
+}
+%    \end{macrocode}
+%
+% \end{codedescribe}
 %</class&option>
