@@ -243,15 +243,20 @@
       \DeclareRobustCommand\huge{\@setfontsize\huge {18pt}{22pt}}
       \let\Huge\@undefined
       \DeclareRobustCommand\Huge{\@setfontsize\Huge {22pt}{24pt}}
-      \let\HUGE\@undefined
-      \DeclareRobustCommand\HUGE{\@setfontsize\HUGE {57pt}{60pt}}
     }
     }
   }{
     \PassOptionsToClass{fontsize=\tudcd@font@fontsizesetting}{\tudcd@baseclass}%
   }
+
+  \let\SubHIIgroesse\@undefined
+  \DeclareRobustCommand\SubHIIgroesse{\@setfontsize\SubHIIgroesse {11pt}{12pt}}
+  \let\ZitatGrossgroesse\@undefined
+  \DeclareRobustCommand\ZitatGrossgroesse{\@setfontsize\ZitatGrossgroesse {57pt}{60pt}}
 }
 %    \end{macrocode}
 %
 % \end{codedescribe}
+% \iffalse
 %</class&option>
+% \fi
