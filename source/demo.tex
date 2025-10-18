@@ -5,14 +5,42 @@
 \usepackage[ngerman]{babel}
 \usepackage[babel]{microtype}
 \usepackage{blindtext}
+\usepackage{xcolor}
+\selectcolormodel{cmyk}
+\usepackage{tudcdcolor}
 
 %\TUDCDoption{paper}{a4paper}
 \TUDCDoption{usemargin}{true}
 
 \usepackage{multicol}
 \usepackage{marginnote}
-
+\usepackage{csquotes}
 %\usepackage{tudcdfonts}
+
+\iffalse
+% Which paper did the authors have in mind when they created the document?
+\immediate\pdfobj stream attr{/N 4} file{PSOuncoated_v3_FOGRA52.icc}
+\pdfcatalog{%
+  /OutputIntents [ <<
+    /Type /OutputIntent
+    /S /GTS_PDFX
+    /DestOutputProfile \the\pdflastobj\space 0 R
+    /Info(PSO Uncoated ISO12647 (ECI))
+    /OutputCondition(Offset printing, according to ISO 12647-2:2004/Amd1, OFCOM, paper type 4 = uncoated white, 115 g/m2, tone value increase curves C (CMY) and D (K))
+    /OutputConditionIdentifier (Uncoated FOGRA47)
+    /RegistryName(http://www.color.org)
+  >>
+  <<
+    /Type /OutputIntent
+    /S /GTS_PDFA1
+    /DestOutputProfile \the\pdflastobj\space 0 R
+    /Info(PSO Uncoated ISO12647 (ECI))
+    /OutputCondition(Offset printing, according to ISO 12647-2:2004/Amd1, OFCOM, paper type 4 = uncoated white, 115 g/m2, tone value increase curves C (CMY) and D (K))
+    /OutputConditionIdentifier (Uncoated FOGRA47)
+    /RegistryName(http://www.color.org)
+  >> ]
+}
+\fi
 
 \makeatletter
 \newcommand\getfontsize{\f@size}%
@@ -157,9 +185,40 @@ Eine Schüssel mit kaltem Wasser füllen, Kartoffeln schälen und 2/3 der Kartof
 
 \pagebreak
 
-\HUGE\textrm{\textcdl{\textit{Zitat – Noto serif
-light italic 57 pt
-Zeilenabstand 60 pt,
-schwarz oder farbig}}}
+\pagecolor{Gruen2}
+\ZitatGrossgroesse\noprotrusion\textcolor{Brilliantblau}{\textrm{\textcdl{\textit{
+\enquote{Ich weiß ja nicht.}}}}}
+
+
+\newpage
+\nopagecolor
+{
+\Large
+\begin{testcolors}[RGB,cmyk]
+
+    \testcolor{Brilliantblau}
+    \testcolor{Dunkelblau}
+    \testcolor{Blau1}
+    \testcolor{Blau2}
+    \testcolor{Violett1}
+    \testcolor{Violett2}
+    \testcolor{Magenta1}
+    \testcolor{Magenta2}
+    \testcolor{Rot1}
+    \testcolor{Rot2}
+    \testcolor{Orange1}
+    \testcolor{Orange2}
+    \testcolor{Gelb1}
+    \testcolor{Gelb2}
+    \testcolor{Oliv1}
+    \testcolor{Oliv2}
+    \testcolor{Gruen1}
+    \testcolor{Gruen2}
+    \testcolor{Tuerkis1}
+    \testcolor{Tuerkis2}
+\end{testcolors}
+
+}
+
 
 \end{document}
