@@ -145,6 +145,21 @@
 %    \end{macrocode}
 % \end{codedescribe}
 %
+% \begin{codedescribe}[macro,new=0.5.2]{\tudcd@StringKey}
+% \begin{codesyntax}
+% \dmacro{\tudcd@StringKey}\tsargs[oarg]{Mitglied}\tsargs[marg]{Schlüssel}\tsargs[oarg]{Säumniswert}\tsargs[marg]{Makro}
+% \end{codesyntax}
+% Mit \dmacro{tudcd@StringKey} wird ein Schlüssel mit dem Namen \tsobj[marg]{Schlüssel} definiert,
+% welcher standardmäßig den angegebenen \tsobj[oarg]{Säumniswert} enthält und mit die Werteliste in \tsobj[marg]{Werteliste} akzeptiert.
+% Beim verarbeiten des Schlüssels wird der Wert im Makro \dmacro{\Makro} gespeichert.
+% Es ist ein Wrapper von \KOMAScript s \dmacro{\FamilyStringKey}.
+%    \begin{macrocode}
+\newcommand*\tudcd@StringKey[1][.\@currname.\@currext]{%
+ \FamilyStringKey[{#1}]{TUDCD}%
+}
+%    \end{macrocode}
+% \end{codedescribe}
+%
 % \begin{codedescribe}[
 % macro,
 % new=0.5.1]{\tudcd@BoolKey}
@@ -302,6 +317,7 @@
 \UseOneTimeHook{@tudcd/beforeOptionsProcessed}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\tudcd@baseclass}}
 \TUDCDProcessOptions%
+\LogHook{@tudcd/afterOptionsProcessed}
 \UseOneTimeHook{@tudcd/afterOptionsProcessed}
 \LoadClass{\tudcd@baseclass}
 \UseOneTimeHook{@tudcd/afterBaseClassLoaded}
