@@ -1,0 +1,254 @@
+% \iffalse meta-comment
+%/GitFileInfo=tudcd-specialpages.dtx
+%
+%  TUDCD-Script -- Corporate Design of Technische Universität Dresden
+% ----------------------------------------------------------------------------
+%
+%  Copyright (C) Jochen Diepelt <David.diepelt@gmx.net>, 2025
+%
+% ----------------------------------------------------------------------------
+%
+%  This work may be distributed and/or modified under the conditions of the
+%  LaTeX Project Public License, either version 1.3c of this license or
+%  any later version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of
+%  LaTeX version 2008-05-04 or later.
+%
+%  This work has the LPPL maintenance status "maintained".
+%
+%  The current maintainer and author of this work is Jochen Diepelt.
+%
+% ----------------------------------------------------------------------------
+%
+% \fi
+%
+% \iffalse ins:batch + dtx:driver
+%<*ins>
+\ifx\documentclass\undefined
+  \input docstrip.tex
+  \ifToplevel{\batchinput{tudcd.ins}}
+\else
+  \let\endbatchfile\relax
+\fi
+\endbatchfile
+%</ins>
+%<*dtx>
+\ProvidesFile{tudcd-specialpages.dtx}[2025/10/02]
+\documentclass[english,ngerman]{tudcddoc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+\usepackage{babel}
+\usepackage[babel]{microtype}
+\RecordChanges
+\begin{document} % Diese Dokumentation dokumentiert NUR diese Datei
+  \title{\Large Dokumentation der Datei \texttt{\jobname.dtx} \\
+  \normalsize Generiert durch \texttt{\$ enginetex \jobname.dtx}}
+  \author{Jochen Diepelt}
+  \maketitle
+  \tableofcontents
+
+  \DocInput{tudcd-specialpages.dtx}
+\end{document}
+%</dtx>
+% \fi
+% \iffalse
+%<*body&class>
+% \fi
+% \selectlanguage{ngerman}
+%
+% \section[Seitenstile im Stil der TUD]{Seitenstile im Stil der \TUD}
+%
+% Aus dem Broschürenraster der TU Dresden leiten sich mehrere \emph{Seitenstile} ab:
+%
+% \begin{itemize}
+%   \item Der \enquote{strenge} Seitenstil des Broschürenrasters ohne Kopf und Fußzeile
+%   \item Der Zitatseitenstil für gesetzte Zitate, ohne Kopf und Fußzeile
+%   \item Der Titelseitenstil für Titelseiten und/oder Plakate mit Logobereich, Freiheihaltezone, Zweitlogobereich, QR-Code
+%   \item Der Kapitelseitenstil mit Freihaltezone zwischen Kapiteltitel und Textbereich.
+% \end{itemize}
+%
+% Da jedoch abseits der strengen Vorgaben des \CD s, vorrangig für den Satz von Abschlussarbeiten
+% ein Broschürenraster ungeeignet ist, werden folgende zusätzliche Seitenstile definiert:
+%
+% \begin{itemize}
+%   \item Der vom Broschürenraster abgewandelte Seitenstil \emph{mit} konfigurierbarer Kopf und Fußzeile
+%   \item Ein dazugehöriger Teil und Kapitelseitenstil
+%   \item Ein Titelseitenstil für Titelseiten ohne Zweitlogobereich ohne QR-Code
+% \end{itemize}
+%
+% Die Seitenstile werden mit dem Paket \dpkg{scrlayer-scrpage} erstellt und konfiguriert.
+% Dabei wird mittels Haken die Seitengeometrie angepasst, sollte es der Seitenstil erzwingen.
+% Dies ist bei den Titelseiten, Zitatseiten und Teilseiten der Fall.
+%
+% Insbesondere werden Abschlussarbeiten \emph{nicht} als zur Kommunikation der \TUD{} gehörigen Kommunikationmittel bewertet
+% womit eine strenge Einhaltung des \CD s auch nicht erforderlich ist. Ein Broschürenraster ist meiner Auffassung nach auch
+% ungeeignet für Abschlussarbeiten.
+%
+% \iffalse
+% Kapitelseitenstil \chapterpagestyle
+% Partseitenstil \partpagestyle
+% \fi
+%
+% \subsection{Auswahl des Logos}
+%
+% Das Logo der \TUD{} kommt in den Farben Weiß, Schwarz und Brilliantblau, in einer deutschen und englischen Variante,
+% sowie in den Farbmodellen RGB und CMYK. Daraus ergeben sich insgesamt $3 \times 2 \times 2 = 12$ verschiedene Logos.
+%
+% \begin{codedescribe}[
+% new=0.5.2
+% ]{\iftudcd@logogerman,\iftudcd@colormodel}
+% \begin{codesyntax}
+% \tstuddocif{tudcd@logogerman}
+% \tstuddocif{tudcd@colormodelrgb}
+% \end{codesyntax}
+%
+% Die Auswahl des Logos wird über die Schalter \dmacro{\iftudcd@logogerman}, \dmacro{\iftudcd@colormodelrgb} und den Wert des Makros
+% \dmacro{\tudcd@logocolor} getroffen.
+%    \begin{macrocode}
+\newif\tudcd@logogerman%
+\newif\tudcd@colormodelrgb%
+\newcommand\tudcd@logocolor{blue}%
+%    \end{macrocode}
+% \end{codedescribe}
+%
+% \begin{codedescribe}[
+% new=0.5.2
+% ]{\tudcd@typesetlogo}
+%
+%    \begin{macrocode}
+\newcommand\tudcd@typesetlogo[1][]{
+  \tudcd@switchcase{string}{\tudcd@logocolor}{
+    {blue}{
+  \iftudcd@logogerman
+    \iftudcd@colormodelrgb%
+\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_blau_de.eps}
+    \else % colormodelrgb
+\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_blau_de.eps}
+    \fi % colormodelrgb
+  \else % logogerman
+    \iftudcd@colormodelrgb%
+\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_blau_en.eps}
+    \else % colormodelrgb
+\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_blau_en.eps}
+    \fi % colormodelrgb
+  \fi % logogerman
+    }
+    {white}{
+\iftudcd@logogerman
+    \iftudcd@colormodelrgb%
+\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_weiss_de.eps}
+    \else % colormodelrgb
+\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_weiss_de.eps}
+    \fi % colormodelrgb
+  \else % logogerman
+    \iftudcd@colormodelrgb%
+\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_weiss_en.eps}
+    \else % colormodelrgb
+\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_weiss_en.eps}
+    \fi % colormodelrgb
+  \fi % logogerman
+    }
+    {black}{
+\iftudcd@logogerman
+    \iftudcd@colormodelrgb%
+\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_schwarz_de.eps}
+    \else % colormodelrgb
+\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_schwarz_de.eps}
+    \fi % colormodelrgb
+  \else % logogerman
+    \iftudcd@colormodelrgb%
+\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_schwarz_en.eps}
+    \else % colormodelrgb
+\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_schwarz_en.eps}
+    \fi % colormodelrgb
+  \fi % logogerman
+    }
+  }{\ClassError{\tudcd@currentclass}{Invalid logo color '\tudcd@logocolor' option given!}{}}
+
+}
+%    \end{macrocode}
+% \end{codedescribe}
+%
+% \subsection{Definition }
+%
+% Die Seitenstile nach laden des Pakets \dpkg{scrlayer-scrpage} definiert
+% um Doppeldefinitionen bei mehrmaligem Laden zu vermeiden, werden die Definitionen an den Haken \dhook{package/scrlayer-scrpage/after} gehängt,
+% welcher einmalig \emph{nach} laden des Pakets ausgeführt wird.
+%
+%    \begin{macrocode}
+%<*body&class>
+\AddToHook{package/scrlayer-scrpage/after}{
+%    \end{macrocode}
+%
+% Das Logo der \TUD{} geht über die gesammte Textspalte und hält gleichzeitig den Schutzraum des Logos,
+% welcher durch die Angabe der doppelten Logohöhe definiert ist.
+% Das Logo wird im Vordergrund gesetzt, um Nutzern bei Fehlern visuell darauf hinzuweisen.
+% Der Skalierungsfaktor $1.071794872$ stellt die Skalierung der Logodatei dar, um auf die in \dmacro{\tudcd@logoheight}
+% festgelegt Höhe zu kommen.
+%
+%    \begin{macrocode}
+  \DeclareLayer[
+    align=tl,
+    area={\tudcd@innermargin}{\tudcd@innermargin}{\textwidth}{2\tudcd@logoheight},
+    contents={\includegraphics[height=1.071794872\tudcd@logoheight]{logo/TUD-Logo_CMYK_horizontal_schwarz_de.eps}},
+    foreground
+  ]{tudcdpage.logo}
+%    \end{macrocode}
+%
+% Die Zweitlogos haben 2 Bereiche bekommen, in welchen diese platziert werden dürfen,
+% Diese jeweiligen Layer werden hiermit angelegt
+%
+%    \begin{macrocode}
+  \DeclareLayer[
+    align=bl,
+    area={\tudcd@innermargin}{\paperheight-\tudcd@innermargin-\tudcd@secondlogoheight}{\textwidth}{\tudcd@secondlogoheight},
+    contents={\color{Magenta1}\rule{\layerwidth}{\layerheight}},
+    foreground
+  ]{tudcdpage.zweitlogo.oben}
+  \DeclareLayer[
+    align=bl,
+    area={\tudcd@innermargin}{\paperheight-\tudcd@innermargin}{\textwidth-\tudcd@gridcolumnwidth-\tudcd@gridcolumnsep}{\tudcd@secondlogoheight},
+    contents={\color{Magenta2}\rule{\layerwidth}{\layerheight}},
+    foreground
+  ]{tudcdpage.zweitlogo.unten}
+%    \end{macrocode}
+%
+% Selbiges wird für den QR-Code angelegt
+%
+%    \begin{macrocode}
+  \DeclareLayer[
+    align=bl,
+    area={\tudcd@innermargin+3\tudcd@gridcolumnsep+3\tudcd@gridcolumnwidth}{\paperheight-\tudcd@innermargin}{\tudcd@gridcolumnwidth}{\tudcd@secondlogoheight},
+    contents={\hfill\footnotesize\color{Brilliantblau} \url{https://tu-dresden.de}\hfill\raisebox{0.25\layerheight}{\qrcode[height=0.6667\layerheight]{https://tu-dresden.de}}},
+    foreground
+  ]{tudcdpage.qrcode}
+%    \end{macrocode}
+%
+% Nach der Definition der einzelnen Ebenen werden diese zu Seitenstilen zusammengefügt.
+%
+% Als letztes wird eine Hintergrundebene angelegt, welche die Hintergrundfarbe der Seite beeinflussen kann.
+% Diese Ebene wird allen Seitenstilen angehängt.
+%
+%    \begin{macrocode}
+  \DeclareLayer[
+    align=tl,
+    area={0pt}{0pt}{\paperwidth}{\paperheight},
+    contents={\color{Tuerkis1}\rule{\layerwidth}{\layerheight}},
+    background
+  ]{tudcdpage.pagecolor}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+  \AddLayersToPageStyle{@everystyle@}{tudcdpage.pagecolor}
+} % \AddToHook package/scrlayer-scrpage/after
+
+\AddToHook{@tudcd/afterBaseClassLoaded}{
+  \RequirePackage{graphicx}
+  \RequirePackage{qrcode}
+  \RequirePackage{xurl}
+  \RequirePackage{scrlayer-scrpage}
+}
+%</body&class>
+%    \end{macrocode}

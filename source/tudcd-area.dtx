@@ -101,10 +101,28 @@
 \newlength\tudcd@exclusionheight%
 \newlength\tudcd@bottommargin%
 \newlength\tudcd@qrheight%
-\newlength\tudcd@gridcolumnwidth%
-\newlength\tudcd@gridcolumnsep%
+\newlength\tudcd@gridcolumnwidth% <-
+\newlength\tudcd@gridcolumnsep% <- Immer 6 mm
 %    \end{macrocode}
 % Die Bezeichnungen leiten sich dabei aus dem Leitfaden ab.
+% \end{codedescribe}
+%
+% \begin{codedescribe}[
+% macro,
+% new=0.5.2
+% ]{\tudcd@getgridcolumnwidth}
+% \begin{codesyntax}
+% \tsmacro{\tudcd@getgridcolumnwidth}[Zusatzbefehle]{Anzahl Spalten}
+% \end{codesyntax}
+% Das Macro \dmacro{\tudcd@getgridcolumnwidth} expandiert zu einem Dimensionausdruck welcher die Spaltenbreite
+% in Abhängigkeit von \dmacro{\paperwidth},\dmacro{\tudcd@gridcolumnsep},\dmacro{\tudcd@outermargin},\dmacro{\tudcd@innermargin}
+%  und der Anzahl an Spalten berechnet.
+% Es wird dabei angenommen, dass es einen Spaltenseparator weniger gibt als es Spalten gibt.
+%    \begin{macrocode}
+\newcommand\tudcd@getgridcolumnwidth[1]{%
+  \dimexpr((\paperwidth-\tudcd@innermargin-\tudcd@outermargin-\tudcd@gridcolumnsep*(#1-1))/#1)\relax
+}
+%    \end{macrocode}
 % \end{codedescribe}
 %
 % \begin{codedescribe}[
@@ -131,11 +149,11 @@
 %    \begin{macrocode}
 \NewSocketPlug{tudcd/pagearea}{usecdgeometry}{
 %    \end{macrocode}
-% dafür bedarf es dem Paket \tsobj[pkg]{geometry}.
+% dafür bedarf es dem Paket \dpkg{geometry}.
 %    \begin{macrocode}
   \RequirePackage{geometry}%
 %    \end{macrocode}
-% In Abhängigkeit vom Schalter \tsobj[macro]{tudcd@usemargin} wird \tsobj[pkg]{geometry} direkt
+% In Abhängigkeit vom Schalter \dmacro{tudcd@usemargin} wird \dpkg{geometry} direkt
 % die Einstellung der Marginalie mitgegeben.
 %    \begin{macrocode}
   \iftudcd@usemargin% true
@@ -197,6 +215,7 @@
 \tudcd@BoolKey{usemargin}{tudcd@usemargin}
 %    \end{macrocode}
 % \end{codedescribe}
+
 % Anschließend werden über \tsobj[macro]{\geometry} die Maße ausgewählten Formats als Standardgeometrie festgelegt.
 % Da die Option erst spät verarbeitet wird,
 % wird die Einstellung der Seitengeometrie an den Haken \tsobj[hook]{@tudcd/afterLateOptionsProcessed} gehangen.
@@ -205,8 +224,8 @@
 \tudcd@switchcase{string}{\tudcd@paperselection}
 {
   {4}{
-    \setlength\tudcd@outermargin{15mm}%
-    \setlength\tudcd@innermargin{10mm}%
+    \setlength\tudcd@outermargin{10mm}%
+    \setlength\tudcd@innermargin{15mm}%
     \setlength\tudcd@logoheight{22.5mm}%
     \setlength\tudcd@secondlogoheight{15mm}%
     \setlength\tudcd@exclusionheight{5mm}%
@@ -218,14 +237,13 @@
     \else% Ohne Marginalie
       \setlength\tudcd@gridcolumnwidth{41.75mm}%
     \fi%
-    \setlength\marginparwidth{\tudcd@gridcolumnwidth}%
+    \setlength\marginparwidth{\tudcd@getgridcolumnwidth{5}}%
     \setlength\marginparsep{\tudcd@gridcolumnsep}%
     \@ifpackageloaded{multicol}{
       \setlength\columnsep{\tudcd@gridcolumnsep}%
       \setlength\columnseprule{0pt}%
     }{}
     \renewcommand\tudcd@selectedpaperformat{a4paper}%
-    \FamilyKeyStateProcessed%
   }
   {3}{
     \setlength\tudcd@outermargin{15mm}%
@@ -235,7 +253,6 @@
     \setlength\tudcd@exclusionheight{5mm}%
     \setlength\tudcd@qrheight{15mm}%
     \renewcommand\tudcd@selectedpaperformat{a3paper}%
-    \FamilyKeyStateProcessed%
   }
 }{%
 \ClassError{tudcd-area}{%
