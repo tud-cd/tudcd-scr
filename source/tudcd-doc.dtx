@@ -90,7 +90,9 @@
 \RequirePackage{xcolor}%
 \RequirePackage{tudcdcolor}%
 \RequirePackage{tudcdfonts}%
-\RequirePackage{csquotes}
+\RequirePackage{csquotes}%
+\RequirePackage[style=numeric]{biblatex}
+\addbibresource{lit.biblio}
 \selectcolormodel{rgb}
 %    \end{macrocode}
 % Ergänzen der zusätzlichen Klasse für Klassen als Abgrenzung von Paketen
@@ -240,4 +242,17 @@
 \newcommand{\TUD}{TUD}
 \newcommand{\TUDCDScript}{TUDCD-Script}
 \newcommand{\CD}{CD}
+%    \end{macrocode}
+%
+% Um Todos in der Dokumentation zu hinterlassen, werden hier Makros bereitgestellt, welche die Todos in eine Liste
+% packen und ein Verzeichnis erzeugt.
+%    \begin{macrocode}
+\addtotoclist{todos}%
+\newcommand{\todo}[1]{
+  \noindent\textbf{Todo:} #1%
+  \addxcontentsline{todos}{section}[\thesection]{#1}\par%
+}
+\newcommand{\listoftodos}{
+  \listoftoc[Liste der Todos]{todos}%
+}
 %    \end{macrocode}

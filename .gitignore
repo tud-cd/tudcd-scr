@@ -47,6 +47,7 @@ temp/
 *.wrt
 *.xdy
 *.xlg
+*.todos
 ## include test files
 !test/**/*.tex
 !test/**/*.cls

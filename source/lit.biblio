@@ -1,0 +1,25 @@
+
+
+@misc{komascriptDocs,
+    author = {Kohm, Markus},
+    title = {Koma-Script: Die Anleitung},
+    url = {https://ctan.org/pkg/koma-script},
+    year = {2025},
+}
+
+@misc{graphicsBundle,
+    author = {David Carlisle, LaTeX3 Team},
+    title = {Packages in the 'graphics' bundle},
+    url = {https://ctan.org/pkg/graphicx},
+    year = {2025},
+}
+
+@manual{xkeyval,
+    title = {The xkeyval package},
+    subtitle = {Extension of the keyval package},
+    author = {Adriaens, Hendri and Carlisle, David},
+    url = {https://ctan.org/pkg/xkeyval},
+    urldate = {2025-11-06},
+    date = {2022},
+    version = {2.10},
+}
