@@ -97,6 +97,7 @@
 % sowie in den Farbmodellen RGB und CMYK. Daraus ergeben sich insgesamt $3 \times 2 \times 2 = 12$ verschiedene Logos.
 %
 % \begin{codedescribe}[
+% macro,
 % new=0.5.2
 % ]{\iftudcd@logogerman,\iftudcd@colormodel}
 % \begin{codesyntax}
@@ -107,74 +108,80 @@
 % Die Auswahl des Logos wird über die Schalter \dmacro{\iftudcd@logogerman}, \dmacro{\iftudcd@colormodelrgb} und den Wert des Makros
 % \dmacro{\tudcd@logocolor} getroffen.
 %    \begin{macrocode}
-\newif\tudcd@logogerman%
-\newif\tudcd@colormodelrgb%
+\newif\iftudcd@logogerman%
+\newif\iftudcd@colormodelrgb%
 \newcommand\tudcd@logocolor{blue}%
 %    \end{macrocode}
 % \end{codedescribe}
 %
 % \begin{codedescribe}[
+% macro,
 % new=0.5.2
 % ]{\tudcd@typesetlogo}
-%
+% \begin{codesyntax}
+% \dmacro{\tudcd@typesetlogo}\tsargs[marg]{Vertikale Höhe}
+% \end{codesyntax}
+% Das Makro \dmacro{\tudcd@typesetlogo} setzt das Logo in Abhängigkeit der Makros \dmacro{\iftudcd@logogerman},
+% \dmacro{\iftudcd@colormodelrgb} und \dmacro{\tudcd@logocolor}. Dabei muss die vertikale Höhe des Logos als Länge übergeben werden.
+% \dmacro{\tudcd@logocolor}.
+% Aus Kompatibilitätsgründen wird in \cite{graphicsBundle} empfohlen die Anweisung \dmacro{\includegraphics} ohne optionales Argument zu nutzen
 %    \begin{macrocode}
-\newcommand\tudcd@typesetlogo[1][]{
-  \tudcd@switchcase{string}{\tudcd@logocolor}{
-    {blue}{
+\newcommand\tudcd@typesetlogo[1]{
+  \tudcd@switchcase{string}{\tudcd@logocolor}{%
+    {blue}{%
   \iftudcd@logogerman
     \iftudcd@colormodelrgb%
-\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_blau_de.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_blau_de.eps}}
     \else % colormodelrgb
-\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_blau_de.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_blau_de.eps}}
     \fi % colormodelrgb
   \else % logogerman
     \iftudcd@colormodelrgb%
-\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_blau_en.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_blau_en.eps}}
     \else % colormodelrgb
-\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_blau_en.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_blau_en.eps}}
     \fi % colormodelrgb
   \fi % logogerman
-    }
-    {white}{
+    }%
+    {white}{%
 \iftudcd@logogerman
     \iftudcd@colormodelrgb%
-\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_weiss_de.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_weiss_de.eps}}
     \else % colormodelrgb
-\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_weiss_de.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_weiss_de.eps}}
     \fi % colormodelrgb
   \else % logogerman
     \iftudcd@colormodelrgb%
-\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_weiss_en.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_weiss_en.eps}}
     \else % colormodelrgb
-\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_weiss_en.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_weiss_en.eps}}
     \fi % colormodelrgb
   \fi % logogerman
-    }
-    {black}{
+    }%
+    {black}{%
 \iftudcd@logogerman
     \iftudcd@colormodelrgb%
-\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_schwarz_de.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_schwarz_de.eps}}
     \else % colormodelrgb
-\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_schwarz_de.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_schwarz_de.eps}}
     \fi % colormodelrgb
   \else % logogerman
     \iftudcd@colormodelrgb%
-\includegraphics[#1]{logo/TUD-Logo_RGB_horizontal_schwarz_en.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_schwarz_en.eps}}
     \else % colormodelrgb
-\includegraphics[#1]{logo/TUD-Logo_CMYK_horizontal_schwarz_en.eps}
+\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_schwarz_en.eps}}
     \fi % colormodelrgb
   \fi % logogerman
-    }
+    }%
   }{\ClassError{\tudcd@currentclass}{Invalid logo color '\tudcd@logocolor' option given!}{}}
-
 }
 %    \end{macrocode}
 % \end{codedescribe}
 %
 % \subsection{Definition }
 %
-% Die Seitenstile nach laden des Pakets \dpkg{scrlayer-scrpage} definiert
-% um Doppeldefinitionen bei mehrmaligem Laden zu vermeiden, werden die Definitionen an den Haken \dhook{package/scrlayer-scrpage/after} gehängt,
+% Um Doppeldefinitionen bei mehrmaligem Laden des Pakets \dpkg{scrlayer-scrpage} zu vermeiden,
+% werden die Definitionen an den Haken \dhook{package/scrlayer-scrpage/after} gehängt,
 % welcher einmalig \emph{nach} laden des Pakets ausgeführt wird.
 %
 %    \begin{macrocode}
@@ -188,11 +195,13 @@
 % Der Skalierungsfaktor $1.071794872$ stellt die Skalierung der Logodatei dar, um auf die in \dmacro{\tudcd@logoheight}
 % festgelegt Höhe zu kommen.
 %
+% \todo{In einer Box kann man die Tiefe und Höhe von der Grundlinie festlegen. Da das Logo bereits auf der Grundlinie des unteren Schriftzuges ist, kann vielleicht eine passende Box definiert werden.}
+%
 %    \begin{macrocode}
   \DeclareLayer[
     align=tl,
     area={\tudcd@innermargin}{\tudcd@innermargin}{\textwidth}{2\tudcd@logoheight},
-    contents={\includegraphics[height=1.071794872\tudcd@logoheight]{logo/TUD-Logo_CMYK_horizontal_schwarz_de.eps}},
+    contents={\tudcd@typesetlogo{\tudcd@logoheight}},
     foreground
   ]{tudcdpage.logo}
 %    \end{macrocode}
@@ -226,29 +235,160 @@
   ]{tudcdpage.qrcode}
 %    \end{macrocode}
 %
+% Zum Debuggen werden die Ebenen
+%
 % Nach der Definition der einzelnen Ebenen werden diese zu Seitenstilen zusammengefügt.
 %
-% Als letztes wird eine Hintergrundebene angelegt, welche die Hintergrundfarbe der Seite beeinflussen kann.
+% Anschließend werden die Pagestyles definiert.
+%
+%    \begin{macrocode}
+\DeclarePageStyleByLayers{tudcdheadings}{
+  scrheadings.head.odd,
+  scrheadings.head.even,
+  scrheadings.head.oneside,
+  scrheadings.head.below.line,
+  scrheadings.foot.above.line,
+  scrheadings.foot.odd,
+  scrheadings.foot.even,
+  scrheadings.foot.oneside
+} % Kolumnentitel
+\DeclarePageStyleByLayers{plain.tudcdheadings}{
+  scrheadings.foot.above.line,
+  scrheadings.foot.odd,
+  scrheadings.foot.even,
+  scrheadings.foot.oneside
+} % ohne Kolumnentitel
+\DeclarePageStyleByLayers{tudcdtitlepage}{
+  tudcdpage.logo,
+  tudcdpage.zweitlogo.oben,
+  tudcdpage.zweitlogo.unten,
+  tudcdpage.qrcode
+}
+%    \end{macrocode}
+%
+% % Als letztes wird eine Hintergrundebene angelegt, welche die Hintergrundfarbe der Seite beeinflussen kann.
 % Diese Ebene wird allen Seitenstilen angehängt.
+%
+% Um die Farbe einzustellen, zusätzlich das Helfermakro \dmacro{\tudcd@pagecolor} definiert,
+% welches mit dem Befehl \dmacro{\tudcd@set@pagecolor} gesetzt werden kann.
+%
+%    \begin{macrocode}
+\providecommand\tudcd@pagecolor{}%
+\newcommand\tudcd@set@pagecolor[1]{%
+  \gdef\tudcd@pagecolor{#1}%
+}%
+%    \end{macrocode}
+%
 %
 %    \begin{macrocode}
   \DeclareLayer[
     align=tl,
     area={0pt}{0pt}{\paperwidth}{\paperheight},
-    contents={\color{Tuerkis1}\rule{\layerwidth}{\layerheight}},
+    contents={%
+    \noindent\ifdefempty{\tudcd@pagecolor}{\meaning\tudcd@pagecolor}{\color{\tudcd@pagecolor}\rule{\layerwidth}{\layerheight}}},
     background
   ]{tudcdpage.pagecolor}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-  \AddLayersToPageStyle{@everystyle@}{tudcdpage.pagecolor}
+\AddLayersToPageStyle{@everystyle@}{tudcdpage.pagecolor}
+%    \end{macrocode}
+%
+% Anschließend werden die einzelnen Seitenstile umdefiniert.
+%    \begin{macrocode}
+\pagestyle{plain.tudcdheadings}
+\renewcommand{\chapterpagestyle}{plain.tudcdheadings}
+%    \end{macrocode}
+%
+%
+%
+%    \begin{macrocode}
 } % \AddToHook package/scrlayer-scrpage/after
-
-\AddToHook{@tudcd/afterBaseClassLoaded}{
+%    \end{macrocode}
+% Es werden jetzt die einzelnen Pakete geladen, welche für die Deklaration der Seitenstile benötigt werden.
+%    \begin{macrocode}
+\AddToHook{@tudcd/afterBaseClassLoaded}[specialpages-packageloading]{
   \RequirePackage{graphicx}
   \RequirePackage{qrcode}
   \RequirePackage{xurl}
   \RequirePackage{scrlayer-scrpage}
 }
+%    \end{macrocode}
+%
+% In dem nachfolgendem Code des Hakens \dhook{@tudcd/afterBaseClassLoaded} werden die Umgebungen für
+% Zitatseiten und Titelseiten deklariert.
+%
+%    \begin{macrocode}
+\AddToHook{@tudcd/afterBaseClassLoaded}[specialpages-enviroment-declaration]{
+%    \end{macrocode}
+%
+% \begin{codedescribe}[env,new=0.5.3]{tudcdtitlepage}
+% \begin{codesyntax}
+% \tsmacro{\begin{tudcdtitlepage}}[Optionen]
+% \ldots
+% \tsmacro{\end{tudcdtitlepage}}{}
+% \end{codesyntax}
+% Die \denv{tudcdtitlepage} Umgebung ist ein Analogon zur \denv{titlepage} Umgebung des \KOMAScript{}-Pakets~\cite{komascriptDocs}.
+% Im Unterschied zur \denv{titlepage} Umgebung wird hierbei das Seitenlayout verändert, um den Schutzbereich des Logos einzuhalten.
+%
+%    \begin{macrocode}
+\NewDocumentEnvironment{tudcdtitlepage}{ O{} }
+  {
+  \tudcd@logogermantrue
+  \clearpage%
+  \newgeometry{%
+    paper=\tudcd@selectedpaperformat,%
+    inner=\tudcd@innermargin,%
+    outer=\tudcd@outermargin,%
+    top=\tudcd@outermargin+2\tudcd@logoheight,% Oberer Abstand + Schutzraum
+    bottom=\tudcd@bottommargin+2\tudcd@secondlogoheight%
+  }%
+  \setlength{\tudcd@gridcolumnwidth}{\tudcd@getgridcolumnwidth{4}}%
+  \thispagestyle{tudcdtitlepage}%
+  }
+  {\restoregeometry} % zurüksetzen auf die alte Geometrie
+%    \end{macrocode}
+% \end{codedescribe}
+%
+% \begin{codedescribe}[env,new=0.5.3]{tudcdquotepage}
+% \begin{codesyntax}
+% \tsmacro{\begin{tudcdquotepage}}[Seitenfarbe]{}
+% \ldots
+% Text
+% \ldots
+% \tsmacro{\end{tudcdquotepage}}{}
+% \end{codesyntax}
+%
+% Diese Umgebung ist für das Setzen von farblich abgehobenen Seiten, auf welchen die Marginalie ausgesetzt wird.
+%
+%    \begin{macrocode}
+\NewDocumentEnvironment{tudcdquotepage}{ o }{
+  \clearpage%
+  \global\let\tudcd@oldpagecolor\tudcd@pagecolor%
+  \IfValueT{#1}{
+    \tudcd@set@pagecolor{#1}%
+  }%
+  \newgeometry{%
+    inner=\tudcd@innermargin,%
+    outer=\tudcd@outermargin,%
+    top=\tudcd@outermargin,% Oberer Abstand + Schutzraum
+    bottom=\tudcd@bottommargin%
+  }%
+  \setlength{\tudcd@gridcolumnwidth}{\tudcd@getgridcolumnwidth{4}}%
+  \thispagestyle{plain}%
+  }%
+{%
+\restoregeometry%
+\global\let\tudcd@pagecolor\tudcd@oldpagecolor%
+} % zurüksetzen auf die alte Geometrie
+%    \end{macrocode}
+%
+% \end{codedescribe}
+%
+%
+%    \begin{macrocode}
+} % @tudcd/afterBaseClassLoaded
 %</body&class>
 %    \end{macrocode}
+%
+% \listoftodos

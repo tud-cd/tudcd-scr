@@ -317,7 +317,6 @@
 \UseOneTimeHook{@tudcd/beforeOptionsProcessed}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\tudcd@baseclass}}
 \TUDCDProcessOptions%
-\LogHook{@tudcd/afterOptionsProcessed}
 \UseOneTimeHook{@tudcd/afterOptionsProcessed}
 \LoadClass{\tudcd@baseclass}
 \UseOneTimeHook{@tudcd/afterBaseClassLoaded}
