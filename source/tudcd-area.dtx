@@ -140,6 +140,19 @@
 % \end{codedescribe}
 %
 % \begin{codedescribe}[
+% macro,
+% new=0.5.1]{%
+%  \iftudcd@usemargin%
+% }
+% \begin{codesyntax}
+% \tstuddocif{tudcd@usemargin}
+% \end{codesyntax}
+% Dieser Schalter gibt an, ob die Marginalien übereinstimmen, oder ob 15mm mit 10mm im Dokument verwendet werden soll.
+%    \begin{macrocode}
+\newif\iftudcd@postermode%
+%    \end{macrocode}
+% \end{codedescribe}
+% \begin{codedescribe}[
 % plug,
 % new=0.5.0]{usecdgeometry}
 % \begin{codesyntax}
@@ -151,6 +164,7 @@
 %    \end{macrocode}
 % dafür bedarf es dem Paket \dpkg{geometry}.
 %    \begin{macrocode}
+  \KOMAoption{usegeometry}{true}%
   \RequirePackage{geometry}%
 %    \end{macrocode}
 % In Abhängigkeit vom Schalter \dmacro{tudcd@usemargin} wird \dpkg{geometry} direkt
@@ -200,7 +214,10 @@
 %    \begin{macrocode}
 \tudcd@NumericalKey{paper}[a4paper]{tudcd@paperselection}{%
   {a4}{4},{a4paper}{4},%
-  {a3}{3},{a3paper}{3}%
+  {a3}{3},{a3paper}{3},%
+  {a2}{2},{a2paper}{2},%
+  {a1}{1},{a1paper}{1},%
+  {a0}{0},{a0paper}{0}%
 }
 %    \end{macrocode}
 %
@@ -215,17 +232,36 @@
 \tudcd@BoolKey{usemargin}{tudcd@usemargin}
 %    \end{macrocode}
 % \end{codedescribe}
-
+%
+% \begin{codedescribe}[
+% key,
+% new=0.5.1]{usemargin}
+% \begin{codesyntax}
+% \tsobj{\TUDCDoption}\{usemargin\}\tsargs[marg]{Wahrheitswert}
+% \end{codesyntax}
+% Der Schlüssel zur Wahl des Postermodus setzt bei Bearbeitung den Schalter \tsobj[macro]{\iftudcd@postermode}.
+% Dabei sorgt dieser dafür, dass der äußere Randabstand gleich dem inneren ist.
+%    \begin{macrocode}
+\tudcd@BoolKey{postermode}{tudcd@postermode}
+%    \end{macrocode}
+% \end{codedescribe}
+%
 % Anschließend werden über \tsobj[macro]{\geometry} die Maße ausgewählten Formats als Standardgeometrie festgelegt.
 % Da die Option erst spät verarbeitet wird,
 % wird die Einstellung der Seitengeometrie an den Haken \tsobj[hook]{@tudcd/afterLateOptionsProcessed} gehangen.
+% \todo{Das Konstruktionsprinzip leitet sich von den A0 Werten ab und wird gemäß des Breitenverhältnisses Skaliert.
+% Da aber auch gerundete Maßvorgaben existieren, ist es vielleicht sinnvoll einen rounded Modus einzuführen, der die gerundeten Werte nutzt.}
 %    \begin{macrocode}
 \AddToHook{@tudcd/afterLateOptionsProcessed}[pagearea-pagesetting]{
 \tudcd@switchcase{string}{\tudcd@paperselection}
 {
   {4}{
     \setlength\tudcd@outermargin{10mm}%
-    \setlength\tudcd@innermargin{15mm}%
+    \iftudcd@postermode
+      \setlength\tudcd@innermargin{15mm}%
+    \else
+      \setlength\tudcd@innermargin{10mm}%
+    \fi
     \setlength\tudcd@logoheight{22.5mm}%
     \setlength\tudcd@secondlogoheight{15mm}%
     \setlength\tudcd@exclusionheight{5mm}%
@@ -247,12 +283,83 @@
   }
   {3}{
     \setlength\tudcd@outermargin{15mm}%
-    \setlength\tudcd@innermargin{10mm}%
-    \setlength\tudcd@logoheight{22.5mm}%
-    \setlength\tudcd@secondlogoheight{15mm}%
-    \setlength\tudcd@exclusionheight{5mm}%
-    \setlength\tudcd@qrheight{15mm}%
+    \iftudcd@postermode
+      \setlength\tudcd@innermargin{21.2mm}%
+    \else
+      \setlength\tudcd@innermargin{15mm}%
+    \fi
+    \setlength\tudcd@logoheight{28.2mm}%
+    \setlength\tudcd@secondlogoheight{21.21mm}%
+    \setlength\tudcd@exclusionheight{7.5mm}%
+    \setlength\tudcd@bottommargin{36.2mm}%
+    \setlength\tudcd@qrheight{21.21mm}%
+    \setlength\tudcd@gridcolumnsep{7.07mm}%
+    \iftudcd@usemargin% Mit Marginalie
+      \setlength\tudcd@gridcolumnwidth{\dimexpr((297mm-\tudcd@innermargin-\tudcd@outermargin-\tudcd@gridcolumnsep*4)/5)\relax}%
+    \else% Ohne Marginalie
+      \setlength\tudcd@gridcolumnwidth{\dimexpr((297mm-\tudcd@innermargin-\tudcd@outermargin-\tudcd@gridcolumnsep*3)/4)\relax}%
+    \fi%
     \renewcommand\tudcd@selectedpaperformat{a3paper}%
+  }
+  {2}{
+    \setlength\tudcd@outermargin{21.2mm}%
+    \iftudcd@postermode
+      \setlength\tudcd@innermargin{30mm}%
+    \else
+      \setlength\tudcd@innermargin{21.2mm}%
+    \fi
+    \setlength\tudcd@logoheight{39.88mm}%
+    \setlength\tudcd@secondlogoheight{30mm}%
+    \setlength\tudcd@exclusionheight{10.5mm}%
+    \setlength\tudcd@bottommargin{51.2mm}%
+    \setlength\tudcd@qrheight{30mm}%
+    \setlength\tudcd@gridcolumnsep{10mm}%
+    \iftudcd@usemargin% Mit Marginalie 594mm ist die Seitenbreite nach DIN A1
+      \setlength\tudcd@gridcolumnwidth{\dimexpr((420mm-\tudcd@innermargin-\tudcd@outermargin-\tudcd@gridcolumnsep*4)/5)\relax}%
+    \else% Ohne Marginalie
+      \setlength\tudcd@gridcolumnwidth{\dimexpr((420mm-\tudcd@innermargin-\tudcd@outermargin-\tudcd@gridcolumnsep*3)/4)\relax}%
+    \fi%
+    \renewcommand\tudcd@selectedpaperformat{a2paper}%
+  }
+  {1}{
+    \setlength\tudcd@outermargin{30mm}%
+    \iftudcd@postermode
+      \setlength\tudcd@innermargin{42.42mm}%
+    \else
+      \setlength\tudcd@innermargin{30mm}%
+    \fi
+    \setlength\tudcd@logoheight{56.4mm}%
+    \setlength\tudcd@secondlogoheight{42.43mm}%
+    \setlength\tudcd@exclusionheight{14.85mm}%
+    \setlength\tudcd@bottommargin{72.407mm}%
+    \setlength\tudcd@qrheight{42.43mm}%
+    \setlength\tudcd@gridcolumnsep{14.14mm}%
+    \iftudcd@usemargin% Mit Marginalie 594mm ist die Seitenbreite nach DIN A1
+      \setlength\tudcd@gridcolumnwidth{\dimexpr((594mm-\tudcd@innermargin-\tudcd@outermargin-\tudcd@gridcolumnsep*4)/5)\relax}%
+    \else% Ohne Marginalie
+      \setlength\tudcd@gridcolumnwidth{\dimexpr((594mm-\tudcd@innermargin-\tudcd@outermargin-\tudcd@gridcolumnsep*3)/4)\relax}%
+    \fi%
+    \renewcommand\tudcd@selectedpaperformat{a1paper}%
+  }
+  {0}{
+    \setlength\tudcd@outermargin{42.4mm}%
+    \iftudcd@postermode
+      \setlength\tudcd@innermargin{60mm}%
+    \else
+      \setlength\tudcd@innermargin{42.4mm}%
+    \fi
+    \setlength\tudcd@logoheight{79.76mm}%
+    \setlength\tudcd@secondlogoheight{60mm}%
+    \setlength\tudcd@exclusionheight{21mm}%
+    \setlength\tudcd@bottommargin{102.4mm}%
+    \setlength\tudcd@qrheight{60mm}%
+    \setlength\tudcd@gridcolumnsep{20mm}%
+    \iftudcd@usemargin% Mit Marginalie 841mm ist die Seitenbreite nach DIN A0
+      \setlength\tudcd@gridcolumnwidth{\dimexpr((841mm-\tudcd@innermargin-\tudcd@outermargin-\tudcd@gridcolumnsep*4)/5)\relax}%
+    \else% Ohne Marginalie
+      \setlength\tudcd@gridcolumnwidth{\dimexpr((841mm-\tudcd@innermargin-\tudcd@outermargin-\tudcd@gridcolumnsep*3)/4)\relax}%
+    \fi%
+    \renewcommand\tudcd@selectedpaperformat{a0paper}%
   }
 }{%
 \ClassError{tudcd-area}{%
@@ -281,6 +388,8 @@ Illegal paper format \tudcd@paperselection given!%
   \DeclareOption{a4paper}{\TUDCDoption{paper}{a4paper}}
   \DeclareOption{a3paper}{\TUDCDoption{paper}{a3paper}}
   \DeclareOption{a2paper}{\TUDCDoption{paper}{a2paper}}
+  \DeclareOption{a1paper}{\TUDCDoption{paper}{a1paper}}
+  \DeclareOption{a0paper}{\TUDCDoption{paper}{a0paper}}
 }
 %    \end{macrocode}
 % \end{codedescribe}
