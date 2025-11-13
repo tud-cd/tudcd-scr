@@ -2,7 +2,6 @@
 
 > [!CAUTION]
 > Diese Klassen sind noch in einem Entwicklungsstadium! Es können daher beim Updaten auf neuere Versionen Inkompatibilitäten entstehen!
-> Sollten Sie dennoch diese nutzen und Probleme oder Fehler finden, dann schreiben Sie bitte ein Issue.
 
 ## Wie verwende ich diese Klassen?
 
@@ -13,8 +12,8 @@
    ```
    erscheinen.
 2. Wenn nicht geschehen, setzen der `TEXMFHOME` Variable. Hilfe und weiterführende Links hierzu finden Sie unter
-   * (TeXLive Installationen)[https://tex.stackexchange.com/q/1137]
-   * (MikTeX Installationen)[https://tex.stackexchange.com/a/2066/272825]
+   * [TeXLive Installationen](https://tex.stackexchange.com/q/1137)
+   * [MikTeX Installationen](https://tex.stackexchange.com/a/2066/272825)
    * MacTeX Installationen: Hierzu habe ich keine Informationen gefunden, bei
 3. Erstellen des Verzeichnisses `TEXMFHOME/tex/latex/tudcd`
 4. Kopieren von
@@ -58,13 +57,13 @@ done
 
 ## Featureliste
 
-* [ ] Logodateien
+* [x] Logodateien
 * [ ] Dokumentenklassen
 * * [x] Seitengeometrie
 * * [x] Konfigurierbarkeit der Seitengeometrie
 * * [x] Einstellen der Schriftarten für LaTeX
 * * [ ] Einstellen der Schriftarten für LuaLaTeX/XeLaTeX
-* * [ ] Einstellen der Schriftgrößen
+* * [x] Einstellen der Schriftgrößen
 * * [x] Hinzufügen von Titelseiten und Zitatseiten
 * * [ ] Einstellungen der Schriftmerkmale für Dokumentationsbestandteile
 * * [ ] Konfiguration des Logos
