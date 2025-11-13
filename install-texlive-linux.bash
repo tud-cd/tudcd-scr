@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\n\t' # Strict Internal Field Separator
+# Wechseln in das source Verzeichnis
+cd source
+
+# "Bauen" der Klassen mittels des Docstrip Driver Files
+latex tudcd.ins
+
+# Bestimmen des Nutzer-Texmf Pfades über kpsewhich
+TEXMF=$(kpsewhich -var-value TEXMFHOME)
+
+# Erstellen der Verzeichnisse
+if [[ ! -d "$TEXMF/tex/latex/tudcd" ]]; then
+  mkdir "$TEXMF/tex/latex/tudcd"
+fi
+if [[ ! -d "$TEXMF/tex/latex/tudcd/logo" ]]; then
+  mkdir "$TEXMF/tex/latex/tudcd/logo"
+fi
+
+
+for file in *; do
+  fileextension=${file##*.}
+  filename=${file%.*}
+  #mv "$TEXMF/tex/latex/tudcd"
+  if [[ -f $file && ($fileextension == "cls" || $fileextension == "sty") ]]; then
+    #echo $file
+    mv -f $file "$TEXMF/tex/latex/tudcd/$file"
+  fi
+# Verschieben der Dateien
+done
+
+cd logo
+for file in *; do
+  fileextension=${file##*.}
+  filename=${file%.*}
+  #mv "$TEXMF/tex/latex/tudcd"
+  if [[ -f $file && ($fileextension == "pdf" || $fileextension == "eps") ]]; then
+    #echo $file
+    cp -f $file "$TEXMF/tex/latex/tudcd/logo/$file"
+  fi
+# Verschieben der Dateien
+done
