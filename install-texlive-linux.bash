@@ -11,6 +11,12 @@ latex tudcd.ins
 # Bestimmen des Nutzer-Texmf Pfades über kpsewhich
 TEXMF=$(kpsewhich -var-value TEXMFHOME)
 
+# Check for empty string
+if [ -z "$TEXMF" ]; then
+    echo "ERROR: Enviroment Variable TEXMFHOME not set or kpsewhich not on path, aborting..."
+    exit
+fi
+
 # Erstellen der Verzeichnisse
 if [[ ! -d "$TEXMF/tex/latex/tudcd" ]]; then
   mkdir "$TEXMF/tex/latex/tudcd"
