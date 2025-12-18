@@ -19,10 +19,10 @@ fi
 
 # Erstellen der Verzeichnisse
 if [[ ! -d "$TEXMF/tex/latex/tudcd" ]]; then
-  mkdir "$TEXMF/tex/latex/tudcd"
+  mkdir -p "$TEXMF/tex/latex/tudcd"
 fi
 if [[ ! -d "$TEXMF/tex/latex/tudcd/logo" ]]; then
-  mkdir "$TEXMF/tex/latex/tudcd/logo"
+  mkdir -p "$TEXMF/tex/latex/tudcd/logo"
 fi
 
 
