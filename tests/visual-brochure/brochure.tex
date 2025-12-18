@@ -1,4 +1,4 @@
-\documentclass[useseriffont=false,fontsize=cdfont]{tudcdreprt}
+\documentclass[twoside,useseriffont=false,fontsize=cdfont]{tudcdreprt}
 \usepackage[T1]{fontenc}
 \usepackage[ngerman=ngerman-x-latest]{hyphsubst}
 
@@ -31,25 +31,28 @@
 \usepackage{ragged2e}
 \usepackage{tikz}
 %\usepackage{tudcdfonts}
-\newcommand{\diff}{\mathop{}d\!}
+\newcommand{\diff}{\mathop{}\!\mathrm{d}}
 \usepackage{xfp}
 \NewExpandableDocumentCommand{\getlengthnumber}{O{pt}m}{%
   % #1 (optional, default pt), #2 = length
   \fpeval{(#2)/(1#1)}%
 }
-
+\iffalse
 \AddToHook{shipout/foreground}{
 \begin{tikzpicture}[remember picture,overlay]
     \coordinate (top) at (current page.north west);
     \coordinate (bottom) at (current page.south west);
-    \fill[magenta,opacity=0.4] (top) rectangle +(15mm,-15mm) node[pos=0.5,black] {A \num{15}x \qty{15}{\mm}};
-    \fill[magenta,opacity=0.4] (top) ++(\paperwidth,0mm) rectangle +(-10mm,-15mm) node[pos=0.5,black] {B\qty{10}{\mm}};
-    \fill[magenta,opacity=0.4] (top) ++(15mm,-15mm) rectangle +(\paperwidth-15mm-10mm,-19.5mm) node[pos=0.5,black,font=\Large] {Logobereich H\qty{19}{\mm}};
-    \fill[magenta,opacity=0.2] (top) ++(15mm,-15mm-19.5mm) rectangle +(\paperwidth-15mm-10mm,-19.5mm) node[pos=0.5,black,font=\Large] {Schutzraum H\qty{19}{\mm}};
-
-    \fill[magenta,opacity=0.4] (bottom) ++(15mm,23.767mm) rectangle +(\paperwidth-15mm-10mm,-23.767mm) node[pos=0.5,black,font=\Large] {Freihaltezone H\qty{23}{\mm}};
-  \end{tikzpicture}
+    \fill[magenta,opacity=0.4] (top) rectangle +(15mm,-15mm) node[pos=0.5,black] {B\qty{15}{\mm}};
+    \fill[magenta,opacity=0.4] (top) ++(\paperwidth,0mm) rectangle +(-15mm,-15mm) node[pos=0.5,black] {B\qty{15}{\mm}};
+    \fill[magenta,opacity=0.4] (top) ++(15mm,-15mm) rectangle +(\paperwidth-15mm-15mm,-19.5mm) node[pos=0.5,black,font=\Large] {Logobereich H\qty{19}{\mm}};
+    \fill[magenta,opacity=0.2] (top) ++(15mm,-15mm-19.5mm) rectangle +(\paperwidth-15mm-15mm,-19.5mm) node[pos=0.5,black,font=\Large] {Schutzraum H\qty{19}{\mm}};
+    \fill[magenta,opacity=0.4] (bottom) ++(15mm,23.767mm) rectangle +(\paperwidth-15mm-15mm,-23.767mm) node[pos=0.5,black,font=\Large] {Freihaltezone H\qty{23.767}{\mm}};
+\foreach \p in {0,1,2,3}{
+    \fill[magenta,opacity=0.4] (top) ++(15mm+\p*41.75mm+\p*6mm,-15mm) rectangle +(41.75mm,-\textheight);
 }
+\end{tikzpicture}
+}
+\fi
 
 \title{Eine Schablonen Datei}
 \subtitle{Welche die einzelnen Eigenschaften hoffentlich hat, die sie brauch}
@@ -75,7 +78,7 @@
 Ein \enquote{x} hat die Höhe \getlengthnumber[sp]{1ex}\texttt{sp} es soll aber \getlengthnumber[sp]{1.7mm}\texttt{sp} sein.
 \getlengthnumber[mm]{1ex}
 
-Die Einstellungsgenauigkeit von \TeX beträgt \getlengthnumber[mm]{1sp}\unit{\mm}.
+Die Einstellungsgenauigkeit von \TeX{} beträgt \getlengthnumber[mm]{1sp}\unit{\mm}.
 
 \LaTeX\, ist eine entstandene Makrosammlung für das \textbf{Textsatzsystem} \TeX\,, dass auch typographischen Laien ermöglicht einheitliche und typographisch herausfordernde Dokumente zu \textit{setzen}.
 Dabei ermöglicht die strikte Trennung von Inhalt und äußerer Form den komfortablen Einbau von Automatisierungen, wie zum Beispiel das Erstellen des Inhaltsverzeichnisses, Tabellenverzeichnisses sowie des Abbildungsverzeichnisses.

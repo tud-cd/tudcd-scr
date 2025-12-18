@@ -256,8 +256,8 @@
 %    \begin{macrocode}
   \DeclareLayer[
     align=tl,
-    area={\tudcd@innermargin-2pt}{\tudcd@innermargin-0.5pt}{\textwidth}{2\tudcd@logoheight},
-    contents={\noindent\tudcd@typesetlogo{0.928571429\tudcd@logoheight}},
+    area={\tudcd@innermargin-2.3pt}{\tudcd@innermargin-0.5pt}{\textwidth}{2\tudcd@logoheight},
+    contents={\noindent\tudcd@typesetlogo{0.946\tudcd@logoheight}},
     foreground
   ]{tudcdpage.logo}
 %    \end{macrocode}
@@ -286,7 +286,7 @@
   \DeclareLayer[
     align=bl,
     area={\tudcd@innermargin+3\tudcd@gridcolumnsep+3\tudcd@gridcolumnwidth}{\paperheight-\tudcd@innermargin}{\tudcd@gridcolumnwidth}{\tudcd@secondlogoheight},
-    contents={\hfill\fontsize{7pt}{9pt}\selectfont\color{Brilliantblau} \url{https://tu-dresden.de}\hfill\raisebox{0.25\layerheight}{\qrcode[height=0.6667\layerheight]{https://tu-dresden.de}}},
+    contents={\hfill\fontsize{7bp}{9bp}\selectfont\color{Brilliantblau} \url{https://tu-dresden.de}\hfill\raisebox{0.25\layerheight}{\qrcode[height=0.6667\layerheight]{https://tu-dresden.de}}},
     foreground
   ]{tudcdpage.qrcode}
 %    \end{macrocode}
@@ -318,7 +318,7 @@
   tudcdpage.logo,
   tudcdpage.zweitlogo.oben,
   tudcdpage.zweitlogo.unten,
-  tudcdpage.qrcode
+%  tudcdpage.qrcode
 } % Titelseiten
 \DeclarePageStyleByLayers{tudcdtitleheadpage}{
   tudcdpage.logo,
@@ -406,7 +406,7 @@
   \newgeometry{%
     inner=\tudcd@innermargin,%
     outer=\tudcd@outermargin,%
-    top=\tudcd@innermargin,% Oberer Abstand + Schutzraum
+    top=\tudcd@innermargin,%
     bottom=\tudcd@bottommargin%
   }%
   \setlength{\tudcd@gridcolumnwidth}{\tudcd@getgridcolumnwidth{4}}%
@@ -418,7 +418,7 @@
   \vfill%
   \vspace*{2\tudcd@secondlogoheight}%
   %\noindent\rule{\textwidth}{2\tudcd@secondlogoheight}%
-  \restoregeometry
+  \restoregeometry%
 \global\let\tudcd@pagecolor\tudcd@oldpagecolor%
   } % zurücksetzen auf die alte Geometrie
 %    \end{macrocode}
