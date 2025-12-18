@@ -131,45 +131,45 @@
     {blue}{%
   \iftudcd@logogerman
     \iftudcd@colormodelrgb%
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_blau_de}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_RGB_horizontal_blau_de}}
     \else % colormodelrgb
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_blau_de}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_CMYK_horizontal_blau_de}}
     \fi % colormodelrgb
   \else % logogerman
     \iftudcd@colormodelrgb%
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_blau_en}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_RGB_horizontal_blau_en}}
     \else % colormodelrgb
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_blau_en}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_CMYK_horizontal_blau_en}}
     \fi % colormodelrgb
   \fi % logogerman
     }%
     {white}{%
 \iftudcd@logogerman
     \iftudcd@colormodelrgb%
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_weiss_de}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_RGB_horizontal_weiss_de}}
     \else % colormodelrgb
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_weiss_de}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_CMYK_horizontal_weiss_de}}
     \fi % colormodelrgb
   \else % logogerman
     \iftudcd@colormodelrgb%
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_weiss_en}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_RGB_horizontal_weiss_en}}
     \else % colormodelrgb
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_weiss_en}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_CMYK_horizontal_weiss_en}}
     \fi % colormodelrgb
   \fi % logogerman
     }%
     {black}{%
 \iftudcd@logogerman
     \iftudcd@colormodelrgb%
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_schwarz_de}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_RGB_horizontal_schwarz_de}}
     \else % colormodelrgb
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_schwarz_de}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_CMYK_horizontal_schwarz_de}}
     \fi % colormodelrgb
   \else % logogerman
     \iftudcd@colormodelrgb%
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_RGB_horizontal_schwarz_en}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_RGB_horizontal_schwarz_en}}
     \else % colormodelrgb
-\resizebox*{!}{#1}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_schwarz_en}}
+\resizebox*{!}{#1}{\noindent\includegraphics{logo/TUD-Logo_CMYK_horizontal_schwarz_en}}
     \fi % colormodelrgb
   \fi % logogerman
     }%
@@ -256,8 +256,8 @@
 %    \begin{macrocode}
   \DeclareLayer[
     align=tl,
-    area={\tudcd@innermargin}{\tudcd@innermargin}{\textwidth}{2\tudcd@logoheight},
-    contents={\tudcd@typesetlogo{\tudcd@logoheight}},
+    area={\tudcd@innermargin-2pt}{\tudcd@innermargin-0.5pt}{\textwidth}{2\tudcd@logoheight},
+    contents={\noindent\tudcd@typesetlogo{0.928571429\tudcd@logoheight}},
     foreground
   ]{tudcdpage.logo}
 %    \end{macrocode}
@@ -402,6 +402,7 @@
   \IfValueT{#1}{
     \tudcd@set@pagecolor{#1}%
   }%
+  \setlength\tudcd@innermargin{15mm}
   \newgeometry{%
     inner=\tudcd@innermargin,%
     outer=\tudcd@outermargin,%
