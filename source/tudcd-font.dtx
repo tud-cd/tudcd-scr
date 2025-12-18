@@ -194,7 +194,7 @@
       \AddToHook{@tudcd/afterBaseClassLoaded}{
       \let\normalsize\@undefined
       \DeclareRobustCommand\normalsize{
-        \@setfontsize\normalsize{9pt}{12pt}%
+        \@setfontsize\normalsize{9bp}{12bp}%
         %\abovedisplayskip 9pt plus 2pt minus 5pt%
         %\abovedisplayshortskip 9pt plus 2pt minus 2pt%
         %\belowdisplayshortskip 9pt plus 3.5pt minus 3pt%
@@ -203,7 +203,7 @@
       }%
       \let\small\@undefined
       \DeclareRobustCommand\small{
-        \@setfontsize\small{8pt}{10pt}%
+        \@setfontsize\small{8bp}{10bp}%
         %\abovedisplayskip 9pt plus 2pt minus 5pt%
         %\abovedisplayshortskip 9pt plus 2pt minus 2pt%
         %\belowdisplayshortskip 9pt plus 3.5pt minus 3pt%
@@ -215,7 +215,7 @@
       }
       \let\footnotesize\@undefined
       \DeclareRobustCommand\footnotesize{%
-        \@setfontsize\footnotesize{7pt}{9pt}%
+        \@setfontsize\footnotesize{7bp}{9bp}%
         %\abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
         %\abovedisplayshortskip \z@ \@plus\p@
         %\belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
@@ -231,21 +231,21 @@
       %    \itemsep4\p@ \@plus2\p@ \@minus\p@}
       %
       \let\scriptsize\@undefined
-      \DeclareRobustCommand\scriptsize{\@setfontsize\scriptsize{6pt}{7pt}}
+      \DeclareRobustCommand\scriptsize{\@setfontsize\scriptsize{6bp}{7bp}}
       \let\tiny\@undefined
-      \DeclareRobustCommand\tiny{\@setfontsize\tiny {5pt} {6pt}}
+      \DeclareRobustCommand\tiny{\@setfontsize\tiny {5bp} {6bp}}
       \let\large\@undefined
-      \DeclareRobustCommand\large{\@setfontsize\large {11pt}{15pt}}
+      \DeclareRobustCommand\large{\@setfontsize\large {11bp}{15bp}}
       \let\Large\@undefined
-      \DeclareRobustCommand\Large{\@setfontsize\Large {12pt}{15pt}}
+      \DeclareRobustCommand\Large{\@setfontsize\Large {12bp}{15bp}}
       \let\LARGE\@undefined
-      \DeclareRobustCommand\LARGE{\@setfontsize\LARGE {15pt}{18pt}}
+      \DeclareRobustCommand\LARGE{\@setfontsize\LARGE {15bp}{18bp}}
       \let\huge\@undefined
-      \DeclareRobustCommand\huge{\@setfontsize\huge {18pt}{22pt}}
+      \DeclareRobustCommand\huge{\@setfontsize\huge {18bp}{22bp}}
       \let\Huge\@undefined
-      \DeclareRobustCommand\Huge{\@setfontsize\Huge {22pt}{24pt}}
+      \DeclareRobustCommand\Huge{\@setfontsize\Huge {22bp}{24bp}}
     }
-    \PassOptionsToClass{fontsize=9pt}{\tudcd@baseclass}%
+    \PassOptionsToClass{fontsize=9bp}{\tudcd@baseclass}%
     }% cdfont
   }{
     \PassOptionsToClass{fontsize=\tudcd@font@fontsizesetting}{\tudcd@baseclass}%
@@ -254,9 +254,9 @@
   \typeout{Processed cdfont fontsize setting}
 
   \let\SubHIIgroesse\@undefined
-  \DeclareRobustCommand\SubHIIgroesse{\@setfontsize\SubHIIgroesse {11pt}{12pt}}
+  \DeclareRobustCommand\SubHIIgroesse{\@setfontsize\SubHIIgroesse {11bp}{12bp}}
   \let\ZitatGrossgroesse\@undefined
-  \DeclareRobustCommand\ZitatGrossgroesse{\@setfontsize\ZitatGrossgroesse {57pt}{60pt}}
+  \DeclareRobustCommand\ZitatGrossgroesse{\@setfontsize\ZitatGrossgroesse {57bp}{60bp}}
 }
 %    \end{macrocode}
 %
