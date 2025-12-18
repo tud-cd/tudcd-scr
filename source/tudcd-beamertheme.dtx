@@ -214,7 +214,7 @@
   \tudcd@beamerouter@exclusionzone[l,b]%
   \tudcd@beamerouter@smalllogo[l,b]%
   (\tudcd@beamerouter@leftrightmargin,\tudcd@beamerouter@topbottommargin)%
-  \SetHorizontalCoffin\tudcd@beamerouter@smallfootline{\insertshorttitle~\textbullet~\insertshortauthor~\textbullet~\pagename~\insertpagenumber}%
+  \SetHorizontalCoffin\tudcd@beamerouter@smallfootline{\usebeamerfont{footline}\insertshorttitle~\textbullet~\insertshortauthor~\textbullet~\pagename~\insertpagenumber}%
   \JoinCoffins%
   \tudcd@beamerouter@exclusionzone[l,b]%
   \tudcd@beamerouter@smallfootline[l,H]% Zur Grundlinie des Textes, nicht zur unteren Kante des Sargs
@@ -227,8 +227,27 @@
   \TypesetCoffin\tudcd@beamerouter@exclusionzone%
   \vskip0pt%
 }
+%    \end{macrocode}
+%
+% Bei \enquote{einfachen} Titelfolien ohne Shape und ohne Bild ist die Fußzeile jedoch etwas anders:
+% Anstelle des kleinen Logos tritt das Datum und der Ort in einer anderen Schriftgröße.
+%
+%    \begin{macrocode}
 
-\setbeamertemplate{footline}[tudcd]
+\defbeamertemplate*{footline}{tudcd/simple title}{
+\SetVerticalCoffin\tudcd@beamerouter@exclusionzone{\paperwidth}{%
+  \vspace{\dimexpr(\tudcd@beamerouter@topbottommargin+\tudcd@beamerouter@secondlogoheight+\tudcd@beamerouter@exlusionheight)}
+  }%
+  \SetHorizontalCoffin\tudcd@beamerouter@smalllogo{\usebeamerfont{footline/simple title}\insertdate~\textbullet~Ort}%
+  \JoinCoffins%
+  \tudcd@beamerouter@exclusionzone[l,b]%
+  \tudcd@beamerouter@smalllogo[l,H]%
+  (\tudcd@beamerouter@leftrightmargin,\tudcd@beamerouter@topbottommargin)%
+  \TypesetCoffin\tudcd@beamerouter@exclusionzone%
+  \vskip0pt%
+}
+
+\setbeamertemplate{footline}[tudcd/simple title]
 \setbeamertemplate{headline}[tudcd]
 
 
@@ -277,6 +296,10 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamercolorthemetudcd}[2025/08/30 v0.1 Beamer Color theme for the Corporate Design of the TU Dresden]
 
+\ProcessOptionsBeamer%
+
+\RequirePackage{tudcdcolor}
+
 %</beamercolortheme>
 %    \end{macrocode}
 %
@@ -304,6 +327,9 @@
 % Elements of Frame
 \setbeamerfont{frametitle}{size*={15}{17},shape=\upshape}
 \setbeamerfont{framesubtitle}{size*={15}{17}}
+%
+\setbeamerfont{footline}{size*={5.5}{7},shape=\upshape}
+\setbeamerfont{footline/simple title}{size*={9bp}{10bp},shape=\upshape} % 9pt != 9pt ?
 %
 % Blocks?
 \setbeamerfont{block}{size*={9}{11}}
