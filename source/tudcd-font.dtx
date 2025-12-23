@@ -144,6 +144,21 @@
 %<class>}%
 %    \end{macrocode}
 %
+% \begin{codedescribe}[macro,new=0.5.4]{\tudcd@font@pt}
+% \begin{codesyntax}
+%    \tsmacro{\tudcd@font@pt}{}
+% \end{codesyntax}
+% Die Größenangabe der Schriftart in den Vorlagen in \enquote{pt} haben Korrespondieren zu keiner von
+% \LaTeX bereitgestellten Größen.
+% Der hier angegebene Wert wurde anhand der Größe des kleinen \enquote{x} in der Vorlage vom CD-Team ermittelt.
+% Dabei entspricht in der Vorlage des CD-Teams die Größe eines kleinen \enquote{x}s \qty{1.7}{\mm}.
+% Der Wert kann nicht genauer als $\qty{73014}{\texsp}$ sein, da \qty{1}{\texsp} die kleinste Einheit von \TeX ist.
+%    \begin{macrocode}
+\newlength{\tudcd@font@pt}%
+\setlength{\tudcd@font@pt}{73014sp}%
+%    \end{macrocode}
+% \end{codedescribe}
+%
 % \subsection{Klassenoptionen für die Wahl der Schrift}
 %
 % \iffalse
@@ -174,20 +189,6 @@
 % \end{codedescribe}
 %
 %
-% \begin{codedescribe}[macro,new=0.5.4]{\tudcd@font@pt}
-% \begin{codesyntax}
-%    \tsmacro{\tudcd@font@pt}{}
-% \end{codesyntax}
-% Die Größenangabe der Schriftart in den Vorlagen in \enquote{pt} haben Korrespondieren zu keiner von
-% \LaTeX bereitgestellten Größen.
-% Der hier angegebene Wert wurde anhand der Größe des kleinen \enquote{x} in der Vorlage vom CD-Team ermittelt.
-% Dabei entspricht in der Vorlage des CD-Teams die Größe eines kleinen \enquote{x}s \qty{1.7}{\mm}.
-% Der Wert kann nicht genauer als $\qty{73014}{\texsp}$ sein, da \qty{1}{\texsp} die kleinste Einheit von \TeX ist.
-%    \begin{macrocode}
-\newlength{\tudcd@font@pt}%
-\setlength{\tudcd@font@pt}{73014sp}%
-%    \end{macrocode}
-% \end{codedescribe}
 %
 % \begin{codedescribe}[option,new=0.5.2,update=0.5.4]{fontsize}
 % \begin{codesyntax}

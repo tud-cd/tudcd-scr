@@ -178,7 +178,6 @@
 \NewCoffin\tudcd@beamerouter@secondlogo
 %    \end{macrocode}
 %
-%
 %    \begin{macrocode}
 \mode<presentation>
 
@@ -189,6 +188,9 @@
 % Aus Gründen die zum Zeitpunkt des Schreibens unklar sind, wird immer 1pt zuviel angegeben. Daher wird dieser Punkt hierbei bereits abgezogen.
 %    \begin{macrocode}
 \defbeamertemplate*{headline}{tudcd}{\vspace{\tudcd@beamerouter@topbottommargin-1pt}}
+
+
+\defbeamertemplate*{headline}{tudcd/simple title}{\vspace{\tudcd@beamerouter@topbottommargin-1pt}}
 %    \end{macrocode}
 %
 % Die Beamertemplate \dcode{frametitle} setzt den Folientitel und Untertitel. Da das Corporate Design keinen Folienuntertitel vorsieht
@@ -250,7 +252,6 @@
 \setbeamertemplate{footline}[tudcd/simple title]
 \setbeamertemplate{headline}[tudcd]
 
-
 % Die Navigation Sidebar ist standardmäßig ausgeschaltet
 \defbeamertemplate*{sidebar left}{tudcd}
 {} % du auch?
@@ -268,9 +269,35 @@
 \setbeamertemplate{sidebar right}[tudcd]
 \setbeamertemplate{sidebar canvas left}[tudcd]
 \setbeamertemplate{sidebar canvas right}[tudcd]
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
 
+\defbeamertemplate*{title page}{tudcd}{
+\resizebox*{!}{8.75mm}{\includegraphics{logo/TUD-Logo_CMYK_horizontal_blau_de.pdf}}%
+%
+\vfill
+%
+\begin{beamercolorbox}{title page/fontcolor}
+\usebeamerfont{author/simple title}\insertauthor
+\end{beamercolorbox}
+%
+\vfill
+%
+\begin{beamercolorbox}{title page/fontcolor}
+\usebeamerfont{title}\inserttitle%
+\end{beamercolorbox}
+%
+\bigskip
+%
+\begin{beamercolorbox}{title page/fontcolor}
+\usebeamerfont{subtitle}\insertsubtitle%
+\end{beamercolorbox}
+%
+}
 
-
+% part page
 \mode<all>
 %</beameroutertheme>
 %    \end{macrocode}
@@ -316,24 +343,25 @@
 \RequirePackage{tudcdfonts}
 
 % Global Definitions
-\setbeamerfont{normal text}{size*={9}{11},shape=\upshape}
-\setbeamerfont{structure}{size*={9}{11}}
-\setbeamerfont{alerted text}{size*={9}{11}}
-\setbeamerfont{tiny structure}{size*={9}{11}}
+\setbeamerfont{normal text}{size*={9\tudcd@font@pt}{11\tudcd@font@pt},shape=\upshape}
+\setbeamerfont{structure}{size*={9\tudcd@font@pt}{11\tudcd@font@pt}}
+\setbeamerfont{alerted text}{size*={9\tudcd@font@pt}{11\tudcd@font@pt}}
+\setbeamerfont{tiny structure}{size*={9\tudcd@font@pt}{11\tudcd@font@pt}}
 % Titleframe
-\setbeamerfont{title}{size*={23}{19},series=\bfseries}
-\setbeamerfont{subtitle}{size*={9}{11},shape=\upshape}
+\setbeamerfont{title}{size*={19\tudcd@font@pt}{23\tudcd@font@pt},series=\bfseries}
+\setbeamerfont{subtitle}{size*={9\tudcd@font@pt}{11\tudcd@font@pt},shape=\upshape}
 %
+\setbeamerfont{author/simple title}{size*={9\tudcd@font@pt}{11\tudcd@font@pt},shape=\upshape}
 % Elements of Frame
-\setbeamerfont{frametitle}{size*={15}{17},shape=\upshape}
-\setbeamerfont{framesubtitle}{size*={15}{17}}
+\setbeamerfont{frametitle}{size*={15\tudcd@font@pt}{17\tudcd@font@pt},shape=\upshape}
+\setbeamerfont{framesubtitle}{size*={15\tudcd@font@pt}{17\tudcd@font@pt}}
 %
-\setbeamerfont{footline}{size*={5.5}{7},shape=\upshape}
-\setbeamerfont{footline/simple title}{size*={9bp}{10bp},shape=\upshape} % 9pt != 9pt ?
+\setbeamerfont{footline}{size*={5.5\tudcd@font@pt}{7\tudcd@font@pt},shape=\upshape}
+\setbeamerfont{footline/simple title}{size*={8\tudcd@font@pt}{9\tudcd@font@pt},shape=\upshape} % 9pt != 9pt ?
 %
 % Blocks?
-\setbeamerfont{block}{size*={9}{11}}
-\setbeamerfont{block title}{size*={9}{11}}
+\setbeamerfont{block}{size*={9\tudcd@font@pt}{11\tudcd@font@pt}}
+\setbeamerfont{block title}{size*={9\tudcd@font@pt}{11\tudcd@font@pt}}
 \iffalse%
 \setbeamerfont{author}{}
 \setbeamerfont{institute}{}
