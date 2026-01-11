@@ -234,7 +234,7 @@
     %\vspace*{\tudcd@beamerouter@logoheight}%
     \else% Untertitel ohne Titel
     \vspace*{\dimexpr\tudcd@beamerouter@logoheight/3}%
-    \usebeamerfont{framesubtitle}\insertframesubtitle%
+    \usebeamercolor{framesubtitle}\usebeamerfont{framesubtitle}\textcolor{fg}{\insertframesubtitle}%
     \fi%
   \else% Titel ist nichtleer
     \ifx\insertframesubtitle\empty%
@@ -243,8 +243,8 @@
     }%
     \else%
     \parbox[t]{\textwidth}{%
-    \usebeamerfont{frametitle}\insertframetitle\\%
-    \usebeamerfont{framesubtitle}\insertframesubtitle\par%
+    \usebeamercolor{frametitle}\usebeamerfont{frametitle}\textcolor{fg}{\insertframetitle}\\%
+    \usebeamercolor{framesubtitle}\usebeamerfont{framesubtitle}\textcolor{fg}{\insertframesubtitle}%
     }%
     \fi%
   \fi%
@@ -266,7 +266,7 @@
   \tudcd@beamerouter@exclusionzone[l,b]%
   \tudcd@beamerouter@smalllogo[l,b]%
   (\tudcd@beamerouter@leftrightmargin,\tudcd@beamerouter@topbottommargin)%
-  \SetHorizontalCoffin\tudcd@beamerouter@smallfootline{\usebeamerfont{footline}\insertshorttitle~\textbullet~\insertshortauthor~\textbullet~\pagename~\insertpagenumber}%
+  \SetHorizontalCoffin\tudcd@beamerouter@smallfootline{\usebeamercolor[fg]{footline}\usebeamerfont{footline}\insertshorttitle~\textbullet~\insertshortauthor~\textbullet~\pagename~\insertpagenumber}%
   \JoinCoffins%
   \tudcd@beamerouter@exclusionzone[l,b]%
   \tudcd@beamerouter@smallfootline[l,H]% Zur Grundlinie des Textes, nicht zur unteren Kante des Sargs
@@ -290,7 +290,7 @@
 \SetVerticalCoffin\tudcd@beamerouter@exclusionzone{\paperwidth}{%
   \vspace{\dimexpr(\tudcd@beamerouter@topbottommargin+\tudcd@beamerouter@secondlogoheight+\tudcd@beamerouter@exlusionheight)}
   }%
-  \SetHorizontalCoffin\tudcd@beamerouter@smalllogo{\usebeamerfont{footline/simple title}\insertdate~\textbullet~\insertlocation}%
+  \SetHorizontalCoffin\tudcd@beamerouter@smalllogo{\usebeamercolor[fg]{title page/fontcolor}\usebeamerfont{footline/simple title}\insertdate~\textbullet~\insertlocation}%
   \JoinCoffins%
   \tudcd@beamerouter@exclusionzone[l,b]%
   \tudcd@beamerouter@smalllogo[l,H]%
@@ -341,7 +341,7 @@
 \vspace{\baselineskip}
 %
 \begin{beamercolorbox}{title page/fontcolor}
-\usebeamerfont{title}\inserttitle%
+\usebeamerfont{title}\inserttitle\par%
 \end{beamercolorbox}
 %
 \vspace{1\baselineskip}
@@ -414,6 +414,11 @@
 
 \RequirePackage{tudcdcolor}
 
+\setbeamercolor{title page/fontcolor}{fg=Brilliantblau}
+\setbeamercolor{footline}{fg=Brilliantblau}
+\setbeamercolor{frametitle}{fg=Schwarz}
+\setbeamercolor{framesubtitle}{fg=Grau80}
+
 %</beamercolortheme>
 %    \end{macrocode}
 %
@@ -435,7 +440,7 @@
 \setbeamerfont{alerted text}{size*={9\tudcd@font@pt}{11\tudcd@font@pt}}
 \setbeamerfont{tiny structure}{size*={9\tudcd@font@pt}{11\tudcd@font@pt}}
 % Titleframe
-\setbeamerfont{title}{size*={19\tudcd@font@pt}{23\tudcd@font@pt},series=\bfseries}
+\setbeamerfont{title}{size*={19\tudcd@font@pt}{21\tudcd@font@pt},series=\bfseries}
 \setbeamerfont{subtitle}{size*={9\tudcd@font@pt}{11\tudcd@font@pt},shape=\upshape}
 %
 \setbeamerfont{author/simple title}{size*={9\tudcd@font@pt}{11\tudcd@font@pt},shape=\upshape}
