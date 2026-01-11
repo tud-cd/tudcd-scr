@@ -121,7 +121,7 @@
 %
 %
 %    \begin{macrocode}
-\newcommand{\defineparameter}[2][0]{%
+\newcommand{\defineparameter}[2][]{%
   \expandafter\def\csname insert#2\endcsname{#1}%
   \expandafter\def\csname insertshort#2\endcsname{#1}%
   \expandafter\NewDocumentCommand\csname #2\endcsname{O{##2} m}{%
