@@ -112,12 +112,14 @@
 \renewcommand{\bfdefault}{sb} % Semibold für Fettschrift
 %    \end{macrocode}
 % \begin{codedescribe}[macro,new=0.5.2]{
-%  \textcdul,\textcdel,\textcdl,\textcdls,\textcdm,\textcdsb,\textcdb,\textcdeb,\textcdub
+%  \textcdul,\textcdel,\textcdl,\textcdsl,\textcdm,\textcdsb,\textcdb,\textcdeb,\textcdub
 % }
 % \begin{codesyntax}
 % \tsmacro{\textcdsl}{Text}
 % \end{codesyntax}
 % Hier werden Schriftschalter und Schriftauswahlbefehle für die verbliebenen Schriftschnitte bereitgestellt.
+% Abweichend von den Standardeinstellungen \dcode{m} für den Medium-Schriftschnitt, muss bei der \dpkg{noto} Schriftart
+% \dcode{medium} anstelle \dcode{m} angegeben werden.
 %    \begin{macrocode}
 \DeclareRobustCommand{\cdulseries}{\fontseries{ul}\selectfont}
 \DeclareTextFontCommand{\textcdul}{\cdulseries}
@@ -126,8 +128,8 @@
 \DeclareRobustCommand{\cdlseries}{\fontseries{l}\selectfont}
 \DeclareTextFontCommand{\textcdl}{\cdlseries}
 \DeclareRobustCommand{\cdslseries}{\fontseries{sl}\selectfont}
-\DeclareTextFontCommand{\textcdls}{\cdslseries}
-\DeclareRobustCommand{\cdmseries}{\fontseries{m}\selectfont}
+\DeclareTextFontCommand{\textcdsl}{\cdslseries}
+\DeclareRobustCommand{\cdmseries}{\fontseries{medium}\selectfont}
 \DeclareTextFontCommand{\textcdm}{\cdmseries}
 \DeclareRobustCommand{\cdsbseries}{\fontseries{sb}\selectfont}
 \DeclareTextFontCommand{\textcdsb}{\cdsbseries}
