@@ -36,15 +36,18 @@ for file in *; do
   #mv "$TEXMF/tex/latex/tudcd"
   if [[ -f $file && ($fileextension == "cls" || $fileextension == "sty") && $filenameprefix != "beamer" ]]; then
     #echo $file
+    echo "Moving $filename.$fileextension to $TEXMF/tex/latex/tudcd/$file"
     mv -f $file "$TEXMF/tex/latex/tudcd/$file"
   fi
   if [[ -f $file && ($fileextension == "cls" || $fileextension == "sty") && $filenameprefix == "beamer" ]]; then
     #echo $file
+    echo "Moving $filename.$fileextension to $TEXMF/tex/latex/beamerthemetudcd/$file"
     mv -f $file "$TEXMF/tex/latex/beamerthemetudcd/$file"
   fi
 # Verschieben der Dateien
 done
 
+echo "Copying Logo Files"
 cd logo
 for file in *; do
   fileextension=${file##*.}
