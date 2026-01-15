@@ -89,6 +89,10 @@
 \ProvidesPackage{beamerthemetudcd}[2025/08/30]
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+\newif\iftudcd@beamer@logoenglish
+\DeclareOptionBeamer{englishlogo}{\tudcd@beamer@logoenglishtrue} %Wahrscheinlich wird diese Option später deprecated
+%    \end{macrocode}
 %
 %    \begin{macrocode}
 \ProcessOptionsBeamer%
@@ -238,8 +242,11 @@
 % welche das Logo im Kopf ausgibt.
 %
 %    \begin{macrocode}
-\providecommand\tudcd@beamerouter@logofile{logo/TUD-Logo_RGB_horizontal_blau_de}
-
+\iftudcd@beamer@logoenglish%
+\providecommand\tudcd@beamerouter@logofile{logo/TUD-Logo_RGB_horizontal_blau_en}%
+\else%
+\providecommand\tudcd@beamerouter@logofile{logo/TUD-Logo_RGB_horizontal_blau_de}%
+\fi%
 \defbeamertemplate*{headline}{tudcd/simple title}{
 \vspace*{\tudcd@beamerouter@topbottommargin}
 %
@@ -358,17 +365,26 @@
 }[action]{
   \setbeamercolor{background canvas/title page}{bg=}
   \setbeamercolor{title page/fontcolor}{fg=Brilliantblau}
-  \renewcommand\tudcd@beamerouter@logofile{logo/TUD-Logo_RGB_horizontal_blau_de}
+
+\iftudcd@beamer@logoenglish%
+\renewcommand\tudcd@beamerouter@logofile{logo/TUD-Logo_RGB_horizontal_blau_en}%
+\else%
+\renewcommand\tudcd@beamerouter@logofile{logo/TUD-Logo_RGB_horizontal_blau_de}%
+\fi%
 }
 \defbeamertemplate{title page/colormode}{blue}{
 }[action]{
   \setbeamercolor{background canvas/title page}{bg=Brilliantblau}
   \setbeamercolor{title page/fontcolor}{fg=Weiss}
-  \renewcommand\tudcd@beamerouter@logofile{logo/TUD-Logo_RGB_horizontal_weiss_de}
+\iftudcd@beamer@logoenglish%
+\renewcommand\tudcd@beamerouter@logofile{logo/TUD-Logo_RGB_horizontal_weiss_en}%
+\else%
+  \renewcommand\tudcd@beamerouter@logofile{logo/TUD-Logo_RGB_horizontal_weiss_de}%
+\fi
 }
 
 \defbeamertemplate*{title page/authorline}{tudcd}{%
-\tudcd@beamer@delimitlist[~|~]{\insertauthor,\insertgroup,\insertcontext}%
+\tudcd@beamer@delimitlist[~|~]{\insertauthor,\insertgroup,\insertinstitute,\insertcontext}%
 }
 
 \defbeamertemplate*{title page}{tudcd/simple title}{

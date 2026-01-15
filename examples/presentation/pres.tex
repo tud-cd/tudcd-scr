@@ -1,6 +1,6 @@
 \documentclass{beamer}
 
-\usetheme{tudcd}
+\usetheme[englishlogo]{tudcd}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -41,9 +41,9 @@
 \title[Kurztitel der Präsentation]{Titel -- Inhalt des Vortrags, \\
 Noto Sans Semibold 19 pt, \\
 Zeilenanstand 21 pt}
-\author[Vortragende]{Yoshi Diepelt, Paul Erdős}
-%\struktureinheit{}
-\group[Short Group]{Group}
+\author[Vortragende]{Yoshi Diepelt}
+\institute{Institut für Numerik | Institut für Mechanik und Flächentragwerke}
+%\group[Short Group]{Group}
 \context[Short Context]{Context}
 \location[Short Location]{Tokyo}
 \date{\today}
@@ -168,16 +168,17 @@ Zeilenanstand 21 pt}
 \end{frame}
 
 \begin{frame}
-\only<1>{\textcdul{Ich bin ein Test Ultra Light}}%
-\only<2>{\textcdel{Ich bin ein Test Extra Light}}%
-\only<3>{\textcdl{Ich bin ein Test Light}}%
-\only<4>{\textcdsl{Ich bin ein Test Semi Light}}%
-\only<5>{\fontseries{medium}\selectfont Ich bin ein Test Medium voll\par}
-\only<6>{\textcdm{Ich bin ein Test Medium}}%
-\only<7>{\textcdsb{Ich bin ein Test Semi bold}}%
-\only<8>{\textcdb{Ich bin ein Test Bold}}%
-\only<9>{\textcdeb{Ich bin ein Test Extra Bold}}%
-\only<10>{\textcdub{Ich bin ein Test Ultra Bold}}%
+\begin{itemize}
+  \item{\textcdul{Ich bin ein Test Ultra Light}}%
+  \item{\textcdel{Ich bin ein Test Extra Light}}%
+  \item{\textcdl{Ich bin ein Test Light}}%
+  \item{\textcdsl{Ich bin ein Test Semi Light}}%
+  \item{\textcdm{Ich bin ein Test Medium}}%
+  \item{\textcdsb{Ich bin ein Test Semi bold}}%
+  \item{\textcdb{Ich bin ein Test Bold}}%
+  \item{\textcdeb{Ich bin ein Test Extra Bold}}%
+  \item{\textcdub{Ich bin ein Test Ultra Bold}}%
+\end{itemize}
 \end{frame}
 
 \begin{frame}
