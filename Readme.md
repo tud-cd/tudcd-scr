@@ -5,6 +5,8 @@
 
 ## Wie verwende ich diese Klassen?
 
+### Lokale Installation
+
 1. Wenden Sie im Verzeichnis `source` den Befehl `latex tudcd.ins` an.
    Auf der Konsole sollte unter anderem die Zeile
    ```
@@ -31,6 +33,11 @@
 
 Für Linux Nutzer gibt es das Installationsskript `./install-texlive-linux.bash`, welches nach Sichtung die
 eben beschriebenen Schritte übernimmt.
+
+### Nutzung in Overleaf
+
+Um eine Nutzung der aktuellsten Version auf Overleaf/ShareLaTeX zu ermöglichen, stehen herunterladbare `.zip`
+im Release Bereich bereit.
 
 ## Beispieldateien
 
