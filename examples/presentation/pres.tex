@@ -13,39 +13,15 @@
 \usepackage{pgfpages}
 \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
 \fi
-\usepackage{tikz}
-\iffalse
-\AddToHook{shipout/foreground}{
-\begin{tikzpicture}[remember picture,overlay]
-    \coordinate (top) at (current page.north west);
-    \coordinate (bottom) at (current page.south west);
-    \fill[magenta,opacity=0.2] (top) -- +(\paperwidth,0mm) -- +(\paperwidth,-5.2mm) -- +(0,-5.2mm);
-    \fill[magenta,opacity=0.2] (top) ++(8mm,-5.2mm) rectangle +(\paperwidth-16mm,-8.75mm);
-    \fill[magenta,opacity=0.4] (top) ++(8mm,-5.2mm-8.75mm) rectangle +(\paperwidth-16mm,-8.75mm);
-    \fill[magenta,opacity=0.2] (top) -- +(\paperwidth,0mm) -- +(\paperwidth,-5.2mm) -- +(0,-5.2mm);
-
-    \fill[magenta,opacity=0.2] (bottom) -- +(\paperwidth,0mm) -- +(\paperwidth,5.2mm) -- +(0,5.2mm);
-    \fill[magenta,opacity=0.5] (bottom) ++(8mm,5.2mm) rectangle +(6*9.8mm+5*2.4mm,2.1mm);% -- +(6*9.8mm+5*2.4mm,2.1mm) -- +(0,2.1mm);
-    \fill[magenta,opacity=0.5] (bottom) ++(8mm+6*9.8mm+6*2.4mm,5.2mm) rectangle +(6*9.8mm+5*2.4mm,5.2mm);
-    \fill[magenta,opacity=0.5] (bottom) ++(8mm,10.4mm) rectangle +(12*9.8mm+11*2.4mm,2.9mm);
-
-    \fill[magenta,opacity=0.2] (top) ++(8mm,-5.2mm-2*8.75mm) rectangle +(9.8mm,-\paperheight+5.2mm+2*8.75mm+5.2mm);
-    \foreach \p in {1,2,...,11}{%
-      \fill[magenta,opacity=0.2] (top) ++(8mm+\p*2.4mm+\p*9.8mm,-5.2mm-2*8.75mm) rectangle +(9.8mm,-\paperheight+5.2mm+2*8.75mm+5.2mm);
-    }
-    %\node[red,scale=10,opacity=0.2] at (current page.north west) {Draft};
-  \end{tikzpicture}
-}
-\fi
 
 \title[Kurztitel der Präsentation]{Titel -- Inhalt des Vortrags, \\
 Noto Sans Semibold 19 pt, \\
-Zeilenanstand 21 pt}
+Zeilenabstand 21 pt}
 \author[Vortragende]{Yoshi Diepelt}
-\institute{Institut für Numerik | Institut für Mechanik und Flächentragwerke}
+\institute{Institut für Typografie}
 %\group[Short Group]{Group}
 \context[Short Context]{Context}
-\location[Short Location]{Tokyo}
+\location[Short Location]{Dresden}
 \date{\today}
 %
 \secondlogos{example-image-a,example-image-b}

@@ -27,25 +27,7 @@
 \usepackage{marginnote}
 \usepackage{csquotes}
 \usepackage{ragged2e}
-%\usepackage{tudcdfonts}
 \usepackage{blindtext}
-
-
-\usepackage{tikz}
-\AddToHook{shipout/foreground}{
-\begin{tikzpicture}[remember picture,overlay]
-    \coordinate (top) at (current page.north west);
-    \coordinate (bottom) at (current page.south west);
-    \fill[magenta,opacity=0.4] (top) ++(15mm,-15mm) rectangle +(\paperwidth-15mm-10mm,-19.5mm);
-    \fill[magenta,opacity=0.2] (top) ++(15mm,-15mm-19.5mm) rectangle +(\paperwidth-15mm-10mm,-19.5mm);
-
-  \end{tikzpicture}
-}
-
-\makeatletter
-\newcommand\getfontsize{\f@size}%
-\NewCommandCopy\getgridwidth\tudcd@getgridcolumnwidth%
-\makeatother
 
 \title{Die ursprüngliche Demodatei}
 \subtitle{Welche die einzelnen Eigenschaften hoffentlich hat, die sie brauch}
@@ -63,7 +45,7 @@
 
 \clearpage%
 
-\RaggedRight
+\RaggedRight%
 
 \begin{multicols}{2}
 
@@ -186,23 +168,23 @@ dreizehn S, sieben T, sieben U, fünf V, vier W, einem X, einem Y, zehn Z, einem
 %dreizehn S, sieben T, sieben U, fünf V, vier W, einem X, einem Y, zehn Z, einem Ä, einem Ö, vier Ü und einem ß.}
 
 
-{\tiny Ich bin \verb|\tiny| mit \getfontsize,\the\baselineskip{} \par}
+{\tiny Ich bin \verb|\tiny| mit \par}
 
-{\scriptsize Ich bin \verb|\scriptsize| mit \getfontsize,\the\baselineskip\par}
+{\scriptsize Ich bin \verb|\scriptsize| mit\par}
 
-{\footnotesize Ich bin \verb|\footnotesize| mit \getfontsize,\the\baselineskip\par}
+{\footnotesize Ich bin \verb|\footnotesize| mit\par}
 
-{\small Ich bin \verb|\small| mit \getfontsize,\the\baselineskip\par}
+{\small Ich bin \verb|\small| mit\par}
 
-{\normalsize Ich bin \verb|\normalsize| mit \getfontsize,\the\baselineskip\par}
+{\normalsize Ich bin \verb|\normalsize| mit\par}
 
-{\large Ich bin \verb|\large| mit \getfontsize,\the\baselineskip\par}
+{\large Ich bin \verb|\large| mit\par}
 
-{\Large Ich bin \verb|\Large| mit \getfontsize,\the\baselineskip\par}
+{\Large Ich bin \verb|\Large| mit\par}
 
-{\LARGE Ich bin \verb|\LARGE| mit \getfontsize,\the\baselineskip\par}
+{\LARGE Ich bin \verb|\LARGE| mit\par}
 
-{\huge Ich bin \verb|\huge| mit \getfontsize,\the\baselineskip\par}
+{\huge Ich bin \verb|\huge| mit\par}
 \end{multicols}
 
 
