@@ -1,0 +1,240 @@
+% \iffalse meta-comment
+%
+%  TUDCD-Script -- Corporate Design of Technische Universität Dresden
+% ----------------------------------------------------------------------------
+%
+%  Copyright (C) Jochen Diepelt <David.diepelt@gmx.net>, 2025
+%
+% ----------------------------------------------------------------------------
+%
+%  This work may be distributed and/or modified under the conditions of the
+%  LaTeX Project Public License, either version 1.3c of this license or
+%  any later version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of
+%  LaTeX version 2008-05-04 or later.
+%
+%  This work has the LPPL maintenance status "maintained".
+%
+%  The current maintainer and author of this work is Jochen Diepelt.
+%
+% ----------------------------------------------------------------------------
+%
+% \fi
+%
+% \iffalse ins:batch + dtx:driver
+%<*ins>
+\ifx\documentclass\undefined
+  \input docstrip.tex
+  \ifToplevel{\batchinput{tudcd.ins}}
+\else
+  \let\endbatchfile\relax
+\fi
+\endbatchfile
+%</ins>
+%<*dtx>
+\ProvidesFile{tudcd-common.dtx}[2025/10/02]
+\documentclass[english,ngerman]{tudcddoc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+\usepackage{babel}
+\usepackage[babel]{microtype}
+\RecordChanges
+\begin{document} % Diese Dokumentation dokumentiert NUR diese Datei
+  \title{\Large Dokumentation der Datei \texttt{\jobname.dtx} \\
+  \normalsize Generiert durch \texttt{\$ enginetex \jobname.dtx}}
+  \author{Jochen Diepelt}
+  \maketitle
+  \tableofcontents
+
+  \DocInput{tudcd-common.dtx}
+  \DocInput{tudcd-documents.dtx}
+\end{document}
+%</dtx>
+% \fi
+%
+% \selectlanguage{ngerman}
+%
+% \section{\texttt{tudcd-common}: Gemeinsame Einstellungen für alle Klassen}
+%
+% \subsection{ Vorbemerkung }
+%
+% Gemäß \dpkg{clsguide} besteht jede Klasse oder Paket in \LaTeX{} aus
+% \begin{enumerate}
+%   \item Identifikation,
+%   \item Vorläufige Deklarationen,
+%   \item Optionen und
+%   \item weiteren Deklarationen.
+% \end{enumerate}
+% Dementsprechend werden die \dpkg{docstrip} Guards folgende Namen annehmen:
+% \begin{description}
+%   \item[identification-pre] Dieser Guard beinhaltet das Laden der Pakete und dem definieren der Makros,
+%   welche vor der Identifikation eines Pakets getroffen werden.
+%   \item[identification] Dieser Guard stellt das Paket vor, welches erstellt werden soll.
+%   \item[prelim-declaration] Vorläufige Deklarationen werden hier getroffen.
+%   Dies beschränkt sich auf Deklarationen, welche für das verarbeiten der Optionen genutzt werden müssen.
+%   \item[option-<Name>] Hier wird die jeweiligen Optionen deklariert.
+%   \item[option-<Name>-processed] Hier wird etwaiges postprocessing von optionen betrieben.
+%   \item[body] Nachdem die Optionen verarbeitet worden sind, kommt hier der Hauptteil der Klasse.
+% \end{description}
+% Weiterhin werden die einzelnen Klassen und Pakete über die Guards
+% \begin{description}
+%   \item[class] Für generelle Klasseneinstellungen
+%   \item[package] Für generelle Paketeinstellungen
+%   \item[article] Für die Artikelklasse
+%   \item[report] Für die Berichtklasse
+%   \item[book] Für die Buchklasse
+%   \item[thesis] Für die Klasse der Abschlussarbeiten
+%   \item[beamer<name>] Für die Beamerthemes
+%   \item[poster] Für die Posterklasse
+% \end{description}
+% ausdifferenziert.
+%
+% \subsection{ Der gemeinsame Vorspann }
+%
+% Wir benötigen das \LaTeXe{} Format vom 3.8.2023, da in diesem die Anbindung der \dpkg{expl3} vollbracht ist.
+% Zudem wird für ältere Pakete vorsorglich das \dpkg{expl3} Paket geladen, sollte der verwendete \LaTeX -Kern zu alt sein.
+%
+%    \begin{macrocode}
+%<*identification-pre>
+\NeedsTeXFormat{LaTeX2e}[2023/08/03]
+\RequirePackage{expl3}
+%    \end{macrocode}
+%
+% Anschließend werden für das \dpkg{l3build}-Build-Tool \enquote{einfache} Makros bereitgestellt, welche
+% die aktuelle Version sowie das aktuelle Builddatum beinhalten. Für weitere Details sei auf die Datei
+% \texttt{build.lua} verwiesen.
+%
+%    \begin{macrocode}
+\newcommand\tudcd@common@version{0.5.5}
+\newcommand\tudcd@common@date{2026/01/25}
+%</identification-pre>
+%    \end{macrocode}
+%
+%
+%
+% \iffalse
+%<*nothingOfNote>
+\str_new:N \l_module_logolang_str
+\str_new:N \l_module_logomodel_str
+\str_new:N \l_module_logocolor_str
+
+\keys_define:nn { module }
+{
+  logo .code:n =
+  {
+    \keys_set:nn { module / logo }{ #1 }
+  },
+  logo/language .choices:nn =
+  { de, en, auto }
+  { \str_if_eq:nVTF { auto } { \l_keys_choice_str } {
+      \hook_gput_next_code:nn{package/babel/after}{
+        \str_set:Ne { \l_module_logolang_str } { \BCPdata{main.language} }
+      }
+      \hook_gput_next_code:nn{package/polyglossia/after}{
+        \str_set:Ne { \l_module_logolang_str } { \BCPdata{main.language} }
+      }
+    }{
+       \str_set_eq:NN { \l_module_logolang_str } { \l_keys_choice_str }
+    }
+  },
+  logo/language .default:n = { de },
+  logo/colormodel .choices:nn =
+  { cmyk, rgb }
+  {
+    \str_set_eq:NN { \l_module_logomodel_str } { \l_keys_choice_str }
+  },
+  logo/colormodel .default:n = { cmyk },
+  logo/color .choices:nn =
+  { blue, white, black }
+  {
+    \str_set_eq:NN { \l_module_logocolor_str } { \l_keys_choice_str }
+  },
+  logo/color .default:n = { blue }
+}
+%%%%%%%%% CUT
+\str_new:N\l_module_fontsize_str
+\str_new:N\l_module_bcor_str
+
+\keys_define:nn{ module }{
+  fontsize .str_set_e:N = \l_module_fontsize_str,
+  fontsize .usage:n = load
+}
+
+%%% This key is forbidden
+\clist_new:N\l_forbidden_keys_and_options_clist
+
+\clist_put_right:Nn\l_forbidden_keys_and_options_clist{BCOR}
+
+\hook_new:n{@forbiddenkey}
+
+\msg_new:nnnn{ module }{ forbiddenkeyerror }{ You~have~used~option~'#1',~which~must~not~be~set~in~TUD~Script! }{
+  If~you~wish~to~use~'#1'~alongside~tudcd~scr,~please~set~the~'unrestricted'~option~as~a~global~document~option.~
+  However,~any~guarantees~made~with~tudcd~scr~may~not~apply~when~using~this~option.
+}
+\msg_new:nnn{ module }{ unrestrictedmodeinfo }{ You~have~set~option~'#1',~forbidden~keys~are~now~allowed. }
+
+%\msg_redirect_name:nnn{ module }{ forbiddenkeyerror }{ warning }
+
+\clist_map_inline:Nn \l_forbidden_keys_and_options_clist {
+  \keys_define:nn{ module }{
+    #1 .code:n = {
+      \hook_gput_code:nnn{@forbiddenkey}{#1 keyerror}{
+        \msg_error:nnn{ module }{ forbiddenkeyerror }{ #1 }
+      }
+    }
+  }
+}
+
+\keys_define:nn{ module }{
+    unrestricted .code:n = {
+      \msg_info:nnn{ module }{ unrestrictedmodeinfo }{ unrestricted }
+      \msg_set:nnnn { module } { forbiddenkeyerror } { In~unrestricted~mode,~ignoring~forbidden~key~'##1'.} {}
+      \msg_redirect_name:nnn{ module }{ forbiddenkeyerror }{ info }
+    },
+    unrestricted .usage:n = load
+}
+
+\keys_define:nn{ module }{
+  unknown .code:n = {\typeout{Unknown~Option~\l_keys_key_str=~#1~passing~to~base~class}\PassOptionsToClass{\l_keys_key_str=#1}{scrartcl}},
+  unknown .default:V = \c_novalue_tl
+}
+
+%\PassOptionsToClass{BCOR=2pt}{scrartcl}
+
+\ProcessKeyOptions[module]
+
+\msg_new:nnnn{ module }{ globalkeyerror }{ You~have~used~key~'#1',~which~can~only~be~set~as~a~class~option! }{
+  The~key~'#1'~must~be~set~in~\iow_char:N\\ documentclass[ #1 ]{scrarticle}.
+}
+\prop_map_inline:Nn \l_keys_usage_load_prop {
+  \clist_map_inline:nn { #2 } {
+    \keys_define:nn { #1 } { ##1 .undefine: }% Entfernen des Keys
+    \keys_define:nn { #1 } { ##1 .code:n = {
+      \msg_error:nnn{ module }{ globalkeyerror }{ ##1 }
+      }
+    }
+  }
+}
+
+\hook_use:n{@forbiddenkey}
+
+\NewDocumentCommand{\showchoices}{}{
+    \str_use:N\l_module_logolang_str , \str_use:N\l_module_logomodel_str, \str_use:N\l_module_logocolor_str
+}
+
+\NewDocumentCommand{\EXPLoptions}{m}{
+    \keys_set:nn { module }{ #1 }
+}
+
+\NewDocumentEnvironment{expltest}{o}{
+  \group_begin:
+  \IfValueT{#1}{
+    \keys_set:nn { module }{ #1 }
+  }
+}{
+  \group_end:
+}
+%</nothingOfNote>
+% \fi

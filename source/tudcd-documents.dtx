@@ -1,0 +1,89 @@
+% \iffalse meta-comment
+%
+%  TUDCD-Script -- Corporate Design of Technische Universität Dresden
+% ----------------------------------------------------------------------------
+%
+%  Copyright (C) Jochen Diepelt <David.diepelt@gmx.net>, 2025
+%
+% ----------------------------------------------------------------------------
+%
+%  This work may be distributed and/or modified under the conditions of the
+%  LaTeX Project Public License, either version 1.3c of this license or
+%  any later version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of
+%  LaTeX version 2008-05-04 or later.
+%
+%  This work has the LPPL maintenance status "maintained".
+%
+%  The current maintainer and author of this work is Jochen Diepelt.
+%
+% ----------------------------------------------------------------------------
+%
+% \fi
+%
+% \iffalse ins:batch + dtx:driver
+%<*ins>
+\ifx\documentclass\undefined
+  \input docstrip.tex
+  \ifToplevel{\batchinput{tudcd.ins}}
+\else
+  \let\endbatchfile\relax
+\fi
+\endbatchfile
+%</ins>
+%<*dtx>
+\ProvidesFile{tudcd-documents.dtx}[2025/10/02]
+\documentclass[english,ngerman]{tudcddoc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+\usepackage{babel}
+\usepackage[babel]{microtype}
+\RecordChanges
+\begin{document} % Diese Dokumentation dokumentiert NUR diese Datei
+  \title{\Large Dokumentation der Datei \texttt{\jobname.dtx} \\
+  \normalsize Generiert durch \texttt{\$ enginetex \jobname.dtx}}
+  \author{Jochen Diepelt}
+  \maketitle
+  \tableofcontents
+
+  \DocInput{tudcd-documents.dtx}
+\end{document}
+%</dtx>
+% \fi
+%
+% \selectlanguage{ngerman}
+%
+% \section{\texttt{tudcd-documents}: Haupteinstellungen für die Dokumentenklassen}
+%
+% \subsection{ Vorbemerkung }
+%
+% Die Dokumentenklassen im Sinne des \TUDCDScript{} sind
+% \begin{itemize}
+%   \item eine Artikelklasse,
+%   \item eine Reportklasse,
+%   \item eine Buchklasse sowie
+%   \item eine Klasse für Abschlussarbeiten.
+% \end{itemize}
+%
+% \subsection{ Identifikation der Klassen }
+%
+% Abhängig von dem jeweiligem Guard werden unterschiedliche Klassen identifiziert.
+% Da dies ausschließlich \dpkg{expl3}-Klassen sein werden, wird \dmacro{\ProvidesExplClass} genutzt.
+% Nach der Identifikation der Klasse wird automatisch das Makro \dmacro{\ExplSyntaxOn} gewirkt.
+%
+%    \begin{macrocode}  {⟨package ⟩} {⟨date ⟩} {⟨version ⟩} {⟨description ⟩}
+%<*identification>
+%<article>\ProvidesExplClass{tudcdartcl}%
+%<report> \ProvidesExplClass{tudcdreprt}%
+%<book>   \ProvidesExplClass{tudcdbook}%
+%<thesis> \ProvidesExplClass{tudcdthesis}%
+{\tudcd@common@date}%
+{\tudcd@common@version}%
+%<article>{Eine Artikelklasse im Corporate Design der TU Dresden}%
+%<report>{Eine Klasse für Broschüren im Corporate Design der TU Dresden}%
+%<book>{Eine Buchklasse im Corporate Design der TU Dresden}%
+%<thesis>{Eine Klasse für Abschlussarbeiten im Corporate Design der TU Dresden}%
+%</identification>
+%    \end{macrocode}
