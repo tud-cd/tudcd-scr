@@ -152,13 +152,13 @@
    }
   \seq_use:Nn \l_tmpa_seq {#1}
  }
-% Hier machen wir eine Kommaliste für Dateinamen für die Zweitlogos
+% Hier machen wir eine Kommaliste fuer Dateinamen fuer die Zweitlogos
 \clist_new:N\g_zweitlogos_dateipfade_clist%
 \NewDocumentCommand\secondlogos{m}{
   \clist_gset:Nn\g_zweitlogos_dateipfade_clist{#1}%
 }
 \NewDocumentCommand\tudcd@beamer@typesetsecondlogos{}{
-  % Tokenliste für ausgabe
+  % Tokenliste fuer ausgabe
   \tl_gset:Nn\g_tmpa_tl{}%
   %\clist_if_empty:NF\g_zweitlogos_dateipfade_clist{
   \clist_map_inline:Nn\g_zweitlogos_dateipfade_clist{
@@ -253,7 +253,7 @@
 \defbeamertemplate*{headline}{tudcd}{\vspace{\tudcd@beamerouter@topbottommargin-1pt}}
 %    \end{macrocode}
 %
-% Für die Beamertemplate \dcode{headline} wird die zusätzliche Template \dcode{tudcd/simple title} deklariert,
+% fuer die Beamertemplate \dcode{headline} wird die zusätzliche Template \dcode{tudcd/simple title} deklariert,
 % welche das Logo im Kopf ausgibt.
 %
 %    \begin{macrocode}
@@ -301,8 +301,8 @@
 %    \end{macrocode}
 %
 % Die Fußzeile wird aufgrund Ihrer speziellen Anforderungen mittels \dpkg{coffins} umgesetzt.
-% Dabei war die Einhaltung des zwölfteiligen Rasters bei dem Setzen der Fußzeile auschlaggebend für diese Entscheidung.
-% \todo{Anpassen bzw. Konfiguration der Fußzeile für andere Kombinationen als Titel, Vortragender, Seitenzahl}
+% Dabei war die Einhaltung des zwölfteiligen Rasters bei dem Setzen der Fußzeile auschlaggebend fuer diese Entscheidung.
+% \todo{Anpassen bzw. Konfiguration der Fußzeile fuer andere Kombinationen als Titel, Vortragender, Seitenzahl}
 %    \begin{macrocode}
 
 
@@ -357,7 +357,7 @@
 \setbeamertemplate{footline}[tudcd]
 \setbeamertemplate{headline}[tudcd]
 
-% Die Navigation Sidebar ist standardmäßig ausgeschaltet
+% Die Navigation Sidebar ist standardmaessig ausgeschaltet
 \defbeamertemplate*{sidebar left}{tudcd}
 {} % du auch?
 
@@ -437,18 +437,17 @@
 
 %    \end{macrocode}
 %
-% Da für den Titel Beamer-Templates umgeschalten werden müssen,
+% Da fuer den Titel Beamer-Templates umgeschalten werden müssen,
 % werden Nutzer von der Nutzung innerhalb einer \denv{frame} Umgebung abgehalten. ^^X https://www.desmos.com/geometry/olumx2rp7o
 %
 %    \begin{macrocode}
 \providecommand\maketitle{}
 \renewcommand\maketitle{%
   \ifbeamer@inframe{%
-    \PackageError{beamerouterthemetud}{Cannot set page style.^^J
-      \space Use \string\maketitle \space outside of any frame, please.^^J
-      ^^J
-      \space Die Titelseite konnte nicht konfiguriert werden.^^J
-      \space Verwenden Sie bitte \string\maketitle \space außerhalb von Folien.
+    \PackageError{beamerouterthemetud}{Cannot set page style.
+      \space Use \string\maketitle \space outside of any frame, please.
+      \space Die Titelseite konnte nicht konfiguriert werden.
+      \space Verwenden Sie bitte \string\maketitle \space ausserhalb von Folien.
     }%
     {%
       \space See the TUD beamer style examples for further information.

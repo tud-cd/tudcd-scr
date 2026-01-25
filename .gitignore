@@ -1,5 +1,5 @@
 ## binaries folder
-development/
+build/
 release*/
 temp/
 ## auxiliary files
@@ -53,8 +53,9 @@ temp/
 !test/**/*.cls
 !test/**/*.sty
 !test/**/*.xdy
-##
-!lit.bib
+## Very specific bibliographys need to be accepted!
+!source.bib
+!handbook.bib
 ## exclude unnecessary generated files
 **/doc/tutorials/*-example.*
 **/doc/tutorials/*-temp*.*

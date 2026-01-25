@@ -44,8 +44,8 @@
 \RecordChanges
 \PrintChanges
 \begin{document} % Diese Dokumentation dokumentiert NUR diese Datei
-  \title{\Large Dokumentation der Datei \texttt{\jobname.dtx} \\
-  \normalsize Generiert durch \texttt{\$ enginetex \jobname.dtx}}
+  \title{\Large Dokumentation des \texttt{tudcd}-Quelltexts}
+  \subtitle{ Stand von \today }
   \author{Jochen Diepelt}
   \maketitle
   \tableofcontents
@@ -57,6 +57,7 @@
   \DocInput{tudcd-area.dtx}
   \DocInput{tudcd-elements.dtx}
   \DocInput{tudcd-specialpages.dtx}
+  \DocInput{tudcd-beamertheme.dtx}
 
   \printbibliography%
 \end{document}
@@ -102,8 +103,38 @@
 \RequirePackage{siunitx}%
 \DeclareSIUnit{\texsp}{sp}
 \RequirePackage[style=numeric]{biblatex}
-
-\addbibresource{lit.bib}
+%    \end{macrocode}
+% Hier wird die von \dpkg{doc} definierte Umgebung \denv{macrocode} umdefiniert, um unter anderem Zeilenumbrüche zu erlauben.
+%    \begin{macrocode}
+\RequirePackage{listings}
+\newcounter{codelinenum}
+\setcounter{codelinenum}{1}
+\let\macrocode\relax
+\lstnewenvironment{macrocode}
+{\edef\test@thecodeline{\arabic{codelinenum}}
+  \lstset{language={[LaTeX]TeX},
+    basicstyle=\footnotesize\ttfamily,
+    literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1,
+    numberstyle=\footnotesize,
+    numbers=left,
+    numbersep=5pt,
+    breaklines,
+    xleftmargin=2em,
+    firstnumber=\test@thecodeline,
+    morecomment=[s][\color{blue}]{\%<}{>},
+    morecomment=[il]\^^M\%\ \ \ \ ,
+    }}
+{\setcounter{codelinenum}{\value{lstnumber}}}
+\AddToHook{cmd/section/before}{\setcounter{codelinenum}{1}}
+\addbibresource{source.bib}
 \selectcolormodel{rgb}
 %    \end{macrocode}
 % Ergänzen der zusätzlichen Klasse für Klassen als Abgrenzung von Paketen
