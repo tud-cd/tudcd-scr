@@ -50,6 +50,8 @@
 
   \DocInput{tudcd-common.dtx}
   \DocInput{tudcd-documents.dtx}
+
+  \printbibliography%
 \end{document}
 %</dtx>
 % \fi
@@ -145,8 +147,12 @@
 %
 % In diesem kurzem Abschnitt wird das Makro \dmacro{\keys_define:nn} deklariert.
 %    \begin{macrocode}
-%<option&pre>\keys_define:nn {
-%<option&post>}
+%<*option&pre>
+\keys_define:nn { tudcd }{
+%</option&pre>
+%<*option&post>
+}
+%</option&post>
 %    \end{macrocode}
 %
 % \subsection{Gemeinsame Optionen und Einstellungen}
@@ -190,10 +196,10 @@
 % \end{codedescribe}
 %    \begin{macrocode}
 %<*prelim-declaration>
-\DeclareDocumentCommand\TUDCDoptions{m}{
+\NewDocumentCommand\TUDCDoptions{m}{
   \keys_set:nn{ tudcd }{ #1 }
 }
-\DeclareDocumentCommand\TUDCDsetup{m}{
+\NewDocumentCommand\TUDCDsetup{m}{
   \keys_set:nn{ tudcd }{ #1 }
 }
 %</prelim-declaration>
@@ -254,9 +260,10 @@
 %    \begin{macrocode}
 %<*class>
 %<*prelim-declaration>
-\clist_new:N\g_@@_prohibited_options_clist
-\cs_new:Nn\@@_add_to_prohibited_options:n{
-  \clist_put_right:Nn\g_@@_prohibited_options_clist{#1}
+\clist_gclear_new:N \g_@@_prohibited_clist%
+\cs_new:Nn \@@_add_to_prohibited_options:n
+{
+  \clist_gput_right:Nn\g_@@_prohibited_clist{#1}
 }
 %    \end{macrocode}
 % Um das Entsperren der verbotenen Klassenoptionen zu gewährleisten, wird ein Haken bereitgestellt,
@@ -298,7 +305,8 @@
 %
 %    \begin{macrocode}
 %<*optionloading&pre>
-\clist_map_inline:Nn \g_@@_prohibited_options_clist {
+\clist_log:N\g_@@_prohibited_clist
+\clist_map_inline:Nn\g_@@_prohibited_clist {
   \keys_define:nn{ tudcd }{
     #1 .code:n = {
       \hook_gput_code:nnn{tudcd@prohibitedkey}{#1 keyerror}{
@@ -362,19 +370,19 @@
        \str_set_eq:NN \l_@@_logolang_str \l_keys_choice_str
     }
   },
-  logo/language .default:n = { de },
+  logo/language .initial:n = { de },
   logo/colormodel .choices:nn =
   { cmyk, rgb }
   {
     \str_set_eq:NN \l_@@_logomodel_str \l_keys_choice_str
   },
-  logo/colormodel .default:n = { rgb },
+  logo/colormodel .initial:n = { rgb },
   logo/color .choices:nn =
   { blue, white, black }
   {
     \str_set_eq:NN \l_@@_logocolor_str \l_keys_choice_str
   },
-  logo/color .default:n = { blue },
+  logo/color .initial:n = { blue },
 %</option&peri>
 %    \end{macrocode}
 %
@@ -486,8 +494,23 @@
 \msg_critical:nnV{tudcd/logoconfig}{logocolorerror}\l_@@_logocolor_str
   }
 }
+%    \end{macrocode}
+%
+% Sollten Nutzer das Logo setzen wollen, wird hierfür ein Nutzermakro bereitgestellt. %TODO: Codedescribe!
+%
+%    \begin{macrocode}
+\NewDocumentCommand\TypesetTUDLogo{o m}{
+  \group_begin:
+  \IfValueT{#1}{
+    \keys_set:nn{ tudcd/logo }{ #1 }
+  }
+  \@@_typeset_logo:n{#2}
+  \group_end:
+}
 %</header&peri>
 %    \end{macrocode}
+%
+%
 %
 % \subsection{Verarbeiten der Optionen}
 %
