@@ -88,7 +88,7 @@
 % anschließend zur Ursprungsgeometrie zurückzukehren. Ein Anwendungsfall hierfür sind Seiten, welche
 % andere PDFs als Vollseite einbinden.
 %
-% \subsection{ Ein Stecker für die Einstellung der Seitengeometrie }
+% \subsection{ Ein Template für die Einstellung der Seitengeometrie }
 %
 % Die größte Herausforderung bei der Einstellung der Geometrie ist das Verhindern der Einstellungen von \dpkg{typearea},
 % sollten Nutzer das Layoutraster der TU Dresden nutzen wollen.
@@ -107,7 +107,28 @@
 %
 % welcher drei konkrete Templates deklariert bekommt.
 %
+% Anschließend können mittels der Templates sogenannte Instanzen deklariert werden.
+% Im Fall der Geometrieeinstellungen sind Instanzen konkrete Geometrieeinstellungen,
+% welche die "Standardgeometrie" setzen.
+%
+% Die ersten beiden Instanzen Instanz sind das Broschürenraster mit Marginalie und ohne Marginalie
+%
+% Anschließend werden die entsprechenden Längen definiert.
+% Dabei ergibt sich die Spaltenbreite aus den Rändern und dem Spaltenseparator,
+% es wird jedoch diese Länge aus Praktikabilitätsgründen mit unterstützt.
+%
 %    \begin{macrocode}
+\dim_new:N\l_@@_top_margin_dim
+\dim_new:N\l_@@_bottom_margin_dim
+\dim_new:N\l_@@_inner_margin_dim
+\dim_new:N\l_@@_outer_margin_dim
+\dim_new:N\l_@@_grid_column_sep_dim
+\dim_new:N\l_@@_grid_column_width_dim
+\dim_new:N\l_@@_logoheight_dim
+\dim_new:N\l_@@_second_logoheight_dim
+\str_new:N\l_@@_geometry_paper_size_str
+\str_set:Nn\l_@@_geometry_paper_size_str{a4paper}
+
 \DeclareTemplateInterface{tudcd/setgeometry}{brochuregrid}{0}{
   usemargin : boolean
 }
@@ -121,46 +142,10 @@
 }
 %    \end{macrocode}
 %
-% Anschließend können mittels der Templates sogenannte Instanzen deklariert werden.
-% Im Fall der Geometrieeinstellungen sind Instanzen konkrete Geometrieeinstellungen,
-% welche die "Standardgeometrie" setzen.
-%
-% Die ersten beiden Instanzen Instanz sind das Broschürenraster mit Marginalie und ohne Marginalie
-%
-%    \begin{macrocode}
-\DeclareInstance{tudcd/setgeometry}{margintrue}{brochuregrid}{
-  usemargin = true
-}
-\DeclareInstance{tudcd/setgeometry}{marginfalse}{brochuregrid}{
-  usemargin = false
-}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\DeclareInstance{tudcd/setgeometry}{conforming}{postergrid}{
-  rounded-values = true
-}
-%    \end{macrocode}
-%
-% Anschließend werden die entsprechenden Längen definiert.
-% Dabei ergibt sich die Spaltenbreite aus den Rändern und dem Spaltenseparator,
-% es wird jedoch diese Länge aus Praktikabilitätsgründen mit unterstützt.
-%
-%    \begin{macrocode}
-\dim_new:N\l_top_margin_dim
-\dim_new:N\l_bottom_margin_dim
-\dim_new:N\l_inner_margin_dim
-\dim_new:N\l_outer_margin_dim
-\dim_new:N\l_grid_column_sep_dim
-\dim_new:N\l_grid_column_width_dim
-%    \end{macrocode}
-%
 % Um in der Optionenwahl die ausgewählte Option abzuspeichern, wird ein String dafür angelegt.
 %
 %    \begin{macrocode}
-\str_new:N\l_@@_geometry_plug_name_str
-\str_new:N\l_@@_geometry_paper_size_str
-\str_set:Nn\l_@@_geometry_paper_size_str{a4paper}
+\str_new:N\l_@@_geometry_instance_name_str
 \bool_new:N\l_@@_geometry_margin_bool
 \bool_set_false:N\l_@@_geometry_margin_bool
 %</prelim-declaration>
@@ -168,7 +153,15 @@
 %
 % Die Schlüssel für die genutzte Geometrie wird im folgenden definiert.
 %    \begin{macrocode}
-%<*option-geometry>
+%<*option-geometry&peri>
+  pagelayout.choices:nn = {
+    brochure,
+    poster,
+    koma
+  }{
+    \str_set_eq:NN \l_@@_geometry_instance_name_str \l_keys_choice_str
+  },
+  papelayout .initial:n = { brochure },
   a5paper .code:n = { \str_set:Nn\l_@@_geometry_paper_size_str{a5paper} },
   a5paper .value_forbidden:n = { true },
   a4paper .code:n = { \str_set:Nn\l_@@_geometry_paper_size_str{a4paper} },
@@ -183,7 +176,7 @@
   a0paper .code:n = { \str_set:Nn\l_@@_geometry_paper_size_str{a0paper} },
   a0paper .value_forbidden:n = { true },
 %</poster>
-  paper .choice:nn = {
+  paper .choices:nn = {
     a5paper, a4paper
 %<poster>    ,a3paper, a2paper, a1paper, a0paper
   }{
@@ -194,8 +187,123 @@
   usemargin .default:n = { true },
   usemargin .initial:n = { false },
 %</article|report|book|thesis>
-%</option-geometry>
+%</option-geometry&peri>
 %    \end{macrocode}
 %
+% Um Nutzer von Typearea abzuhalten, werden die Schlüssel \dcode{DIV} und \dcode{BCOR} verboten.
+%    \begin{macrocode}
+%<optionloading&pre> \@@_add_to_prohibited_options:n{DIV,BCOR}
+%    \end{macrocode}
 %
+% Im Header der Klassen werden anschließend die Template Codes implementiert
 %
+%    \begin{macrocode}
+%<*header&peri>
+\msg_new:nnnn{ tudcd }{ geometry/papersizeerror }{
+  During~internal~processing~on~line~\msg_line_number: ,~an~illegal~paper~size~option~'#1'~was~encountered.
+}{
+  This~should~not~happen~during~normal~processing,~please~file~an~Issue~at~<https://github.com/tud-cd/tudcd-scr/issues>
+}
+
+\str_if_eq:nVF{koma}\l_@@_geometry_instance_name_str{
+  \PassOptionsToPackage{usegeometry}{typearea}
+}
+\RequirePackage[paper=\str_use:N\l_@@_geometry_paper_size_str]{geometry}
+
+%5,25
+%3,7
+
+\DeclareTemplateCode{tudcd/setgeometry}{brochuregrid}{0}
+{
+  usemargin = \l_tmpa_bool
+}{
+  \str_case:VnF\l_@@_geometry_paper_size_str{
+    {a5paper}{
+%% Diese Größen wurden mittels Skalierung ermittelt, daher können die sich noch ändern!
+      \dim_set:Nn\l_@@_top_margin_dim{10.6mm}
+      \dim_set:Nn\l_@@_bottom_margin_dim{18.1mm}
+      \dim_set:Nn\l_@@_inner_margin_dim{10.6mm}
+      \dim_set:Nn\l_@@_outer_margin_dim{7.5mm}
+      \dim_set:Nn\l_@@_logoheight_dim{14.1mm}
+      \dim_set:Nn\l_@@_second_logoheight_dim{10.6mm}
+      \dim_set:Nn\l_@@_grid_column_sep_dim{3.5mm}
+      \bool_if:nTF\l_tmpa_bool{ % Use the Margin
+        \dim_set:Nn\l_@@_grid_column_width_dim{148mm/5-\l_@@_inner_margin_dim/5-\l_@@_outer_margin_dim/5-4\l_@@_grid_column_sep_dim/5} % A5= 148 x 210
+        \dim_set:Nn\marginparwidth{\l_@@_grid_column_width_dim}%
+        \dim_set:Nn\marginparsep{\l_@@_grid_column_sep_dim}%
+      }{ % Do not use the margin
+        \dim_set:Nn\l_@@_grid_column_width_dim{148mm/4-\l_@@_inner_margin_dim/4-\l_@@_outer_margin_dim/4-3\l_@@_grid_column_sep_dim/4}
+        \dim_set:Nn\marginparwidth{0pt}%
+        \dim_set:Nn\marginparsep{0pt}%
+      }
+    }
+    {a4paper}{
+      \dim_set:Nn\l_@@_top_margin_dim{15mm}
+      \dim_set:Nn\l_@@_bottom_margin_dim{23.767mm}
+      \dim_set:Nn\l_@@_inner_margin_dim{15mm}
+      \dim_set:Nn\l_@@_outer_margin_dim{10mm}
+      \dim_set:Nn\l_@@_logoheight_dim{19.0mm}
+      \dim_set:Nn\l_@@_second_logoheight_dim{15mm}
+      \dim_set:Nn\l_@@_grid_column_sep_dim{6mm}
+      \bool_if:nTF\l_tmpa_bool{ % Use the Margin
+        \dim_set:Nn\l_@@_grid_column_width_dim{210mm/5-\l_@@_inner_margin_dim/5-\l_@@_outer_margin_dim/5-4\l_@@_grid_column_sep_dim/5} % A4= 148 x 210
+        \dim_set:Nn\marginparwidth{\l_@@_grid_column_width_dim}%
+        \dim_set:Nn\marginparsep{\l_@@_grid_column_sep_dim}%
+      }{ % Do not use the margin
+        \dim_set:Nn\l_@@_grid_column_width_dim{210mm/4-\l_@@_inner_margin_dim/4-\l_@@_outer_margin_dim/4-3\l_@@_grid_column_sep_dim/4}
+        \dim_set:Nn\marginparwidth{0pt}%
+        \dim_set:Nn\marginparsep{0pt}%
+      }
+    }
+  }{
+\msg_error:nnV{ tudcd }{geometry/papersizeerror}\l_@@_geometry_paper_size_str
+  }
+  \bool_if:nTF{\l_tmpa_bool}{% use the margin
+    \newgeometry{
+      includemp,
+      paper=\str_use:N\l_@@_geometry_paper_size_str,
+      inner=\dim_use:N\l_@@_inner_margin_dim,
+      outer=\dim_use:N\l_@@_outer_margin_dim,
+      top=\dim_use:N\l_@@_top_margin_dim,
+      bottom=\dim_use:N\l_@@_bottom_margin_dim
+    }
+  }{
+    \newgeometry{
+      paper=\str_use:N\l_@@_geometry_paper_size_str,
+      inner=\dim_use:N\l_@@_inner_margin_dim,
+      outer=\dim_use:N\l_@@_outer_margin_dim,
+      top=\dim_use:N\l_@@_top_margin_dim,
+      bottom=\dim_use:N\l_@@_bottom_margin_dim
+    }
+  }
+}
+\DeclareTemplateCode{tudcd/setgeometry}{postergrid}{0}
+{
+  secondlogoline = \l_tmpa_bool,
+  rounded-values = \l_tmpb_bool
+}{
+
+}
+\DeclareTemplateCode{tudcd/setgeometry}{titlepage}{0}
+{
+  secondlogoline = \l_tmpa_bool,
+  backgroundcode = \l_tmpa_tl
+}{
+
+}
+\DeclareInstance{tudcd/setgeometry}{margintrue}{brochuregrid}{
+  usemargin = true
+}
+\DeclareInstance{tudcd/setgeometry}{marginfalse}{brochuregrid}{
+  usemargin = false
+}
+
+\DeclareInstance{tudcd/setgeometry}{conforming}{postergrid}{
+  rounded-values = true
+}
+
+\hook_gput_code:nnn{begindocument/after}{setgeometry}{
+  \UseInstance{tudcd/setgeometry}{marginfalse}
+}
+%</header&peri>
+%    \end{macrocode}
