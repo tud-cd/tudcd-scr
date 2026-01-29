@@ -1,4 +1,5 @@
 % \iffalse meta-comment
+% LTeX: language=de-DE
 %
 %  TUDCD-Script -- Corporate Design of Technische Universität Dresden
 % ----------------------------------------------------------------------------
@@ -51,6 +52,7 @@
   \DocInput{tudcd-common.dtx}
   \DocInput{tudcd-documents.dtx}
   \DocInput{tudcd-geometry.dtx}
+  \DocInput{tudcd-fonts.dtx}
 
   \printbibliography%
 \end{document}
@@ -215,14 +217,14 @@
 % daher werden sie aus der Liste der möglichen Optionen entfernt.
 %    \begin{macrocode}
 %<*optionloading&post&class>
-\msg_new:nnnn{ tudcd/options }{ globalkeyerror }{ You~have~used~key~'#1',~which~can~only~be~set~as~a~class~option! }{
+\msg_new:nnnn{ tudcd }{ options/globalkeyerror }{ You~have~used~key~'#1',~which~can~only~be~set~as~a~class~option! }{
   The~key~'#1'~must~be~set~in~\iow_char:N\\ documentclass[ ... ]\{scrarticle\}.
 }
 \prop_map_inline:Nn \l_keys_usage_load_prop {
   \clist_map_inline:nn { #2 } {
     \keys_define:nn { #1 } { ##1 .undefine: }% Entfernen des Keys
     \keys_define:nn { #1 } { ##1 .code:n = {
-      \msg_error:nnn{ tudcd/options }{ globalkeyerror }{ ##1 }
+      \msg_error:nnn{ tudcd }{ options/globalkeyerror }{ ##1 }
       }
     }
   }
@@ -234,7 +236,7 @@
 % daher wird an den Haken \dhook{begindocument/before} das Codesegment gehangen.
 %    \begin{macrocode}
 %<*optionloading&post>
-\msg_new:nnnn{ tudcd/options }{ latekeyerror }{ You~have~used~key~'#1',~which~can~only~be~set~inside~the~preamble! }{
+\msg_new:nnnn{ tudcd }{ options/latekeyerror }{ You~have~used~key~'#1',~which~can~only~be~set~inside~the~preamble! }{
   The~key~'#1'~must~be~set~in~\iow_char:N\\ TUDCDsetup\{ ... \}.
 }
 \hook_gput_code:nnn{ begindocument/before }{ tudcd/lateoptioninvalidation }{
@@ -242,7 +244,7 @@
     \clist_map_inline:nn { #2 } {
       \keys_define:nn { #1 } { ##1 .undefine: }% Entfernen des Keys
       \keys_define:nn { #1 } { ##1 .code:n = {
-        \msg_error:nnn{ tudcd/options }{ latekeyerror }{ ##1 }
+        \msg_error:nnn{ tudcd }{ options/latekeyerror }{ ##1 }
         }
       }
     }
@@ -278,13 +280,13 @@
 % dass sie sich außerhalb der unterstützten Optionen bewegen.
 %
 %    \begin{macrocode}
-\msg_new:nnnn{ tudcd/options }{ prohibitedkeyerror }{
+\msg_new:nnnn{ tudcd }{ options/prohibitedkeyerror }{
   You~have~used~key~'#1',~which~must~not~be~set~in~TUD~Script! }{
   If~you~wish~to~use~'#1'~alongside~tudcdscr,~please~set~the~'unrestricted'~option~as~a~global~document~option.~
   However,~any~guarantees~made~with~tudcdscr~may~not~apply~when~using~the~'unrestricted'~option. \\ \\
   If~you~think~this~option~should~be~part~of~tudcdscr,~please~open~an~issue~at~<https://github.com/tud-cd/tudcd-scr/issues>
 }
-\msg_new:nnn{ tudcd/options }{ unrestrictedmodeinfo }{ You~have~set~option~'#1',~prohibited~keys~are~now~allowed. }
+\msg_new:nnn{ tudcd }{ options/unrestrictedmodeinfo }{ You~have~set~option~'#1',~prohibited~keys~are~now~allowed. }
 %</prelim-declaration>
 %    \end{macrocode}
 %
@@ -295,9 +297,9 @@
 %    \begin{macrocode}
 %<*option&peri>
   unrestricted .code:n = {
-    \msg_info:nnn{ tudcd/options }{ unrestrictedmodeinfo }{ unrestricted }
-    \msg_set:nnnn { tudcd/options } { prohibitedkeyerror } { In~unrestricted~mode,~prohibited~key~'##1'~gets~set.} {}
-    \msg_redirect_name:nnn{ tudcd/options }{ prohibitedkeyerror }{ info }
+    \msg_info:nnn{ tudcd }{ options/unrestrictedmodeinfo }{ unrestricted }
+    \msg_set:nnnn { tudcd } { options/prohibitedkeyerror } { In~unrestricted~mode,~prohibited~key~'##1'~gets~set.} {}
+    \msg_redirect_name:nnn{ tudcd }{ options/prohibitedkeyerror }{ info }
   },
   unrestricted .value_forbidden:n = true,
   unrestricted .usage:n = load,
@@ -311,7 +313,7 @@
   \keys_define:nn{ tudcd }{
     #1 .code:n = {
       \hook_gput_code:nnn{tudcd@prohibitedkey}{#1 keyerror}{
-        \msg_error:nnn{ tudcd/options }{ prohibitedkeyerror }{ #1 }
+        \msg_error:nnn{ tudcd }{ options/prohibitedkeyerror }{ #1 }
       }
     }
   }
@@ -343,17 +345,17 @@
 % Die jeweilige Auswahl wird in Stringvariablen gespeichert
 %
 %    \begin{macrocode}
-%<*prelim-declaration>
+%<*prelim-declaration&class>
 \str_new:N \l_@@_logolang_str
 \str_new:N \l_@@_logomodel_str
 \str_new:N \l_@@_logocolor_str
-%</prelim-declaration>
+%</prelim-declaration&class>
 %    \end{macrocode}
 %
 % Anschließend werden die Optionen definiert und deklariert.
 %
 %    \begin{macrocode}
-%<*option&peri>
+%<*option&peri&class>
   logo .code:n =
   {
     \keys_set:nn { tudcd / logo }{ #1 }
@@ -384,19 +386,19 @@
     \str_set_eq:NN \l_@@_logocolor_str \l_keys_choice_str
   },
   logo/color .initial:n = { blue },
-%</option&peri>
+%</option&peri&class>
 %    \end{macrocode}
 %
 % Anschließend wird ein internes Makro deklariert, welches das Logo setzt, und dabei die richtige Datei auswählt.
 % Dieses wird nach verarbeiten der Optionen deklariert
 %    \begin{macrocode}
-%<*header&peri>
+%<*header&peri&class>
 %%
 \RequirePackage{graphicx}
 
-\msg_new:nnn{ tudcd/logoconfig }{ logolanguagerror }{ Illegal~string~'#1'~for~logolanguage!~This~error~should~not~appear,~please~report~an~issue~to~<https://github.com/tud-cd/tudcd-scr/issues>. }
-\msg_new:nnn{ tudcd/logoconfig }{ logomodelerror }{ Illegal~string~'#1'~for~logo~color~model!~This~error~should~not~appear,~please~report~an~issue~to~<https://github.com/tud-cd/tudcd-scr/issues>. }
-\msg_new:nnn{ tudcd/logoconfig }{ logocolorerror }{ Illegal~string~'#1'~for~logo~color!~This~error~should~not~appear,~please~report~an~issue~to~<https://github.com/tud-cd/tudcd-scr/issues>. }
+\msg_new:nnn{ tudcd }{ logoconfig/logolanguagerror }{ Illegal~string~'#1'~for~logolanguage!~This~error~should~not~appear,~please~report~an~issue~to~<https://github.com/tud-cd/tudcd-scr/issues>. }
+\msg_new:nnn{ tudcd }{ logoconfig/logomodelerror }{ Illegal~string~'#1'~for~logo~color~model!~This~error~should~not~appear,~please~report~an~issue~to~<https://github.com/tud-cd/tudcd-scr/issues>. }
+\msg_new:nnn{ tudcd }{ logoconfig/logocolorerror }{ Illegal~string~'#1'~for~logo~color!~This~error~should~not~appear,~please~report~an~issue~to~<https://github.com/tud-cd/tudcd-scr/issues>. }
 %%
 \cs_new:Nn \@@_typeset_logo:n
 {
@@ -412,7 +414,7 @@
 \resizebox*{!}{#1}{\raisebox{-1.65mm}[20.0mm][2.0mm]{\includegraphics{logo/TUD-Logo_RGB_horizontal_blau_de}}}%
           }
         }{% False Branch
-\msg_critical:nnV{tudcd/logoconfig}{logomodelerror}\l_@@_logomodel_str
+\msg_critical:nnV{tudcd}{logoconfig/logomodelerror}\l_@@_logomodel_str
         }
       }
       {en}{
@@ -424,11 +426,11 @@
 \resizebox*{!}{#1}{\raisebox{-1.65mm}[20.0mm][2.0mm]{\includegraphics{logo/TUD-Logo_RGB_horizontal_blau_en}}}%
           }
         }{% False Branch
-\msg_critical:nnV{tudcd/logoconfig}{logomodelerror}\l_@@_logomodel_str
+\msg_critical:nnV{tudcd}{logoconfig/logomodelerror}\l_@@_logomodel_str
         }
       }
     }{
-\msg_critical:nnV{tudcd/logoconfig}{logolanguagerror}\l_@@_logolang_str
+\msg_critical:nnV{tudcd}{logoconfig/logolanguagerror}\l_@@_logolang_str
     }
   }% BLUE ende
   { white }{
@@ -442,7 +444,7 @@
 \resizebox*{!}{#1}{\raisebox{-1.65mm}[20.0mm][2.0mm]{\includegraphics{logo/TUD-Logo_RGB_horizontal_weiss_de}}}%
           }
         }{% False Branch
-\msg_critical:nnV{tudcd/logoconfig}{logomodelerror}\l_@@_logomodel_str
+\msg_critical:nnV{tudcd}{logoconfig/logomodelerror}\l_@@_logomodel_str
         }
       }
       {en}{
@@ -454,11 +456,11 @@
 \resizebox*{!}{#1}{\raisebox{-1.65mm}[20.0mm][2.0mm]{\includegraphics{logo/TUD-Logo_RGB_horizontal_weiss_en}}}%
           }
         }{% False Branch
-\msg_critical:nnV{tudcd/logoconfig}{logomodelerror}\l_@@_logomodel_str
+\msg_critical:nnV{tudcd}{logoconfig/logomodelerror}\l_@@_logomodel_str
         }
       }
     }{
-\msg_critical:nnV{tudcd/logoconfig}{logolanguagerror}\l_@@_logolang_str
+\msg_critical:nnV{tudcd}{logoconfig/logolanguagerror}\l_@@_logolang_str
     }
   }% Weiss ende
   { black }{
@@ -472,7 +474,7 @@
 \resizebox*{!}{#1}{\raisebox{-1.65mm}[20.0mm][2.0mm]{\includegraphics{logo/TUD-Logo_RGB_horizontal_schwarz_de}}}%
           }
         }{% False Branch
-\msg_critical:nnV{tudcd/logoconfig}{logomodelerror}\l_@@_logomodel_str
+\msg_critical:nnV{tudcd}{logoconfig/logomodelerror}\l_@@_logomodel_str
         }
       }
       {en}{
@@ -484,15 +486,15 @@
 \resizebox*{!}{#1}{\raisebox{-1.65mm}[20.0mm][2.0mm]{\includegraphics{logo/TUD-Logo_RGB_horizontal_schwarz_en}}}%
           }
         }{% False Branch
-\msg_critical:nnV{tudcd/logoconfig}{logomodelerror}\l_@@_logomodel_str
+\msg_critical:nnV{tudcd}{logoconfig/logomodelerror}\l_@@_logomodel_str
         }
       }
     }{
-\msg_critical:nnV{tudcd/logoconfig}{logolanguagerror}\l_@@_logolang_str
+\msg_critical:nnV{tudcd}{logoconfig/logolanguagerror}\l_@@_logolang_str
     }
   }
   }{
-\msg_critical:nnV{tudcd/logoconfig}{logocolorerror}\l_@@_logocolor_str
+\msg_critical:nnV{tudcd}{logoconfig/logocolorerror}\l_@@_logocolor_str
   }
 }
 %    \end{macrocode}
@@ -508,7 +510,7 @@
   \@@_typeset_logo:n{#2}
   \group_end:
 }
-%</header&peri>
+%</header&peri&class>
 %    \end{macrocode}
 %
 %
