@@ -1,0 +1,279 @@
+% \iffalse meta-comment
+%
+%  TUDCD-Script -- Corporate Design of Technische Universität Dresden
+% ----------------------------------------------------------------------------
+%
+%  Copyright (C) Jochen Diepelt <David.diepelt@gmx.net>, 2025
+%
+% ----------------------------------------------------------------------------
+%
+%  This work may be distributed and/or modified under the conditions of the
+%  LaTeX Project Public License, either version 1.3c of this license or
+%  any later version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of
+%  LaTeX version 2008-05-04 or later.
+%
+%  This work has the LPPL maintenance status "maintained".
+%
+%  The current maintainer and author of this work is Jochen Diepelt.
+%
+% ----------------------------------------------------------------------------
+%
+% \fi
+%
+% \iffalse ins:batch + dtx:driver
+%<*ins>
+\ifx\documentclass\undefined
+  \input docstrip.tex
+  \ifToplevel{\batchinput{tudcd.ins}}
+\else
+  \let\endbatchfile\relax
+\fi
+\endbatchfile
+%</ins>
+%<*dtx>
+\ProvidesFile{tudcd-specialpages.dtx}[2025/10/02]
+\documentclass[english,ngerman]{tudcddoc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+\usepackage{babel}
+\usepackage[babel]{microtype}
+\RecordChanges
+\begin{document} % Diese Dokumentation dokumentiert NUR diese Datei
+  \title{\Large Dokumentation der Datei \texttt{\jobname.dtx} \\
+  \normalsize Generiert durch \texttt{\$ enginetex \jobname.dtx}}
+  \author{Jochen Diepelt}
+  \maketitle
+  \tableofcontents
+
+  \DocInput{tudcd-pagestyles.dtx}
+\end{document}
+%</dtx>
+% \fi
+%
+% \selectlanguage{ngerman}
+%
+% \section{\texttt{tudcd-pagestyles}: Seitenstile für Dokument- und Posterklassen}
+%
+% \subsection{Vorbemerkung}
+%
+% Diese Seitenstile definieren die Seitenstile für normale Seiten, Titelseiten und
+% Zitatseiten.
+% Weiterhin stellt dieses Modul Umgebungen für das Umschalten auf spezielle Seitenstile
+% bereit.
+%
+% \subsection{Definieren der Seitenstile}
+%
+%
+% Das Logo der \TUD{} geht über die gesammte Textspalte und hält gleichzeitig den Schutzraum des Logos,
+% welcher durch die Angabe der doppelten Logohöhe definiert ist.
+% Das Logo wird im Vordergrund gesetzt, um Nutzern bei Fehlern visuell darauf hinzuweisen.
+% Der Skalierungsfaktor $1.071794872$ stellt die Skalierung der Logodatei dar, um auf die in \dmacro{\tudcd@logoheight}
+% festgelegt Höhe zu kommen.
+%
+% \todo{In einer Box kann man die Tiefe und Höhe von der Grundlinie festlegen. Da das Logo bereits auf der Grundlinie des unteren Schriftzuges ist, kann vielleicht eine passende Box definiert werden.}
+%    \begin{macrocode}
+%<*article|report|book|thesis|poster>
+%<*body&peri>
+\RequirePackage{graphicx}
+\RequirePackage{qrcode}
+\RequirePackage{xurl}
+\RequirePackage{scrlayer-scrpage}
+
+
+  \DeclareLayer[
+    align=tl,
+    area={\l_@@_inner_margin_dim}{\l_@@_top_margin_dim}{\textwidth}{2\l_@@_logoheight_dim},
+    contents={\@@_typeset_logo:n{1.13\l_@@_logoheight_dim}},
+    foreground
+  ]{tudcdpage.logo}
+%    \end{macrocode}
+%
+% Die Zweitlogos haben 2 Bereiche bekommen, in welchen diese platziert werden dürfen,
+% Diese jeweiligen Layer werden hiermit angelegt
+%
+%    \begin{macrocode}
+  \DeclareLayer[
+    align=bl,
+    area={\l_@@_inner_margin_dim}{\paperheight-\l_@@_inner_margin_dim-\l_@@_second_logoheight_dim}{\textwidth}{\l_@@_second_logoheight_dim},
+    contents={},
+    foreground
+  ]{tudcdpage.zweitlogo.oben}
+  \DeclareLayer[
+    align=bl,
+    area={\l_@@_inner_margin_dim}{\paperheight-\l_@@_inner_margin_dim}{\textwidth-\l_@@_grid_column_width_dim-\l_@@_grid_column_sep_dim}{\l_@@_second_logoheight_dim},
+    contents={},
+    foreground
+  ]{tudcdpage.zweitlogo.unten}
+%    \end{macrocode}
+%
+% Selbiges wird für den QR-Code angelegt
+%
+%    \begin{macrocode}
+  \DeclareLayer[
+    align=bl,
+    area={\l_@@_inner_margin_dim+3\l_@@_grid_column_sep_dim+3\l_@@_grid_column_width_dim}{\paperheight-\l_@@_inner_margin_dim}{\l_@@_grid_column_width_dim}{\l_@@_second_logoheight_dim},
+    contents={\hfill\fontsize{7\tudpt}{9\tudpt}\selectfont\color{Brilliantblau} \url{https://tu-dresden.de}\hfill\raisebox{0.25\layerheight}{\qrcode[height=0.6667\layerheight]{https://tu-dresden.de}}},
+    foreground
+  ]{tudcdpage.qrcode}
+%    \end{macrocode}
+%
+% Nach der Definition der einzelnen Ebenen werden diese zu Seitenstilen zusammengefügt.
+%
+% Anschließend werden die Pagestyles definiert.
+%
+%    \begin{macrocode}
+\DeclarePageStyleByLayers{tudcdheadings}{
+  scrheadings.head.odd,
+  scrheadings.head.even,
+  scrheadings.head.oneside,
+  scrheadings.head.below.line,
+  scrheadings.foot.above.line,
+  scrheadings.foot.odd,
+  scrheadings.foot.even,
+  scrheadings.foot.oneside
+} % Kolumnentitel
+\DeclarePageStyleByLayers{plain.tudcdheadings}{
+  scrheadings.foot.above.line,
+  scrheadings.foot.odd,
+  scrheadings.foot.even,
+  scrheadings.foot.oneside
+} % ohne Kolumnentitel
+\DeclarePageStyleByLayers{tudcdtitlepage}{
+  tudcdpage.logo,
+  tudcdpage.zweitlogo.oben,
+  tudcdpage.zweitlogo.unten,
+%  tudcdpage.qrcode
+} % Titelseiten
+\DeclarePageStyleByLayers{tudcdtitleheadpage}{
+  tudcdpage.logo,
+%  tudcdpage.zweitlogo.oben,
+%  tudcdpage.zweitlogo.unten
+} % Titelseiten
+\DeclarePageStyleByLayers{tudcdquotepage}{}
+%    \end{macrocode}
+%
+% % Als letztes wird eine Hintergrundebene angelegt, welche die Hintergrundfarbe der Seite beeinflussen kann.
+% Diese Ebene wird allen Seitenstilen angehängt.
+%
+% Um die Farbe einzustellen, zusätzlich das Helfermakro \dmacro{\tudcd@pagecolor} definiert,
+% welches mit dem Befehl \dmacro{\tudcd@set@pagecolor} gesetzt werden kann.
+%
+%    \begin{macrocode}
+\providecommand\tudcd@pagecolor{}%
+\newcommand\tudcd@set@pagecolor[1]{%
+  \gdef\tudcd@pagecolor{#1}%
+}%
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+  \DeclareLayer[
+    align=tl,
+    area={0pt}{0pt}{\paperwidth}{\paperheight},
+    contents={%
+    \noindent\ifdefempty{\tudcd@pagecolor}{}{\color{\tudcd@pagecolor}\rule{\layerwidth}{\layerheight}}},
+    background
+  ]{tudcdpage.pagecolor}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\AddLayersToPageStyle{@everystyle@}{tudcdpage.pagecolor}
+%    \end{macrocode}
+%
+% Anschließend werden die einzelnen Seitenstile umdefiniert.
+%    \begin{macrocode}
+\pagestyle{plain.tudcdheadings}
+%<report|book>\renewcommand{\chapterpagestyle}{plain.tudcdheadings}
+%    \end{macrocode}
+%
+%
+% \begin{codedescribe}[env,new=0.5.3]{tudcdtitlepage}
+% \begin{codesyntax}
+% \tsmacro{\begin{tudcdtitlepage}}[Optionen]
+% \ldots
+% \tsmacro{\end{tudcdtitlepage}}{}
+% \end{codesyntax}
+% Die \denv{tudcdtitlepage} Umgebung ist ein Analogon zur \denv{titlepage} Umgebung des \KOMAScript{}-Pakets~\cite{komascriptDocs}.
+% Im Unterschied zur \denv{titlepage} Umgebung wird hierbei das Seitenlayout verändert, um den Schutzbereich des Logos einzuhalten.
+%
+% \todo{Auf der Seite nach der Titelseite ist die Fußzeile verrutscht.}
+%
+%    \begin{macrocode}
+\NewDocumentEnvironment{tudcdtitlepage}{ o }
+  {
+  \group_begin:
+  \IfValueT{#1}{
+    \tudcd@set@pagecolor{#1}%
+  }%
+  \newgeometry{%
+    inner=\l_@@_inner_margin_dim,%
+    outer=\l_@@_outer_margin_dim,%
+    top=\l_@@_top_margin_dim,%
+    bottom=\l_@@_bottom_margin_dim%
+  }%
+  \thispagestyle{tudcdtitlepage}%
+  \vspace*{2\l_@@_logoheight_dim}%
+  }
+  {
+  \vfill%
+  \vspace*{2\l_@@_logoheight_dim}%
+  \restoregeometry%
+  \group_end:
+} % zurücksetzen auf die alte Geometrie
+%    \end{macrocode}
+% \end{codedescribe}
+%
+% \begin{codedescribe}[env,new=0.5.4]{tudcdheadingpage}
+% \begin{codesyntax}
+% \tsmacro{\begin{tudcdheadingpage}}[Optionen]
+% \ldots
+% \tsmacro{\end{tudcdheadingpage}}{}
+% \end{codesyntax}
+%
+% Die \denv{tudcdheadingpage} Umgebung setzt eine Seite ohne Zweitlogos und ohne QR-Code. Damit soll
+% \end{codedescribe}
+%
+% \begin{codedescribe}[env,new=0.5.3]{tudcdquotepage}
+% \begin{codesyntax}
+% \tsmacro{\begin{tudcdquotepage}}[Seitenfarbe]{}
+% \ldots
+% Text
+% \ldots
+% \tsmacro{\end{tudcdquotepage}}{}
+% \end{codesyntax}
+%
+% Diese Umgebung ist für das Setzen von farblich abgehobenen Seiten, auf welchen die Marginalie ausgesetzt wird.
+%
+%    \begin{macrocode}
+\NewDocumentEnvironment{tudcdquotepage}{ o }{
+  \clearpage%
+\group_begin:
+  \IfValueT{#1}{
+    \tudcd@set@pagecolor{#1}%
+  }%
+  \newgeometry{%
+    inner=\l_@@_inner_margin_dim,%
+    outer=\l_@@_outer_margin_dim,%
+    top=\l_@@_top_margin_dim,% Oberer Abstand + Schutzraum
+    bottom=\l_@@_bottom_margin_dim%
+  }%
+  \thispagestyle{tudcdquotepage}%
+  }%
+{%
+\restoregeometry%
+\group_end:
+} % zurüksetzen auf die alte Geometrie
+%    \end{macrocode}
+%
+% \end{codedescribe}
+%
+%
+%    \begin{macrocode}
+%</body&peri>
+%</article|report|book|thesis|poster>
+%    \end{macrocode}
+%
+% \listoftodos
