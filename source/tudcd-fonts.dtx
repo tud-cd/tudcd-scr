@@ -1,0 +1,392 @@
+% \iffalse meta-comment
+% LTeX: language=de-DE
+%
+%  TUDCD-Script -- Corporate Design of Technische Universität Dresden
+% ----------------------------------------------------------------------------
+%
+%  Copyright (C) Jochen Diepelt <David.diepelt@gmx.net>, 2025
+%
+% ----------------------------------------------------------------------------
+%
+%  This work may be distributed and/or modified under the conditions of the
+%  LaTeX Project Public License, either version 1.3c of this license or
+%  any later version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of
+%  LaTeX version 2008-05-04 or later.
+%
+%  This work has the LPPL maintenance status "maintained".
+%
+%  The current maintainer and author of this work is Jochen Diepelt.
+%
+% ----------------------------------------------------------------------------
+%
+% \fi
+%
+% \iffalse ins:batch + dtx:driver
+%<*ins>
+\ifx\documentclass\undefined
+  \input docstrip.tex
+  \ifToplevel{\batchinput{tudcd.ins}}
+\else
+  \let\endbatchfile\relax
+\fi
+\endbatchfile
+%</ins>
+%<*dtx>
+\ProvidesFile{tudcd-fonts.dtx}[2025/10/02]
+\documentclass[english,ngerman]{tudcddoc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+\usepackage{babel}
+\usepackage[babel]{microtype}
+\RecordChanges
+\begin{document} % Diese Dokumentation dokumentiert NUR diese Datei
+  \title{\Large Dokumentation der Datei \texttt{\jobname.dtx} \\
+  \normalsize Generiert durch \texttt{\$ enginetex \jobname.dtx}}
+  \author{Jochen Diepelt}
+  \maketitle
+  \tableofcontents
+
+  \DocInput{tudcd-fonts.dtx}
+\end{document}
+%</dtx>
+% \fi
+%
+% \selectlanguage{ngerman}
+%
+% \section{\texttt{tudcd-fonts}: Einstellungen der Schriftart}
+%
+% Dieser Teilabschnitt beschäftigt sich mit der Einbettung der Hausschrift in \TUDCDScript.
+%
+% \subsection{ Vorbemerkung }
+%
+% Die Hausschrift der TU-Dresden ist \dpkg{noto} im Medium Schriftschnitt,
+% während \textbf{fette Textauszeichnungen} im Semibold Schriftschnitt sind.
+% Zusätzlich muss die entsprechende Italics Schriftart, sowie die richtigen Kapitälchen eingestellt werden.
+%
+% Weiterhin sollen die Schrifteinstellungen für sowohl \LaTeX{} als auch \LuaLaTeX{} funktionieren.
+% Da letzteres eine Unicode-Engine ist, müssen die Schriftarten als \texttt{OT1}-Schriftart eingebettet werden,
+% während für ersteres eine \texttt{T1} Enkodierung vorgesehen ist.
+%
+% Auch sollte es für fremde Klassen möglich sein, die Hausschrift korrekt zu nutzen, daher muss sowohl ein Paket,
+% als auch ein Abschnitt für die Klassendateien vorgesehen werden.
+%
+% Weiterhin besitzt die Designvorlage eine weitere Definition von der Einheit \unit{\texpt}, weshalb
+% das Einstellen der Schriftgröße in Klassen auch angeboten werden muss.
+% Dabei muss \KOMAScript{} ebenfalls davon in Kenntnis gesetzt werden.
+%
+% \subsection{ Identifikation des Pakets \texttt{tudcdfonts} }
+%
+% Das Paket ist, ähnlich wie die Klassen, aufgebaut auf der \dpkg{expl3}-Syntax.
+% Daher wird das Paket mit \dmacro{\ProvidesExplPackage} angekündigt.
+%    \begin{macrocode}
+%<*identification&package>
+%<@@=tudcd>
+\ProvidesExplPackage{tudcdfonts}{\tudcd@common@date}{\tudcd@common@version}{Ein Paket für die Konfiguration der Schriften im Corporate Design der TU Dresden}
+%</identification&package>
+%    \end{macrocode}
+%
+% \subsection{ Einstellung der Optionen für die Schriftart}
+%
+% Die \enquote{offizielle} Schrift ist die Noto Sans, also die Schriftart ohne Serifen.
+% Um dennoch die Serifenschrift als normale Schriftart einzustellen wird die Option
+% \doption{useseriffont} angeboten.
+%
+%    \begin{macrocode}
+%<*prelim-declaration>
+\bool_new:N\l_@@_use_seriffont_bool
+%</prelim-declaration>
+%    \end{macrocode}
+%
+% Die Serifenschrift kann mittels \doption{useseriffont} eingestellt werden.
+% Dabei sollte die Einstellung zu Beginn CD-Corform sein, während eine einfache Nennung des Schlüssels ohne
+% Key die Serifenschrift aktivieren sollte.
+%
+%    \begin{macrocode}
+%<*option-useserif&peri>
+  useseriffont .bool_set:N = \l_@@_use_seriffont_bool,
+  useseriffont .usage:n = preamble,
+  useseriffont .default:n = true,
+  useseriffont .initial:n = false,
+%</option-useserif&peri>
+%    \end{macrocode}
+%
+% Um die Schriftart \texttt{Noto} einzustellen, wird das Paket \dpkg{noto} geladen
+%    \begin{macrocode}
+%<*body&peri>
+\bool_if:nTF{\l_@@_use_seriffont_bool}{
+  % Noto stellt standardmäßig die Serifenschrift ein.
+}{
+  \PassOptionsToPackage{sfdefault}{notomath}
+}
+\RequirePackage{notomath}
+%    \end{macrocode}
+%
+% Anschließend werden die einzelnen Schriftarten in Abhängigkeit der verwendeten Engine eingestellt.
+% Um die
+%    \begin{macrocode}
+\sys_if_engine_opentype:TF{
+\RequirePackage{fontspec}
+  % Hier wird LuaTeX oder XeTeX verwendet
+\renewcommand{\bfdefault}{SemiBold}
+\renewcommand{\mddefault}{Medium}
+%    \end{macrocode}
+%
+% Dabei werden für die Auswahl der einzelnen Schriftschnitte separate Befehle bereitgestellt.
+% Danke hierbei an Tim Pokart für das finden dieser Einstellungen %FIXME: Contributing Liste erstellen!
+%
+%    \begin{macrocode}
+\DeclareRobustCommand{\cdulseries}{\fontseries{UltraLight}\selectfont}
+\DeclareTextFontCommand{\textcdul}{\cdulseries}
+\DeclareRobustCommand{\cdelseries}{\fontseries{ExtraLight}\selectfont}
+\DeclareTextFontCommand{\textcdel}{\cdelseries}
+\DeclareRobustCommand{\cdlseries}{\fontseries{Light}\selectfont}
+\DeclareTextFontCommand{\textcdl}{\cdlseries}
+\DeclareRobustCommand{\cdslseries}{\fontseries{SemiLight}\selectfont}
+\DeclareTextFontCommand{\textcdsl}{\cdslseries}
+\DeclareRobustCommand{\cdmseries}{\fontseries{Medium}\selectfont}
+\DeclareTextFontCommand{\textcdm}{\cdmseries}
+\DeclareRobustCommand{\cdsbseries}{\fontseries{SemiBold}\selectfont}
+\DeclareTextFontCommand{\textcdsb}{\cdsbseries}
+\DeclareRobustCommand{\cdbseries}{\fontseries{Bold}\selectfont}
+\DeclareTextFontCommand{\textcdb}{\cdbseries}
+\DeclareRobustCommand{\cdebseries}{\fontseries{ExtraBold}\selectfont}
+\DeclareTextFontCommand{\textcdeb}{\cdebseries}
+\DeclareRobustCommand{\cdubseries}{\fontseries{Black}\selectfont}
+\DeclareTextFontCommand{\textcdub}{\cdubseries}
+}{
+  % Hier ist pdfTeX verwendet worden.
+\renewcommand{\bfdefault}{sb}
+\renewcommand{\mddefault}{medium}
+%    \end{macrocode}
+%
+% Dabei werden für die Auswahl der einzelnen Schriftschnitte separate Befehle bereitgestellt.
+%
+%    \begin{macrocode}
+\DeclareRobustCommand{\cdulseries}{\fontseries{ul}\selectfont}
+\DeclareTextFontCommand{\textcdul}{\cdulseries}
+\DeclareRobustCommand{\cdelseries}{\fontseries{el}\selectfont}
+\DeclareTextFontCommand{\textcdel}{\cdelseries}
+\DeclareRobustCommand{\cdlseries}{\fontseries{l}\selectfont}
+\DeclareTextFontCommand{\textcdl}{\cdlseries}
+\DeclareRobustCommand{\cdslseries}{\fontseries{m}\selectfont}
+\DeclareTextFontCommand{\textcdsl}{\cdslseries}
+\DeclareRobustCommand{\cdmseries}{\fontseries{medium}\selectfont}
+\DeclareTextFontCommand{\textcdm}{\cdmseries}
+\DeclareRobustCommand{\cdsbseries}{\fontseries{sb}\selectfont}
+\DeclareTextFontCommand{\textcdsb}{\cdsbseries}
+\DeclareRobustCommand{\cdbseries}{\fontseries{b}\selectfont}
+\DeclareTextFontCommand{\textcdb}{\cdbseries}
+\DeclareRobustCommand{\cdebseries}{\fontseries{eb}\selectfont}
+\DeclareTextFontCommand{\textcdeb}{\cdebseries}
+\DeclareRobustCommand{\cdubseries}{\fontseries{ub}\selectfont}
+\DeclareTextFontCommand{\textcdub}{\cdubseries}
+}
+%</body&peri>
+%    \end{macrocode}
+%
+%
+% \subsection{ Einstellung der Optionen für die Schriftgröße }
+%
+% Die etwas aufwändigere Einstellung ist die Schriftgröße:
+% Aus Gründen der mangelnden Vereinheitlichung der Maßeinheit \unit{\texpt},
+% haben \TeX-\unit{\texpt} und die TUDCD-\unit{\texpt} nicht denselben Wert.
+% Die Schriftgröße entspricht auch nicht dem Word-\unit{\texpt}, was in \TeX{}
+% der Maßeinheit \unit{\texbp} entsprechen würde.
+%
+% Daher wird eine spezielle \emph{Konstante} Länge festgelegt, welches den festgesetzten Wert
+% \qty{73015}{\texsp} bekommt.
+% Dieser Wert ist leicht größer als das \unit{\texpt} in den TUDCD-Vorlagen, allerdings konnte
+% zum Zeitpunkt des Schreibens kein besserer Wert ermittelt werden.
+%
+% Es wird weiterhin eine \LaTeXe{} Länge bereitgestellt, damit Nutzer ebenfalls Zugriff auf diese Länge besitzen.
+%    \begin{macrocode}
+%<*prelim-declaration>
+\dim_const:Nn\c_@@_typo_point_dim{73015sp}
+\newlength\tudpt%
+\setlength\tudpt{\c_@@_typo_point_dim}
+%</prelim-declaration>
+%    \end{macrocode}
+%
+% Das Einstellen der Schriftgröße muss einerseits ermöglichen,
+% die Schriftgröße der \TUD{} wählen zu können, andererseits muss es möglich sein,
+% die Option \dcode{fontsize} von \KOMAScript{} nutzen zu können.
+%  Test
+% Daher wird der übergebene Wert als String gespeichert, anschließend verarbeitet und erst
+% nachdem festgestellt worden ist, dass es nicht die \TUD{} Definition ist, an
+% \KOMAScript durchgereicht.
+%
+%    \begin{macrocode}
+%<*article|report|book|thesis>
+%<*prelim-declaration>
+\str_new:N\g_@@_fontsize_str
+%</prelim-declaration>
+%    \end{macrocode}
+%
+% Anschließend wird der Schlüssel definiert.
+%
+%    \begin{macrocode}
+%<*option-fontsize&peri>
+  fontsize .str_gset:N = \g_@@_fontsize_str,
+  fontsize .usage:n = load,
+  fontsize .value_required:n = true,
+  fontsize .initial:n = brochure,
+%</option-fontsize&peri>
+%    \end{macrocode}
+%
+% Im Header der Klassendatei wird der Wert der Option verarbeitet.
+% Dabei muss für etwaige Fehler die Fehlermeldung aussagekräftig genug sein,
+% damit sofort erkennen, dass der Fehler in den globalen Klassenoptionen liegt.
+%
+% Zuerst werden die Meldungen definiert, welche die Fehlermeldungen ausgeben.
+%
+%    \begin{macrocode}
+%<*header&peri>
+\msg_new:nnnn{ tudcd }{ font/fontsizeparseerror }{ Illegal~value~'#1'~for~document~option~fontsize~given! }{
+  During~the~option~processing~of~the~option~'fontsize',~an~illegal~value~'#1'~was~encountered. \\ \\
+
+  If~you~think~this~message~not~correct,~please~open~an~issue~at~<https://github.com/tud-cd/tudcd-scr/issues>
+}
+\msg_new:nnn{ tudcd }{ font/fontsizetudcdinfo }{ Parsed~value~'#1',~passing~value~'#2'~to~KOMA~Script. }
+%    \end{macrocode}
+%
+% Da mehrere Fälle nacheinander abgearbeitet werden müssen,
+% wird eine Variable definiert, welche das erfolgreiche Verarbeiten signalisiert.
+%
+%    \begin{macrocode}
+\bool_new:N\l_@@_option_was_parsed_bool%
+\bool_set_false:N\l_@@_option_was_parsed_bool%
+%    \end{macrocode}
+%
+% Anschließend wird zuerst die Option \doption{brochure} abgearbeitet.
+% Hierbei sei angemerkt, dass \dpkg{microtype} momentan Längenregister in \dmacro{\fontsize}-Befehlen
+% inkorrekterweise nicht akzeptiert, dies jedoch langsam abgearbeitet wird.
+% Daher wurden die Produkte für die einzelnen Schriftgrößen manuell abgearbeitet.
+%
+%    \begin{macrocode}
+\bool_if:nT{!\l_@@_option_was_parsed_bool && \str_if_eq_p:Vn\g_@@_fontsize_str{brochure}}{
+  \let\normalsize\@undefined
+  \DeclareRobustCommand\normalsize{
+    %\@setfontsize\normalsize{9\tudcd@font@pt}{12\tudcd@font@pt}%
+    \@setfontsize\normalsize{657128sp}{876168sp}
+    %\abovedisplayskip 9pt plus 2pt minus 5pt%
+    %\abovedisplayshortskip 9pt plus 2pt minus 2pt%
+    %\belowdisplayshortskip 9pt plus 3.5pt minus 3pt%
+    %\belowdisplayskip\abovedisplayskip%
+    %\let\@listi\@listI
+
+  }%
+  \let\small\@undefined
+  \DeclareRobustCommand\small{
+    %\@setfontsize\small{8\tudcd@font@pt}{10\tudcd@font@pt}%
+    \@setfontsize\small{584112sp}{730140sp}
+    %\abovedisplayskip 9pt plus 2pt minus 5pt%
+    %\abovedisplayshortskip 9pt plus 2pt minus 2pt%
+    %\belowdisplayshortskip 9pt plus 3.5pt minus 3pt%
+    %\belowdisplayskip\abovedisplayskip%
+    %\def\@listi{\leftmargin\leftmargini
+    %  \topsep 4pt plus 2pt minus 2pt
+    %  \parsep 2pt plus 1pt minus 1pt
+    %  \itemsep \parsep}%
+  }
+  \let\footnotesize\@undefined
+  \DeclareRobustCommand\footnotesize{%
+  %\@setfontsize\footnotesize{7\tudcd@font@pt}{9\tudcd@font@pt}%
+  \@setfontsize\footnotesize{511098sp}{657126sp}%
+  %\abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+  %\abovedisplayshortskip \z@ \@plus\p@
+  %\belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+  %\def\@listi{\leftmargin\leftmargini
+  %  \topsep 3\p@ \@plus\p@ \@minus\p@
+  %  \parsep 2\p@ \@plus\p@ \@minus\p@
+  %  \itemsep \parsep}%
+  }
+  %
+  %\def\@listi{\leftmargin\leftmargini
+  %    \parsep 4\p@ \@plus2\p@ \@minus\p@
+  %    \topsep 8\p@ \@plus2\p@ \@minus4\p@
+  %    \itemsep4\p@ \@plus2\p@ \@minus\p@}
+  %
+  \let\scriptsize\@undefined
+  \DeclareRobustCommand\scriptsize{\@setfontsize\scriptsize{438084sp}{511098sp}}
+  \let\tiny\@undefined
+  \DeclareRobustCommand\tiny{\@setfontsize\tiny {365070sp} {438084sp}}
+  \let\large\@undefined
+  \DeclareRobustCommand\large{\@setfontsize\large {803154sp}{1095210sp}}
+  \let\Large\@undefined
+  \DeclareRobustCommand\Large{\@setfontsize\Large {876168sp}{1095210sp}}
+  \let\LARGE\@undefined
+  \DeclareRobustCommand\LARGE{\@setfontsize\LARGE {1095210sp}{1314252sp}}
+  \let\huge\@undefined
+  \DeclareRobustCommand\huge{\@setfontsize\huge {1314252sp}{1606308sp}}
+  \let\Huge\@undefined
+  \DeclareRobustCommand\Huge{\@setfontsize\Huge {1606308sp}{1752336sp}}
+  % Manual Fontsizesetting 9pt
+  \msg_info:nnVn{ tudcd }{ font/fontsizetudcdinfo }\g_@@_fontsize_str{657128sp}
+  \bool_set_true:N\l_@@_option_was_parsed_bool
+  \PassOptionsToClass{fontsize=657128sp}
+%<article>  {scrartcl}%
+%<report>   {scrreprt}%
+%<book>     {scrbook}%
+%<thesis>   {scrbook}%
+}
+%    \end{macrocode}
+%
+% Sollten die vorherigen Optionen nicht verarbeitet worden sein,
+% dann wird versucht zu ermitteln, ob die letzten 5 Charaktere
+% \texttt{tudpt} sind. Sollte dies der Fall sein,
+% wird mit der internen Länge \dmacro{\tudpt} multipliziert,
+% ansonsten wird die Option unbearbeitet an \KOMAScript durchgereicht.
+%
+%    \begin{macrocode}
+\bool_if:nT{!\l_@@_option_was_parsed_bool}{
+  \str_clear:N\l_tmpa_str%
+  \str_set:Ne\l_tmpa_str{
+    \str_range:Nnn\g_@@_fontsize_str{-5}{-1}
+  }
+  \str_set_eq:NN\l_tmpb_str\g_@@_fontsize_str%
+  \str_if_eq:VnTF\l_tmpa_str{tudcd}{
+    % Entferne das tudpt
+    \str_remove_once:Nn\l_tmpb_str{tudpt}
+    % Anschließend bastel einen Ausdruck daraus
+    \str_log:N\l_tmpb_str
+    \dim_set:Nn\l_tmpa_dim{\c_@@_typo_point_dim * \l_tmpb_str}
+
+    \msg_info:nnVV{ tudcd }{ font/fontsizetudcdinfo }\g_@@_fontsize_str\l_tmpa_dim
+    \bool_set_true:N\l_@@_option_was_parsed_bool
+%    \end{macrocode}
+%
+% Im folgenden wird eine Tokenliste zum Weiterreichen der Option konstruiert.
+% Dies hat den Grund, dass bei der bloßen Längenangabe \dpkg{tocbasic} einen kryptischen Fehler
+% hat. Mittels des Expandierens der Länge wird dieser umgangen.
+%
+%    \begin{macrocode}
+    \tl_set:Ne\l_tmpa_tl{\exp_not:o{\dim_use:N\l_tmpa_dim}}
+    \tl_set:Ne\l_tmpa_tl{\exp_not:n{\PassOptionsToClass}{fontsize=\exp_not:o{\l_tmpa_tl}}}
+    \tl_put_right:Nn\l_tmpa_tl{
+%<article>  {scrartcl}%
+%<report>   {scrreprt}%
+%<book>     {scrbook}%
+%<thesis>   {scrbook}%
+    }
+    \tl_use:N\l_tmpa_tl
+  }{
+    \msg_info:nnVV{ tudcd }{ font/fontsizetudcdinfo }\g_@@_fontsize_str\g_@@_fontsize_str
+    \bool_set_true:N\l_@@_option_was_parsed_bool
+
+    \tl_set:Ne\l_tmpa_tl{\exp_not:o{\dim_use:N\l_tmpa_dim}}
+    \tl_set:Ne\l_tmpa_tl{\exp_not:n{\PassOptionsToClass}{fontsize=\exp_not:o{\g_@@_fontsize_str}}}
+    \tl_put_right:Nn\l_tmpa_tl{
+%<article>  {scrartcl}%
+%<report>   {scrreprt}%
+%<book>     {scrbook}%
+%<thesis>   {scrbook}%
+    }
+    \tl_use:N\l_tmpa_tl
+  }
+}
+%</header&peri>
+%</article|report|book|thesis>
+%    \end{macrocode}
