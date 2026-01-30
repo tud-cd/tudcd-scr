@@ -23,7 +23,9 @@
 \usepackage{hvlogos}
 
 \usepackage{siunitx}
-
+\usepackage{float}
+\usepackage{tabularray}
+\SetTblrInner{expand=\tudcdGridColumnwidth}
 \usepackage{listings}
 \lstset{
   language={[LaTeX]Tex},
@@ -38,9 +40,13 @@
   {ö}{{\"o}}1
   {~}{{\textasciitilde}}1,
   numberstyle=\footnotesize,
-  backgroundcolor=\SelectTUDCDSecondBackgroundColor
+  frame=single,
+  rulecolor=\SelectTUDCDHighlightColor,
+  backgroundcolor=\SelectTUDCDTertiaryColor
 %  numbers=left,
 }
+
+\usepackage{hyperref}
 
 \author{Jochen Diepelt}
 \title{TUDCD-Script: Offizielle Klassen und Pakete im Stil der TU Dresden}
@@ -49,12 +55,13 @@
 
 \TUDCDsetup{
   titlepage={
-    highlight-color=Brilliantblau,
-    background-color=Blau2%
+    highlight-color=Weiss,
+    background-color=Brilliantblau,
+    logo-color=white
   },
   color={
     highlight-color=Brilliantblau,
-    second-background-color=Blau2%
+    tertiary-color=Blau2%
   }
 }
 
@@ -143,11 +150,121 @@ Mit den Logoeinstellungen kann anschließend das Logo mittels \lstinline|\Typese
 \textbf{ACHTUNG:} Das Logo besitzt eine Unterlänge, weswegen der Shape des Logos immer \emph{kleiner} sein wird,
 als die angegeben Größe. Die Dimension muss mit dem Faktor \num{1.13} multipliziert werden, damit der Shape die angegebene Größe hat.
 
+
+\section{Einstellungen der Farben}
+
+Das Corporate Design sieht für Farben eine festgelegte Farbpalette vor.
+Gemäß Corporate Design Leitfaden dürfen maximal zwei unterschiedliche
+sekundäre Farben verwendet werden, allerdings wird hierbei die Schwarze Schriftfarbe
+nicht gezählt.
+
+TUDCD-Script bietet daher drei einstellbare Farben an:
+\begin{lstlisting}
+\TUDCDsetup{
+  color/highlight-color=<Farbe>,
+  color/secondary-color=<Farbe>,
+  color/tertiary-color=<Farbe>
+}
+\end{lstlisting}
+welche jeweils mit
+\begin{lstlisting}
+\SelectTUDCDHighlightColor
+\SelectTUDCDSecondaryColor
+\SelectTUDCDTertiaryColor
+\end{lstlisting}
+ausgewählt werden können.
+
+\textbf{ACHTUNG:} Die \lstinline|\SelectTUDCD...|-Befehle wählen die Farbe in der momentanen Gruppe aus!
+Um also die Farbauswahl zu begrenzen ist entweder
+\begin{lstlisting}
+{
+\SelectTUDCDHighlightColor
+Hier ein Text
+}
+\end{lstlisting}
+oder
+\begin{lstlisting}
+\begingroup
+\SelectTUDCDHighlightColor
+Hier ein Text
+\endgroup
+\end{lstlisting}
+zu benutzten.
+
+\textbf{ANMERKUNG:} Die Makros \lstinline|\textcolor|,\lstinline|\mathcolor| und \lstinline|\color| des Pakets \texttt{xcolor}~\cite{ctan-xcolor},
+können bisher nicht mit den Auszeichnungsfarben verwendet werden. Eine Möglichkeit für Metafarben, welche in diesen Befehlen
+verwendet werden kann, wird in Kürze bereitgestellt.
+
+\subsection{Der Farbenkatalog des Corporate Designs}
+
+Die Farben des Corporate Design werden in Tabelle~\ref{tab:colorcatalogue} dargestellt.
+Dabei wurde die zulässige Schriftfarbe zu einem Hintergrund mit dargestellt.
+Auf den Sekundärfarben (mit dem Namen \texttt{Farbe2})
+darf ebenfalls mit dem Brilliantblau geschrieben werden.
+Dabei sollte beachtet werden, dass die Kontraste mindestens dem Grad AA
+der WCAG 2.2 Norm erfüllen. % TODO: ORDENTLICHE QUELLE HINZUFÜGEN!
+Eine Übersicht über die Kontraste der Farben finden sie unter diesem
+\href{https://contrast-grid.eightshapes.com/?version=1.1.0&background-colors=&foreground-colors=%2300005A%2C%20Dunkelblau%0D%0A%2300008C%2C%20Prim%C3%A4rblau%0D%0A%232F57B2%2C%20Blau%201%0D%0A%237369BE%2C%20Violett%201%0D%0A%23BC1589%2C%20Pink%201%0D%0A%23D20F41%2C%20Rot%201%0D%0A%23C85000%2C%20Orange%201%0D%0A%23FFC700%2C%20Gelb%201%0D%0A%23767A23%2C%20Oliv%201%0D%0A%23007D4B%2C%20Gr%C3%BCn%201%0D%0A%230A777F%2C%20Petrol%201%0D%0A%2397C6FF%2C%20Blau%202%0D%0A%23C8C8FF%2C%20Violett%202%0D%0A%23FFB9FF%2C%20Pink%202%0D%0A%23FFAAA5%2C%20Rot%202%0D%0A%23FFBE78%2C%20Orange%202%0D%0A%23FFE483%2C%20Gelb%202%0D%0A%23D2DC46%2C%20Oliv%202%0D%0A%238CE6AA%2C%20Gr%C3%BCn%202%0D%0A%238CE6D7%2C%20Petrol%202%0D%0A%23000000%2C%20Schwarz%0D%0A%23323F4B%2C%20Grau%20100%0D%0A%23566371%2C%20Grau%2080%0D%0A%237D8894%2C%20Grau%2060%0D%0A%23A5AEB8%2C%20Grau%2040%0D%0A%23D0D5DC%2C%20Grau%2020%0D%0A%23E7E9ED%2C%20Grau%2010%0D%0A%23FFFFFF%2C%20Wei%C3%9F&es-color-form__tile-size=compact&es-color-form__show-contrast=aaa&es-color-form__show-contrast=aa&es-color-form__show-contrast=aa18&es-color-form__show-contrast=dnp}{Link}.
+
+
+\begin{table}[h]
+  \centering
+  \label{tab:colorcatalogue}
+  \captionabove{Farbenkatalog der TU Dresden}
+  \begin{tabular}{
+    @{}
+    p{\tudcdGridColumnwidth}
+    @{\hspace{\tudcdGridColumnsep}}
+    p{\tudcdGridColumnwidth}
+    @{\hspace{\tudcdGridColumnsep}}
+    p{\tudcdGridColumnwidth}
+    @{\hspace{\tudcdGridColumnsep}}
+    p{\tudcdGridColumnwidth}@{}}
+    \colorbox{Brilliantblau}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Brilliantblau} \\}} &
+    \colorbox{Blau1}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Blau1} \\ }} &
+    \colorbox{Violett1}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Violett1} \\}} &
+    \colorbox{Magenta1}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Magenta1} \\}} \\
+    %
+    \colorbox{Dunkelblau}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Dunkelblau} \\ }} &
+    \colorbox{Blau2}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Blau2} \\ }} &
+    \colorbox{Violett2}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Violett2} \\}} &
+    \colorbox{Magenta2}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Magenta2}  \\}} \\[\tudcdGridColumnsep]
+    % Platzlassen
+    \colorbox{Rot1}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Rot1} \\}} &
+    \colorbox{Orange1}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Orange1} \\ }} &
+    \colorbox{Gelb1}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Gelb1} \\}} &
+    \colorbox{Oliv1}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Oliv1} \\}} \\
+    %
+    \colorbox{Rot2}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Rot2} \\ }} &
+    \colorbox{Orange2}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Orange2} \\ }} &
+    \colorbox{Gelb2}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Gelb2} \\}} &
+    \colorbox{Oliv2}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Oliv2}  \\}} \\[\tudcdGridColumnsep]
+    % Platzlassen
+    \colorbox{Gruen1}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Gruen1} \\}} &
+    \colorbox{Tuerkis1}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Tuerkis1} \\ }} &
+    \colorbox{Schwarz}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Schwarz} \\}} &
+    \colorbox{Grau100}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Grau100} \\}} \\
+    %
+    \colorbox{Gruen2}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Gruen2} \\ }} &
+    \colorbox{Tuerkis2}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Tuerkis2} \\ }} &
+    \colorbox{Weiss}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Weiss} \\}} &
+    \colorbox{Grau80}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Grau80}  \\}} \\[\tudcdGridColumnsep]
+
+    \colorbox{Grau60}{\parbox{\tudcdGridColumnwidth}{\textcolor{Weiss}{Grau60} \\ }} &
+    \colorbox{Grau40}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Grau40} \\ }} &
+    \colorbox{Grau20}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Grau20} \\}} &
+    \colorbox{Grau10}{\parbox{\tudcdGridColumnwidth}{\textcolor{Schwarz}{Grau10}  \\}} \\
+  \end{tabular}
+\end{table}
+
+
 \TUDCDsetup{
   color={
-    highlight-color=Tuerkis1
+    highlight-color=Tuerkis1,
+    tertiary-color=Tuerkis2
   }
 }
+
 
 \chapter{Dokumente im Stil der TU Dresden}
   Hauptklassen \texttt{tudcdartcl} und \texttt{tudcdreprt}
@@ -157,6 +274,15 @@ Zum Zeitpunkt des Schreibens sind die beiden Hauptklassen
 
 \section{Einstellungen}
 
+\begin{lstlisting}
+\TUDCDsetup{
+  logo={
+    language=<Wert>,
+    color=<Wert>,
+    colormodel=<Wert>
+  }
+}
+\end{lstlisting}
 
 
 

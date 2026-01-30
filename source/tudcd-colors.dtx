@@ -118,10 +118,10 @@
 \NewDocumentCommand\SelectTUDCDHighlightColor{}{
   \@@_select_highlight_color:
 }
-\NewDocumentCommand\SelectTUDCDBackgroundColor{}{
+\NewDocumentCommand\SelectTUDCDSecondaryColor{}{
   \@@_select_background_color:
 }
-\NewDocumentCommand\SelectTUDCDSecondBackgroundColor{}{
+\NewDocumentCommand\SelectTUDCDTertiaryColor{}{
   \@@_select_second_background_color:
 }
 %</prelim-declaration>
@@ -135,10 +135,10 @@
   },
   color/highlight-color .tl_set:N = \l_@@_highlight_color_tl,
   color/highlight-color .initial:n = {Brilliantblau},
-  color/background-color .tl_set:N = \l_@@_background_color_tl,
-  color/background-color .initial:n = {.},
-  color/second-background-color .tl_set:N = \l_@@_second_background_color_tl,
-  color/second-background-color .initial:n = {.},
+  color/secondary-color .tl_set:N = \l_@@_background_color_tl,
+  color/secondary-color .initial:n = {.},
+  color/tertiary-color .tl_set:N = \l_@@_second_background_color_tl,
+  color/tertiary-color .initial:n = {.},
   color/model .choices:nn = {
     rgb, cmyk
   }{
