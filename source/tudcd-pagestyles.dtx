@@ -165,22 +165,11 @@
 % % Als letztes wird eine Hintergrundebene angelegt, welche die Hintergrundfarbe der Seite beeinflussen kann.
 % Diese Ebene wird allen Seitenstilen angehängt.
 %
-% Um die Farbe einzustellen, zusätzlich das Helfermakro \dmacro{\tudcd@pagecolor} definiert,
-% welches mit dem Befehl \dmacro{\tudcd@set@pagecolor} gesetzt werden kann.
-%
-%    \begin{macrocode}
-\providecommand\tudcd@pagecolor{}%
-\newcommand\tudcd@set@pagecolor[1]{%
-  \gdef\tudcd@pagecolor{#1}%
-}%
-%    \end{macrocode}
-%
-%
 %    \begin{macrocode}
   \DeclareLayer[
     align=tl,
     area={0pt}{0pt}{\paperwidth}{\paperheight},
-    contents={\noindent\tl_if_blank:VF\l_@@_page_color_tl{\color_select:V{\l_@@_page_color_tl} \rule{\layerwidth}{\layerheight}}},
+    contents={\noindent\tl_if_blank:VF{\l_@@_page_color_tl}{\color_select:V{\l_@@_page_color_tl} \rule{\layerwidth}{\layerheight}}},
     background
   ]{tudcdpage.pagecolor}
 %    \end{macrocode}
@@ -224,11 +213,11 @@
     \keys_set:nn{ tudcd / titlepage }{ #1 }
   },
   titlepage/highlight-color .tl_set:N = \l_@@_titlepage_highlight_color_tl,
-  titlepage/highlight-color .default:o = \l_@@_highlight_color_tl, % Wir erben von tudcd-colors
+%  titlepage/highlight-color .default:o = \l_@@_highlight_color_tl, % Wir erben von tudcd-colors
   titlepage/background-color .tl_set:N = \l_@@_titlepage_background_color_tl,
-  titlepage/background-color .default:o = \l_@@_background_color_tl,
+%  titlepage/background-color .default:o = \l_@@_background_color_tl,
   titlepage/secondary-color .tl_set:N = \l_@@_titlepage_second_background_color_tl,
-  titlepage/secondary-color .default:o = \l_@@_second_background_color_tl,
+%  titlepage/secondary-color .default:o = \l_@@_second_background_color_tl,
   titlepage/logo-language .str_set:N = \l_@@_titlepage_logo_language_str,
   titlepage/logo-language .value_required:n = true,
   titlepage/logo-language .initial:o =\l_@@_logolang_str,
@@ -262,6 +251,7 @@
     \keys_set:nn{ tudcd/titlepage }{ #1 }
   }%
   \tl_set_eq:NN\l_@@_highlight_color_tl\l_@@_titlepage_highlight_color_tl
+  \tl_log:N\l_@@_titlepage_background_color_tl
   \tl_set_eq:NN\l_@@_page_color_tl\l_@@_titlepage_background_color_tl
   %
   \str_set_eq:NN\l_@@_logolang_str\l_@@_titlepage_logo_language_str
@@ -280,6 +270,7 @@
   {
   \vfill%
   \vspace*{2\l_@@_logoheight_dim}%
+  \clearpage
   \group_end:
   \restoregeometry%
 } % zurücksetzen auf die alte Geometrie
