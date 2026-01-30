@@ -23,6 +23,15 @@
 \usepackage{hvlogos}
 
 \usepackage{siunitx}
+\DeclareSIUnit{\texpt}{pt}
+\DeclareSIUnit{\texbp}{bt}
+\DeclareSIUnit{\texsp}{sp}
+\DeclareSIQualifier{\word}{\text{Word}}
+\DeclareSIQualifier{\tex}{\text{\TeX}}
+\DeclareSIQualifier{\adobe}{\text{Adobe}}
+\DeclareSIQualifier{\tud}{\text{TUD}}
+
+
 \usepackage{float}
 \usepackage{tabularray}
 \SetTblrInner{expand=\tudcdGridColumnwidth}
@@ -260,7 +269,9 @@ Eine Übersicht über die Kontraste der Farben finden sie unter diesem
 
 
 
-\subsection{Die Hausschrift der TU Dresden}
+\section{Die Hausschrift der TU Dresden}
+
+\subsection{Serifen oder keine Serifen}
 
 Die Hausschrift der TUD ist die Noto Sans, im Schriftschnitt Medium.
 Da für Fließtexte eine Serifenschrift unter Umständen einen besseren
@@ -281,6 +292,25 @@ Lesefluss ermöglicht, wird die späte Option \texttt{useseriffont} bereitgestel
 Diese Option schaltet auf die Serifenschrift um.
 Dabei bleibt für Überschriften die serifenlose Schrift erhalten.
 
+\subsection{Weitere Schriftschnitte}
+
+Um alle Schriftschnitte der Noto Schriftfamilie zur Verfügung zu stellen,
+werden die Makros
+\begin{lstlisting}
+\textcdul{Text}
+\textcdel{Text}
+\textcdl{Text}
+\textcdsl{Text}
+\textcdm{Text}
+\textcdsb{Text}
+\textcdb{Text}
+\textcdeb{Text}
+\textcdub{Text}
+\end{lstlisting}
+bereitgestellt. Diese wählen den jeweiligen Schriftschnitt nach der Schriftensammlung aus.
+
+\textbf{ANMERKUNG}: Das Corporate Design lässt für Spezialanwendungen die Schriften mit
+einer geringeren Laufweite (die Noto Condensed) zu. Diese wurden jedoch nicht mit eingebunden.
 
 \TUDCDsetup{
   color={
@@ -289,25 +319,150 @@ Dabei bleibt für Überschriften die serifenlose Schrift erhalten.
   }
 }
 
+
 \chapter{Dokumente im Stil der TU Dresden}
-  Hauptklassen \texttt{tudcdartcl} und \texttt{tudcdreprt}
 
 Zum Zeitpunkt des Schreibens sind die beiden Hauptklassen
 \texttt{tudcdartcl} und \texttt{tudcdreprt}.
+Diese setzen das Broschürenraster der TU Dresden um.
 
-\section{Einstellungen}
+\section{Das Broschürenraster}
 
+Die Klassen setzen das Broschürenraster der TUD um.
+Da dies in mehreren Varianten angeboten wird, werden in diesem Abschnitt
+die Einstellungsmöglichkeiten dargestellt.
+
+\subsection{Einstellung der Marginalie}
+
+Das Broschürenraster kommt in zwei Varianten, einmal mit Marginalienspalte,
+einmal ohne Marginalienspalte.
+Um zwischen diesen Möglichenkeiten umzuschalten
 wird die globale Option \texttt{usemargin} bereitgestellt.
 \begin{lstlisting}
 \documentclass[usemargin]{<Klasse>}
 % Oder
 \documentclass[usemargin=<Wahrheitswert>]{<Klasse>}
 \end{lstlisting}
+Dabei ist standardmäßig die Marginalie ausgeschaltet, die alleinige Angabe von \texttt{usemargin}
+stellt diese ein.
+
+\section{Schrifteinstellungen}
+
+\subsection{Schriftgrößen}
+
+Die Schriftgrößen, welche in den Vorlagen des Corporate Designs dargestellt sind, beziehen sich auf eine
+Einheit \unit{\texpt}, welche weder \unit{\texpt\tex}, noch \unit{\texpt\word} oder \unit{\texpt\adobe} entspricht.
+Daher wurde für diese Klasse die Länge \lstinline|\tudpt| definiert, welche empirisch auf \qty{73015}{\texsp} festgelegt wurde.
+
+Zur Einstellung der Schriftgröße wird die globale Option \texttt{fontsize}
+angeboten.
+\begin{lstlisting}
+\documentclass[fontsize=<Größe>]{<TUDCD-Klasse>}
+\end{lstlisting}
+Diese erlaubt folgende Werte \begin{description}
+  \item[\texttt{brochure}] Hiermit wird die Schriftgröße des Haupttexts auf \qty{9}{\texpt\tud} gesetzt,
+  und alle weiteren Schriftgrößenbefehle wie \lstinline|\Large|,\lstinline|\small|,\lstinline|\footnotesize| auf
+  Werte gesetzt, welche dem Broschürenraster entnommen worden sind.
+  Dies ist die Standardeinstellung.
+  \item[$x$\texttt{tudpt}] Hiermit wird die Schriftgröße auf $x$~\unit{\texpt\tud} gesetzt, und wird intern an
+  die \KOMAScript\  Option \texttt{fontsize} durchgereicht.
+  In der Protokolldatei erscheint eine Information, welche Größe in \unit{\texpt\tex} an \KOMAScript\ durchgereicht wurde.
+  \item[Sonst] Alle Werte welche nicht durch die oberen Einstellungen verarbeitet wurden, werden direkt an
+  die \KOMAScript\  Option \texttt{fontsize} durchgereicht.
+\end{description}
+
+\section{Titelseiten}
+
+Zum Zeitpunkt des Schreibens wird für die Konfiguration der Titelseite in \texttt{tudcdreprt},
+die Umgebung \texttt{tudcdtitlepage} definiert.
+
+\begin{lstlisting}
+\begin{tudcdtitlepage}
+% Inhalte
+\end{tudcdtitlepage}
+\end{lstlisting}
+
+Die \lstinline|<Optionen>| stellen hierbei eine Kombination aus den allgemeinen einfachen Optionen für das Einstellen des Logos,
+sowie zur Einstellung der Farben dar
+\begin{lstlisting}
+\TUDCDsetup{
+  titlepage/highlight-color =<Farbe>,
+  titlepage/background-color=<Farbe>,
+  titlepage/secondary-color =<Farbe>,
+  titlepage/logo-language=<de|en|auto>,
+  titlepage/logo-model=<cmyk|rgb>,
+  titlepage/logo-color=<white|black|blue>
+}
+\end{lstlisting}
+Sollten die Optionen mittels \lstinline|\TUDCDsetup| gesetzt worden sein,
+gelten diese ab diesem Zeitpunkt für alle nachfolgenden Umgebungen \texttt{tudcdtitlepage}
+
+Diese können jedoch lokal überschrieben werden, indem im optionalen Argument der Umgebung
+die Schlüssel neu gesetzt werden.
+\begin{lstlisting}
+\begin{tudcdtitlepage}[
+  titlepage/highlight-color =<Farbe>,
+  titlepage/background-color=<Farbe>,
+  titlepage/secondary-color =<Farbe>,
+  titlepage/logo-language=<de|en|auto>,
+  titlepage/logo-model=<cmyk|rgb>,
+  titlepage/logo-color=<white|black|blue>
+]
+% Inhalte
+\end{tudcdtitlepage}
+\end{lstlisting}
+Diese Überschreibung gilt nur innerhalb dieser Umgebung.
+
+In beiden Fällen kann das Setzen der Schlüssel mit
+\begin{lstlisting}
+\TUDCDsetup{
+  titlepage={
+    highlight-color =<Farbe>,
+    background-color=<Farbe>,
+    secondary-color =<Farbe>,
+    logo-language=<de|en|auto>,
+    logo-model=<cmyk|rgb>,
+    logo-color=<white|black|blue>
+  }
+}
+\end{lstlisting}
+erfolgen.
+
+\TUDCDsetup{
+  color={
+    highlight-color=Violett1,
+    tertiary-color=Violett2
+  }
+}
+
+\section{Fertige Beispieldokumente}
 
 
-\subsection{Wieder anderer Test}
+\chapter{Präsentationen im Stil der TU Dresden}
 
-\subsubsection{Noch ein Test}
+Zum Zeitpunkt des Schreibens wird eine \texttt{beamer}~\cite{ctan-beamer} Präsentationsvorlage
+bereitgestellt, welche jedoch die vorangegangenen Konfigurationen nicht teilt.
+
+Dies liegt unter anderem daran, dass diese Klasse parallel zu den anderen Klassen entstanden ist,
+und eine Überarbeitung noch vorliegt.
+
+\section{Laden des Beamertemplates}
+
+Nach erfolgter Installation des Paketbundles kann das Corporate Design der TU Dresden mittels
+\begin{lstlisting}
+\usetheme{tudcd}
+\end{lstlisting}
+eingestellt werden.
+
+\subsection{Zusätzliche Möglichkeiten}
+
+Die Beamerklasse definiert das zusätzliche Makro \lstinline|\secondlogos|, welches das Einbinden zusätzlicher
+Zweitlogos ermöglicht.
+\begin{lstlisting}
+\secondlogos{Dateipfad1,Dateipfad2,Dateipfad3,...}
+\end{lstlisting}
+Da \lstinline|\secondlogos| eine kommaseparierte Liste an Einträgen erwartet, können die Dateipfade keine Kommata enthalten.
+Die Logos werden von Links nach Rechts rechtbündig in den dafür vorgesehenen Bereich platziert.
 
 \TUDCDsetup{
   color={
@@ -315,5 +470,8 @@ wird die globale Option \texttt{usemargin} bereitgestellt.
   }
 }
 \printbibliography%
+
+
+\section{Fertige Beispieldokumente}
 
 \end{document}
