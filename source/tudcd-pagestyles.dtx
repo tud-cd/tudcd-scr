@@ -210,6 +210,10 @@
 \tl_new:N\l_@@_titlepage_highlight_color_tl
 \tl_new:N\l_@@_titlepage_background_color_tl
 \tl_new:N\l_@@_titlepage_second_background_color_tl
+
+\str_new:N\l_@@_titlepage_logo_language_str
+\str_new:N\l_@@_titlepage_logo_color_str
+\str_new:N\l_@@_titlepage_logo_model_str
 %</prelim-declaration>
 %    \end{macrocode}
 %
@@ -225,12 +229,15 @@
   titlepage/background-color .default:o = \l_@@_background_color_tl,
   titlepage/secondary-color .tl_set:N = \l_@@_titlepage_second_background_color_tl,
   titlepage/secondary-color .default:o = \l_@@_second_background_color_tl,
-  titlepage/logo-language .meta:n = {logo/language=#1},
+  titlepage/logo-language .str_set:N = \l_@@_titlepage_logo_language_str,
   titlepage/logo-language .value_required:n = true,
-  titlepage/logo-model .meta:n = {logo/model=#1},
+  titlepage/logo-language .initial:o =\l_@@_logolang_str,
+  titlepage/logo-model .str_set:N = \l_@@_titlepage_logo_model_str,
   titlepage/logo-model .value_required:n = true,
-  titlepage/logo-color .meta:n = {logo/color=#1},
+  titlepage/logo-model .initial:o =\l_@@_logomodel_str,
+  titlepage/logo-color .str_set:N = \l_@@_titlepage_logo_color_str,
   titlepage/logo-color .value_required:n = true,
+  titlepage/logo-color .initial:o =\l_@@_logocolor_str
 %</option-titlepage&peri>
 %    \end{macrocode}
 %
@@ -254,7 +261,13 @@
   \IfValueT{#1}{
     \keys_set:nn{ tudcd/titlepage }{ #1 }
   }%
+  \tl_set_eq:NN\l_@@_highlight_color_tl\l_@@_titlepage_highlight_color_tl
   \tl_set_eq:NN\l_@@_page_color_tl\l_@@_titlepage_background_color_tl
+  %
+  \str_set_eq:NN\l_@@_logolang_str\l_@@_titlepage_logo_language_str
+  \str_set_eq:NN\l_@@_logocolor_str\l_@@_titlepage_logo_color_str
+  \str_set_eq:NN\l_@@_logomodel_str\l_@@_titlepage_logo_model_str
+  %
   \newgeometry{%
     inner=\l_@@_inner_margin_dim,%
     outer=\l_@@_outer_margin_dim,%

@@ -53,9 +53,6 @@
 \end{document}
 %</dtx>
 % \fi
-% \iffalse
-%<*body&class>
-% \fi
 % \selectlanguage{ngerman}
 %
 % \section{\texttt{tudcd-elements}: Gestaltungselemente für das Corporate Design der \TUD}
@@ -175,7 +172,7 @@
 %</article>
 %<*report|book>
 \renewcommand{\maketitle}{%
-\begin{tudcdtitlepage}[\tudcd@titlepagecolor]
+\begin{tudcdtitlepage}
 
   \group_begin:
   \raggedright%
@@ -204,10 +201,10 @@
 \end{tudcdtitlepage}
 }%
 %</report|book>
+%</body&peri>
 %    \end{macrocode}
 %
 % \end{codedescribe}
 %    \begin{macrocode}
-%</body&peri>
 %    \end{macrocode}
 %
