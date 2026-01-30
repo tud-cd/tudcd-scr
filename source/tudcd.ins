@@ -36,70 +36,6 @@ LaTeX version 2025-05-04 or later.
 
 \generate{%
   \file{tudcdartcl.cls}{
-    \from{tudcd-base.dtx}{class,article}%
-    \from{tudcd-color.dtx}{class}%
-    \from{tudcd-area.dtx}{class,option,article}%
-    \from{tudcd-font.dtx}{class,option}%
-    \from{tudcd-area.dtx}{class,body,article}%
-    \from{tudcd-font.dtx}{class,body}%
-    \from{tudcd-specialpages.dtx}{class,body}%
-    \from{tudcd-elements.dtx}{class,body,article}%
-    \from{tudcd-base.dtx}{load}%
-  }
-  \file{tudcdreprt.cls}{
-    \from{tudcd-base.dtx}{class,report}%
-    \from{tudcd-color.dtx}{class}%
-    \from{tudcd-area.dtx}{class,option,report}%
-    \from{tudcd-font.dtx}{class,option}%
-    \from{tudcd-area.dtx}{class,body,report}%
-    \from{tudcd-font.dtx}{class,body}%
-    \from{tudcd-specialpages.dtx}{class,body}%
-    \from{tudcd-elements.dtx}{class,body,report}%
-    \from{tudcd-base.dtx}{load}%
-  }
-  \file{tudcdbook.cls}{
-    \from{tudcd-base.dtx}{class,book}%
-    \from{tudcd-color.dtx}{class}%
-    \from{tudcd-area.dtx}{class,option,book}%
-    \from{tudcd-font.dtx}{class,option}%
-    \from{tudcd-area.dtx}{class,body,book}%
-    \from{tudcd-font.dtx}{class,body}%
-    \from{tudcd-specialpages.dtx}{class,body}%
-    \from{tudcd-elements.dtx}{class,body,book}%
-    \from{tudcd-base.dtx}{load}%
-  }
-  \file{tudcddoc.cls}{
-    \from{tudcd-doc.dtx}{doc}%
-  }
-  \file{tudcdcolor.sty}{
-    \from{tudcd-color.dtx}{package}%
-  }
-  \file{tudcdfonts.sty}{
-    \from{tudcd-base.dtx}{package}%
-    \from{tudcd-font.dtx}{package,body}%
-  }
-}
-
-\generate{%
-  \file{beamerthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beamertheme}%
-  }
-  \file{beamerouterthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beameroutertheme}%
-  }
-  \file{beamerinnerthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beamerinnertheme}%
-  }
-  \file{beamercolorthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beamercolortheme}%
-  }
-  \file{beamerfontthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beamerfonttheme}%
-  }
-}
-
-\generate{%
-  \file{tudcdartcl-expl.cls}{
     \from{tudcd-common.dtx}{identification,class,pre}
     \from{tudcd-documents.dtx}{identification,article}
     \from{tudcd-common.dtx}{identification,class,post}
@@ -134,9 +70,159 @@ LaTeX version 2025-05-04 or later.
     %% Body
     \from{tudcd-common.dtx}{body,pre,class}
     \from{tudcd-fonts.dtx}{body,peri,article}
-    \from{tudcd-pagestyles.dtx}{body,peri,article}
-    \from{tudcd-elements.dtx}{body,peri,article}
+    \from{tudcd-pagestyles.dtx}{body,peri,article}%
+    \from{tudcd-elements.dtx}{body,peri,article}%
+    \from{tudcd-common.dtx}{body,post,class}%
+  }
+}
+\generate{%
+  \file{tudcdreprt.cls}{
+    \from{tudcd-common.dtx}{identification,class,pre}
+    \from{tudcd-documents.dtx}{identification,report}
+    \from{tudcd-common.dtx}{identification,class,post}
+    \from{tudcd-common.dtx}{prelim-declaration,class}
+    \from{tudcd-geometry.dtx}{prelim-declaration,report}
+    \from{tudcd-fonts.dtx}{prelim-declaration,report}
+    \from{tudcd-colors.dtx}{prelim-declaration,report}
+    \from{tudcd-pagestyles.dtx}{prelim-declaration,report}
+    %% Optionen!
+    \from{tudcd-common.dtx}{option,pre,class}
+    \from{tudcd-common.dtx}{option,peri,class}
+    \from{tudcd-geometry.dtx}{option-geometry,peri,report}
+    \from{tudcd-fonts.dtx}{option-useserif,peri,report}
+    \from{tudcd-fonts.dtx}{option-fontsize,peri,report}
+    \from{tudcd-colors.dtx}{option,peri,report}
+    \from{tudcd-pagestyles.dtx}{option-titlepage,peri,report}
+    \from{tudcd-common.dtx}{option,post,class}
+    %% ProcessKeyOptions
+    \from{tudcd-common.dtx}{optionloading,pre,class}
+    \from{tudcd-geometry.dtx}{optionloading,pre,report}
+    \from{tudcd-common.dtx}{optionloading,peri,class}
+    \from{tudcd-common.dtx}{optionloading,post,class}
+    %% Header
+    \from{tudcd-common.dtx}{header,peri,class}
+    \from{tudcd-geometry.dtx}{header,peri,report}
+    \from{tudcd-fonts.dtx}{header,peri,report}
+    \from{tudcd-colors.dtx}{header,peri,report}
+    %% \LoadClass
+    \from{tudcd-common.dtx}{baseclassloading,pre,class}
+    \from{tudcd-documents.dtx}{baseclassloading,peri,report}
+    \from{tudcd-common.dtx}{baseclassloading,post,class}
+    %% Body
+    \from{tudcd-common.dtx}{body,pre,class}
+    \from{tudcd-fonts.dtx}{body,peri,report}
+    \from{tudcd-pagestyles.dtx}{body,peri,report}
+    \from{tudcd-elements.dtx}{body,peri,report}
     \from{tudcd-common.dtx}{body,post,class}
+  }
+}
+
+\generate{%
+  \file{tudcdbook.cls}{
+    \from{tudcd-common.dtx}{identification,class,pre}
+    \from{tudcd-documents.dtx}{identification,book}
+    \from{tudcd-common.dtx}{identification,class,post}
+    \from{tudcd-common.dtx}{prelim-declaration,class}
+    \from{tudcd-geometry.dtx}{prelim-declaration,book}
+    \from{tudcd-fonts.dtx}{prelim-declaration,book}
+    \from{tudcd-colors.dtx}{prelim-declaration,book}
+    \from{tudcd-pagestyles.dtx}{prelim-declaration,book}
+    %% Optionen!
+    \from{tudcd-common.dtx}{option,pre,class}
+    \from{tudcd-common.dtx}{option,peri,class}
+    \from{tudcd-geometry.dtx}{option-geometry,peri,book}
+    \from{tudcd-fonts.dtx}{option-useserif,peri,book}
+    \from{tudcd-fonts.dtx}{option-fontsize,peri,book}
+    \from{tudcd-colors.dtx}{option,peri,book}
+    \from{tudcd-pagestyles.dtx}{option-titlepage,peri,book}
+    \from{tudcd-common.dtx}{option,post,class}
+    %% ProcessKeyOptions
+    \from{tudcd-common.dtx}{optionloading,pre,class}
+    \from{tudcd-geometry.dtx}{optionloading,pre,book}
+    \from{tudcd-common.dtx}{optionloading,peri,class}
+    \from{tudcd-common.dtx}{optionloading,post,class}
+    %% Header
+    \from{tudcd-common.dtx}{header,peri,class}
+    \from{tudcd-geometry.dtx}{header,peri,book}
+    \from{tudcd-fonts.dtx}{header,peri,book}
+    \from{tudcd-colors.dtx}{header,peri,book}
+    %% \LoadClass
+    \from{tudcd-common.dtx}{baseclassloading,pre,class}
+    \from{tudcd-documents.dtx}{baseclassloading,peri,book}
+    \from{tudcd-common.dtx}{baseclassloading,post,class}
+    %% Body
+    \from{tudcd-common.dtx}{body,pre,class}
+    \from{tudcd-fonts.dtx}{body,peri,book}
+    \from{tudcd-pagestyles.dtx}{body,peri,book}
+    \from{tudcd-elements.dtx}{body,peri,book}
+    \from{tudcd-common.dtx}{body,post,class}%
+  }
+}
+\generate{%
+  \file{tudcdcolor.sty}{
+    \from{tudcd-common.dtx}{identification,package,pre}%
+    \from{tudcd-colors.dtx}{identification,package}%
+    \from{tudcd-common.dtx}{identification,package,post}%
+    \from{tudcd-common.dtx}{prelim-declaration,package}%
+    %%
+    \from{tudcd-common.dtx}{option,pre,package}
+    \from{tudcd-common.dtx}{option,peri,package}
+    \from{tudcd-colors.dtx}{option,peri,package}
+    \from{tudcd-common.dtx}{option,post,package}
+    %%
+    \from{tudcd-common.dtx}{optionloading,pre,package}
+    \from{tudcd-common.dtx}{optionloading,peri,package}
+    \from{tudcd-common.dtx}{optionloading,post,package}
+    %% Header
+    \from{tudcd-common.dtx}{header,peri,package}
+    \from{tudcd-colors.dtx}{header,peri,package}
+    %% Body
+    \from{tudcd-common.dtx}{body,pre,package}
+    \from{tudcd-common.dtx}{body,post,package}%
+  }
+}
+\generate{
+  \file{tudcdfonts.sty}{
+    \from{tudcd-common.dtx}{identification,package,pre}%
+    \from{tudcd-fonts.dtx}{identification,package}%
+    \from{tudcd-common.dtx}{identification,package,post}%
+    \from{tudcd-common.dtx}{prelim-declaration,package}%
+    %%
+    \from{tudcd-common.dtx}{option,pre,package}
+    \from{tudcd-common.dtx}{option,peri,package}
+    \from{tudcd-fonts.dtx}{option-useserif,peri,package}
+    \from{tudcd-common.dtx}{option,post,package}
+    %%
+    \from{tudcd-common.dtx}{optionloading,pre,package}
+    \from{tudcd-common.dtx}{optionloading,peri,package}
+    \from{tudcd-common.dtx}{optionloading,post,package}
+    %% Header
+    \from{tudcd-common.dtx}{header,peri,package}
+    \from{tudcd-fonts.dtx}{header,peri,package}
+    %% Body
+    \from{tudcd-common.dtx}{body,pre,package}
+    \from{tudcd-fonts.dtx}{body,peri,package}
+    \from{tudcd-common.dtx}{body,post,package}%
+  }
+}
+\generate{%
+  \file{tudcddoc.cls}{
+    \from{tudcd-doc.dtx}{doc}%
+  }
+  \file{beamerthemetudcd.sty}{
+    \from{tudcd-beamertheme.dtx}{beamertheme}%
+  }
+  \file{beamerouterthemetudcd.sty}{
+    \from{tudcd-beamertheme.dtx}{beameroutertheme}%
+  }
+  \file{beamerinnerthemetudcd.sty}{
+    \from{tudcd-beamertheme.dtx}{beamerinnertheme}%
+  }
+  \file{beamercolorthemetudcd.sty}{
+    \from{tudcd-beamertheme.dtx}{beamercolortheme}%
+  }
+  \file{beamerfontthemetudcd.sty}{
+    \from{tudcd-beamertheme.dtx}{beamerfonttheme}%
   }
 }
 \endbatchfile
