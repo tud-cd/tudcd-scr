@@ -146,8 +146,14 @@
 % \texttt{build.lua} verwiesen.
 %
 %    \begin{macrocode}
+%<*package>
+\providecommand\tudcd@common@version{0.5.5}
+\providecommand\tudcd@common@date{2026/01/25}
+%</package>
+%<*class>
 \newcommand\tudcd@common@version{0.5.5}
 \newcommand\tudcd@common@date{2026/01/25}
+%</class>
 %</identification&pre>
 %    \end{macrocode}
 %
@@ -204,10 +210,10 @@
 % \end{codedescribe}
 %    \begin{macrocode}
 %<*prelim-declaration>
-\NewDocumentCommand\TUDCDoptions{m}{
+\ProvideDocumentCommand\TUDCDoptions{m}{
   \keys_set:nn{ tudcd }{ #1 }
 }
-\NewDocumentCommand\TUDCDsetup{m}{
+\ProvideDocumentCommand\TUDCDsetup{m}{
   \keys_set:nn{ tudcd }{ #1 }
 }
 %</prelim-declaration>
