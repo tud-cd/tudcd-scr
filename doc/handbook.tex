@@ -158,7 +158,7 @@ Gemäß Corporate Design Leitfaden dürfen maximal zwei unterschiedliche
 sekundäre Farben verwendet werden, allerdings wird hierbei die Schwarze Schriftfarbe
 nicht gezählt.
 
-TUDCD-Script bietet daher drei einstellbare Farben an:
+TUDCD-Script bietet daher drei einstellbare Farben als einfache Optionen an:
 \begin{lstlisting}
 \TUDCDsetup{
   color/highlight-color=<Farbe>,
@@ -258,13 +258,36 @@ Eine Übersicht über die Kontraste der Farben finden sie unter diesem
 \end{table}
 
 
+
+
+\subsection{Die Hausschrift der TU Dresden}
+
+Die Hausschrift der TUD ist die Noto Sans, im Schriftschnitt Medium.
+Da für Fließtexte eine Serifenschrift unter Umständen einen besseren
+Lesefluss ermöglicht, wird die späte Option \texttt{useseriffont} bereitgestellt
+\begin{lstlisting}
+\documentclass{<TUDCD-Klasse>}
+
+\TUDCDsetup{
+  useseriffont
+}
+% oder
+\TUDCDsetup{
+  useseriffont=<Wahrheitswert>
+}
+% ...
+\begin{document}
+\end{lstlisting}
+Diese Option schaltet auf die Serifenschrift um.
+Dabei bleibt für Überschriften die serifenlose Schrift erhalten.
+
+
 \TUDCDsetup{
   color={
-    highlight-color=Tuerkis1,
-    tertiary-color=Tuerkis2
+    highlight-color=Gruen1,
+    tertiary-color=Gruen2
   }
 }
-
 
 \chapter{Dokumente im Stil der TU Dresden}
   Hauptklassen \texttt{tudcdartcl} und \texttt{tudcdreprt}
@@ -274,16 +297,12 @@ Zum Zeitpunkt des Schreibens sind die beiden Hauptklassen
 
 \section{Einstellungen}
 
+wird die globale Option \texttt{usemargin} bereitgestellt.
 \begin{lstlisting}
-\TUDCDsetup{
-  logo={
-    language=<Wert>,
-    color=<Wert>,
-    colormodel=<Wert>
-  }
-}
+\documentclass[usemargin]{<Klasse>}
+% Oder
+\documentclass[usemargin=<Wahrheitswert>]{<Klasse>}
 \end{lstlisting}
-
 
 
 \subsection{Wieder anderer Test}
