@@ -100,6 +100,23 @@
 %</baseclassloading&peri>
 %    \end{macrocode}
 %
+% \subsection{ Behandeln unbekannter Optionen }
+%
+% Für Klassen ist es üblich, unbekannte Klassenoptionen an die Basisklasse weiterzureichen.
+% Da dies jedoch nur Sinn ergibt, wenn die entsprechende Option in \dmacro{\documentclass} geladen wird,
+% wird die entsprechende Optionenvarbeitung nach dem Verarbeiten der Optionen wieder entfernt.
+%    \begin{macrocode}
+%<*option&peri>
+  unknown .code:n ={\PassOptionsToClass{#1}
+%<article>{scrartcl}%
+%<report> {scrreprt}%
+%<book>   {scrbook}%
+%<thesis> {scrbook}%
+  },
+  unknown .default:V = \c_novalue_tl,
+%</option&peri>
+%    \end{macrocode}
+%
 % \subsection{ Inkompatible Pakete }
 %
 % Um gewissen Anwendungsfehlern vorzubeugen, werden gewisse Pakete detektiert und es wird direkt ein Fehler
