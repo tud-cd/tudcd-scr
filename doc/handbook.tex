@@ -21,7 +21,8 @@
 \addbibresource{source.bib}
 \usepackage{csquotes}
 \usepackage{hvlogos}
-
+\usepackage{pdfpages}
+\usepackage{subcaption}
 \usepackage{siunitx}
 \DeclareSIUnit{\texpt}{pt}
 \DeclareSIUnit{\texbp}{bt}
@@ -50,6 +51,7 @@
   {~}{{\textasciitilde}}1,
   numberstyle=\footnotesize,
   frame=single,
+  breaklines,
   rulecolor=\SelectTUDCDHighlightColor,
   backgroundcolor=\SelectTUDCDTertiaryColor
 %  numbers=left,
@@ -428,16 +430,56 @@ In beiden Fällen kann das Setzen der Schlüssel mit
 \end{lstlisting}
 erfolgen.
 
+\section{Fertige Beispieldokumente}
+
+\subsection{Eine Artikelklasse}
+
+Eine beispielhafte Datei für einen englischen Artikel ist angegeben.
+
+\lstinputlisting[linerange=\%\ Start-\%\ End]{article.tex}
+
+\begin{figure}[hb]
+  \centering
+  \setlength\fboxsep{0pt}
+  \fbox{\includegraphics[width=\dimexpr(3\tudcdGridColumnwidth+2\tudcdGridColumnsep)]{article.pdf}}
+  \caption{Resultat des der Beispieldatei}
+\end{figure}
+
+\subsection{Eine Berichtklasse im Broschürendesign}
+
+Eine beispielhafte Datei für einen deutschsprachigen Bericht ist hier demonstriert.
+Dabei wird auf die Gestaltung der Titelseite hingewiesen, welche eine andere Farbe für den Hintergrund einstellt.
+
+\lstinputlisting[linerange=\%\ Start-\%\ End]{report.tex}
+
+Um das Broschürenraster mit zwei Spalten zu setzen ist das Paket \texttt{multicol}~\cite{ctan-multicol} notwendig.
+
+\textbf{ACHTUNG}: Die Option \texttt{twocolumn} hat bei Benutzung einen unerwünschten Nebeneffekt, wenn die
+Marginalie eingeschaltet ist. Um daher Broschüren zu setzen, ist bei eingeschalteter Marginalie die Benutzung Pakets
+\texttt{multicol} dringend anzuraten.
+
+\begin{figure}[hb]
+  \centering
+  \setlength\fboxsep{0pt}
+  \subcaptionbox{Erste Seite}{
+    \fbox{\includegraphics[page=1,width=\dimexpr(2\tudcdGridColumnwidth+1\tudcdGridColumnsep)]{report.pdf}}
+  }
+  \subcaptionbox{Zweite Seite}{
+    \fbox{\includegraphics[page=2,width=\dimexpr(2\tudcdGridColumnwidth+1\tudcdGridColumnsep)]{report.pdf}}
+  }
+
+  \subcaptionbox{Dritte Seite}{
+    \fbox{\includegraphics[page=3,width=\dimexpr(2\tudcdGridColumnwidth+1\tudcdGridColumnsep)]{report.pdf}}
+  }
+  \caption{Resultat des der Beispieldatei}
+\end{figure}
+
 \TUDCDsetup{
   color={
     highlight-color=Violett1,
     tertiary-color=Violett2
   }
 }
-
-\section{Fertige Beispieldokumente}
-
-
 \chapter{Präsentationen im Stil der TU Dresden}
 
 Zum Zeitpunkt des Schreibens wird eine \texttt{beamer}~\cite{ctan-beamer} Präsentationsvorlage
@@ -462,7 +504,9 @@ Zweitlogos ermöglicht.
 \secondlogos{Dateipfad1,Dateipfad2,Dateipfad3,...}
 \end{lstlisting}
 Da \lstinline|\secondlogos| eine kommaseparierte Liste an Einträgen erwartet, können die Dateipfade keine Kommata enthalten.
-Die Logos werden von Links nach Rechts rechtbündig in den dafür vorgesehenen Bereich platziert.
+Die Logos werden von Links nach Rechts rechtsbündig in den dafür vorgesehenen Bereich platziert.
+
+\section{Fertige Beispielpräsentationen}
 
 \TUDCDsetup{
   color={
@@ -472,6 +516,5 @@ Die Logos werden von Links nach Rechts rechtbündig in den dafür vorgesehenen B
 \printbibliography%
 
 
-\section{Fertige Beispieldokumente}
 
 \end{document}

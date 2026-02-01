@@ -1,4 +1,5 @@
-\documentclass[fontsize=brochure]{tudcdreprt}
+% Start
+\documentclass[twoside,fontsize=brochure]{tudcdreprt}
 \usepackage[T1]{fontenc}
 \usepackage[ngerman=ngerman-x-latest]{hyphsubst}
 
@@ -10,52 +11,26 @@
 \usepackage{amsmath}
 \usepackage{accents}
 \usepackage{mathtools}
-\let\openbox\undefined
-\usepackage{keytheorems}
-\usepackage{siunitx}
-
-\selectcolormodel{RGB}
-
-
-\usepackage{multicol}
-\usepackage{marginnote}
 \usepackage{csquotes}
-\usepackage{ragged2e}
-\usepackage{blindtext}
-
-
-
-\title{Die ursprüngliche Demodatei}
-\subtitle{Welche die einzelnen Eigenschaften hoffentlich hat, die sie brauch}
-\author{Jochen Diepelt}
-\date{\today}
-
-\iffalse
+\usepackage{siunitx}
+\usepackage{multicol}
+\usepackage{float}
 \usepackage{tikz}
-\AddToHook{shipout/foreground}{
-\begin{tikzpicture}[remember picture,overlay]
-    \coordinate (top) at (current page.north west);
-    \coordinate (bottom) at (current page.south west);
-    \fill[magenta,opacity=0.4] (top) rectangle +(15mm,-15mm) node[pos=0.5,black] {B\qty{15}{\mm}};
-    \fill[magenta,opacity=0.4] (top) ++(\paperwidth,0mm) rectangle +(-15mm,-15mm) node[pos=0.5,black] {B\qty{15}{\mm}};
-    \fill[magenta,opacity=0.4] (top) ++(15mm,-15mm) rectangle +(\paperwidth-15mm-15mm,-19.5mm) node[pos=0.5,black,font=\Large] {Logobereich H\qty{19}{\mm}};
-    \fill[magenta,opacity=0.2] (top) ++(15mm,-15mm-19.5mm) rectangle +(\paperwidth-15mm-15mm,-19.5mm) node[pos=0.5,black,font=\Large] {Schutzraum H\qty{19}{\mm}};
-    \fill[magenta,opacity=0.4] (bottom) ++(15mm,23.767mm) rectangle +(\paperwidth-15mm-15mm,-23.767mm) node[pos=0.5,black,font=\Large] {Freihaltezone H\qty{23.767}{\mm}};
-    \foreach \p in {0,1,2,3}{
-      \fill[magenta,opacity=0.4] (top) ++(15mm+\p*41.75mm+\p*6mm,-15mm) rectangle +(41.75mm,-\textheight);
-    }
-\end{tikzpicture}
-}
-\fi
 
-%\selectcolormodel{cmyk}
-%\sethighlightcolor{Brilliantblau}
+\title{Die Konstruktion des Shapes}
+\subtitle{Mit \texttt{TikZ}}
+\author{Yoshi Diepelt}
+\date{2026}
+
+\ExplSyntaxOn
+\newcommand{\mymod}[2]{\int_mod:nn{#1}{#2}}
+\ExplSyntaxOff
 
 \TUDCDsetup{
   titlepage={
-    highlight-color=Weiss,
-    background-color=Blau1,
-    logo-color=white
+    highlight-color=Brilliantblau,
+    background-color=Gelb2,
+    logo-color=blue
   }
 }
 
@@ -63,9 +38,439 @@
 
 \maketitle
 
-%20,9 mm entspricht 19,5 -> 195/209 ist umrechnungsfaktor 20,364102564, 1.07 ,1.13
-\noindent\TypesetTUDLogo{21.47mm}
+\chapter{Der Shape und sein Konstruktionsschema}
 
-\blindtext[10]
+\begin{multicols*}{2}
+% End
+Mit dem neuen Corporate Design wurde auch der \emph{Shape}
+des Logos ausgetauscht. Um dennoch eine Weiterentwicklung
+darzustellen wurde die Konstruktion des neuen Shapes auf
+der Grundkonstruktion des alten Shapes aufgebaut.
 
+\section{Der neue Shape}
+
+\subsection{Konstruktion}
+
+Zur Konstruktion des Shapes wird ein Oktagon konstruiert.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=2]
+    \coordinate (origin) at (0,0);
+    \coordinate (top-left) at (-1,1);
+    \coordinate (top-right) at (1,1);
+    \coordinate (bot-left) at (-1,-1);
+    \coordinate (bot-right) at (1,-1);
+
+    \draw (origin) circle[radius=1.0];
+    %
+    \foreach \p in {0,1,2,...,7}{
+      \fill (origin) +(22.5+\p*45:1) coordinate (oct\p) circle (1pt); %node {$\p$};
+    };
+    \draw (oct0) foreach \p in {1,2,3,4,5,6,7}{
+      -- (oct\p)
+    } -- cycle;
+
+    \node[right] at (oct0) {$A$};
+    \node[above right] at (oct1) {$B$};
+    \node[above left] at (oct2) {$C$};
+    \node[left] at (oct3) {$D$};
+    \node[left] at (oct4) {$E$};
+    \node[below left] at (oct5) {$F$};
+    \node[below right] at (oct6) {$G$};
+    \node[right] at (oct7) {$H$};
+  \end{tikzpicture}
+  \caption{Schritt 1 der Konstruktion des Shapes}
+\end{figure}
+
+Anschließend werden senkrecht zu den Seitenflächen an den Eckpunkten
+sowie an den Seitenhalbierenden Geraden eingezeichnet.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=2]
+    \coordinate (origin) at (0,0);
+    \coordinate (top-left) at (-1,1);
+    \coordinate (top-right) at (1,1);
+    \coordinate (bot-left) at (-1,-1);
+    \coordinate (bot-right) at (1,-1);
+
+    %\draw (origin) circle[radius=1.0];
+    %
+
+    \draw (oct0) foreach \p in {1,2,3,4,5,6,7}{
+        -- (oct\p)
+    } -- cycle;
+
+    \node[below right] at (oct0) {$A$};
+    \node[right] at (oct1) {$B$};
+    \node[left] at (oct2) {$C$};
+    \node[below left] at (oct3) {$D$};
+    \node[above left] at (oct4) {$E$};
+    \node[left] at (oct5) {$F$};
+    \node[right] at (oct6) {$G$};
+    \node[above right] at (oct7) {$H$};
+    %%%%
+    \foreach \p/\q in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/0}{
+      \path (oct\p) -- (oct\q) coordinate[pos=0.5] (oct\p-\q);
+      \draw[Grau80] (oct\p) -- (oct\q) -- ([turn]90:2);
+      \draw[Grau80] (oct\q) -- (oct\p) -- ([turn]-90:2);
+      \draw[Grau80] (oct\q) -- (oct\p-\q) -- ([turn]-90:2);
+      %\node at (oct\p-\q) {$\p-\q$};
+    }
+    \foreach \p in {0,1,2,...,7}{
+      \fill (origin) +(22.5+\p*45:1) coordinate (oct\p) circle (1pt); %node {$\p$};
+    };
+
+
+  \end{tikzpicture}
+  \caption{Schritt 2 der Konstruktion des Shapes}
+  \label{fig:step2}
+\end{figure}
+
+In Abbildung~\ref{fig:step3old} wurden
+die Schnittpunkte $I,\,J,\,K,\, L$ der vertikalen und horizontalen Strecken (bspw.\@ $\overline{AD}$ geschnitten mit $\overline{BG}$ ergibt Punkt $I$),
+sowie die relevanten Schnittpunkte $M,\, O,\, N,\, P$ der Diagonalen eingezeichnet.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=2]
+    \coordinate (origin) at (0,0);
+    \coordinate (top-left) at (-1,1);
+    \coordinate (top-right) at (1,1);
+    \coordinate (bot-left) at (-1,-1);
+    \coordinate (bot-right) at (1,-1);
+
+    %\draw (origin) circle[radius=1.0];
+    %
+
+    \draw (oct0) foreach \p in {1,2,3,4,5,6,7}{
+        -- (oct\p)
+    } -- cycle;
+
+    \node[below right] at (oct0) {$A$};
+    \node[right] at (oct1) {$B$};
+    \node[left] at (oct2) {$C$};
+    \node[below left] at (oct3) {$D$};
+    \node[above left] at (oct4) {$E$};
+    \node[left] at (oct5) {$F$};
+    \node[right] at (oct6) {$G$};
+    \node[above right] at (oct7) {$H$};
+    %%%%
+    \foreach \p/\q in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/0}{
+      \path (oct\p) -- (oct\q) coordinate[pos=0.5] (oct\p-\q);
+      \draw[Grau80] (oct\p) -- (oct\q) -- ([turn]90:2);
+      \draw[Grau80] (oct\q) -- (oct\p) -- ([turn]-90:2);
+      \draw[Grau80] (oct\q) -- (oct\p-\q) -- ([turn]-90:2);
+      %\node at (oct\p-\q) {$\p-\q$};
+    }
+    \foreach \p in {0,1,2,...,7}{
+      \fill (origin) +(22.5+\p*45:1) coordinate (oct\p) circle (1pt); %node {$\p$};
+    };
+    %% Außeres Quadrat
+    \coordinate (outerTL) at (oct0-|oct1);
+    \coordinate (outerBL) at (oct1|-oct7);
+    \coordinate (outerTR) at (oct0-|oct2);
+    \coordinate (outerBR) at (oct7-|oct2);
+    \fill (outerTL) circle (1pt) node[above right] {$I$};
+    \fill (outerBL) circle (1pt) node[below left] {$J$};
+    \fill (outerTR) circle (1pt) node[above left] {$K$};
+    \fill (outerBR) circle (1pt) node[below right] {$L$};
+    %% Inneres Quadrat
+    \coordinate (innerTL) at (intersection of oct2-3--oct6-7 and oct1--oct4);
+    \coordinate (innerBL) at (intersection of oct0-1--oct4-5 and oct3--oct6);
+    \coordinate (innerTR) at (intersection of oct0-1--oct4-5 and oct2--oct7);
+    \coordinate (innerBR) at (intersection of oct2-3--oct6-7 and oct0--oct5);
+    \fill (innerTL) circle (1pt) node[below] {$M$};
+    \fill (innerTR) circle (1pt) node[below] {$O$};
+    \fill (innerBL) circle (1pt) node[above] {$N$};
+    \fill (innerBR) circle (1pt) node[above] {$P$};
+    %\coordinate (inner)
+  \end{tikzpicture}
+  \caption{Schritt 3 der Konstruktion des Shapes}
+  \label{fig:step3old}
+\end{figure}
+
+Anschließend werden die Geraden $\overline{IM}$ und $\overline{DE}$ geschnitten,
+was den Schnittpunkt $Q$ ergibt, sowie die Geraden $\overline{LP}$ und $\overline{AH}$,
+womit der Schnittpunkt $R$ ermittelt wird. Diese Konstruktion ist in Abbildung \ref{fig:step4old}
+dargestellt.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=2]
+    \coordinate (origin) at (0,0);
+    \coordinate (top-left) at (-1,1);
+    \coordinate (top-right) at (1,1);
+    \coordinate (bot-left) at (-1,-1);
+    \coordinate (bot-right) at (1,-1);
+
+    %\draw (origin) circle[radius=1.0];
+    %
+
+    \draw (oct0) foreach \p in {1,2,3,4,5,6,7}{
+        -- (oct\p)
+    } -- cycle;
+
+    \node[below right] at (oct0) {$A$};
+    \node[right] at (oct1) {$B$};
+    \node[left] at (oct2) {$C$};
+    \node[below left] at (oct3) {$D$};
+    \node[above left] at (oct4) {$E$};
+    \node[left] at (oct5) {$F$};
+    \node[right] at (oct6) {$G$};
+    \node[above right] at (oct7) {$H$};
+    %%%%
+    \foreach \p/\q in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/0}{
+      \path (oct\p) -- (oct\q) coordinate[pos=0.5] (oct\p-\q);
+      \draw[Grau80] (oct\p) -- (oct\q) -- ([turn]90:2);
+      \draw[Grau80] (oct\q) -- (oct\p) -- ([turn]-90:2);
+      \draw[Grau80] (oct\q) -- (oct\p-\q) -- ([turn]-90:2);
+      %\node at (oct\p-\q) {$\p-\q$};
+    }
+    \foreach \p in {0,1,2,...,7}{
+      \fill (origin) +(22.5+\p*45:1) coordinate (oct\p) circle (1pt); %node {$\p$};
+    };
+    %% Außeres Quadrat
+    \coordinate (outerTL) at (oct0-|oct1);
+    \coordinate (outerBL) at (oct1|-oct7);
+    \coordinate (outerTR) at (oct0-|oct2);
+    \coordinate (outerBR) at (oct7-|oct2);
+    \fill (outerTL) circle (1pt) node[above right] {$I$}; % Falsche Bezeichnung...
+    \fill (outerBL) circle (1pt) node[below left] {$J$};
+    \fill (outerTR) circle (1pt) node[above left] {$K$};
+    \fill (outerBR) circle (1pt) node[below right] {$L$};
+    %% Inneres Quadrat
+    \coordinate (innerTL) at (intersection of oct2-3--oct6-7 and oct1--oct4);
+    \coordinate (innerBL) at (intersection of oct0-1--oct4-5 and oct3--oct6);
+    \coordinate (innerTR) at (intersection of oct0-1--oct4-5 and oct2--oct7);
+    \coordinate (innerBR) at (intersection of oct2-3--oct6-7 and oct0--oct5);
+    \fill (innerTL) circle (1pt) node[below] {$M$};
+    \fill (innerTR) circle (1pt) node[below] {$O$};
+    \fill (innerBL) circle (1pt) node[above] {$N$};
+    \fill (innerBR) circle (1pt) node[above] {$P$};
+    % Schrägen
+    \coordinate (outerDiag1) at (intersection of outerTL--innerTL and oct3--oct4);
+    \coordinate (outerDiag2) at (intersection of outerBR--innerBR and oct0--oct7);
+    \fill (outerDiag1) circle (1pt) node[left] {$Q$};
+    \fill (outerDiag2) circle (1pt) node[right] {$R$};
+    \draw[Grau80] (outerDiag1) -- (outerTL);
+    \draw[Grau80] (outerDiag2) -- (outerBR);
+    %\draw[Brilliantblau] (innerBL) -- (TShapeL) -- (oct3) -- (oct2) -- (oct1) -- (oct0) -- (TShapeR) -- (innerBR) -- cycle;
+  \end{tikzpicture}
+  \caption{Schritt 4 der Konstruktion des Shapes}
+  \label{fig:step4old}
+\end{figure}
+
+Der Shape besteht nun aus den Polygonen mit den Ecken
+$Q,\, E,\, F,\, G,\, N,\, M$ und $C,\, O, \, P,\, R,\, A,\, B$.
+Die Polygone werden in Abbidung~\ref{fig:step5}, welche
+zusammen den Shape ergeben.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=2]
+    \coordinate (origin) at (0,0);
+    \coordinate (top-left) at (-1,1);
+    \coordinate (top-right) at (1,1);
+    \coordinate (bot-left) at (-1,-1);
+    \coordinate (bot-right) at (1,-1);
+
+    %\draw (origin) circle[radius=1.0];
+    %
+    \foreach \p in {0,1,2,...,7}{
+      \fill (origin) +(22.5+\p*45:1) coordinate (oct\p);% circle (1pt); %node {$\p$};
+    };
+    %\draw (oct0) foreach \p in {1,2,3,4,5,6,7}{
+    %    -- (oct\p)
+    %} -- cycle;
+
+    \node[below right] at (oct0) {$A$};
+    \node[right] at (oct1) {$B$};
+    \node[left] at (oct2) {$C$};
+    %\node[below left] at (oct3) {$D$};
+    \node[above left] at (oct4) {$E$};
+    \node[left] at (oct5) {$F$};
+    \node[right] at (oct6) {$G$};
+    %\node[above right] at (oct7) {$H$};
+    %%%%
+    \foreach \p/\q in {0/1,1/2,2/3,3/4,4/5,5/6,6/7,7/0}{
+      \path (oct\p) -- (oct\q) coordinate[pos=0.5] (oct\p-\q);
+      \path[Grau80] (oct\p) -- (oct\q) -- ([turn]90:2);
+      \path[Grau80] (oct\q) -- (oct\p) -- ([turn]-90:2);
+      \path[Grau80] (oct\q) -- (oct\p-\q) -- ([turn]-90:2);
+    }
+
+    %% Außeres Quadrat
+    \coordinate (outerTL) at (oct0-|oct1);
+    \coordinate (outerBL) at (oct1|-oct7);
+    \coordinate (outerTR) at (oct0-|oct2);
+    \coordinate (outerBR) at (oct7-|oct2);
+    %\node[above right] at (outerTL)  {$I$}; % Falsche Bezeichnung...
+    %\node[below left]  at (outerBL) {$J$};
+    %\node[above left]  at (outerTR) {$K$};
+    %\node[below right] at (outerBR)  {$L$};
+    %% Inneres Quadrat
+    \coordinate (innerTL) at (intersection of oct2-3--oct6-7 and oct1--oct4);
+    \coordinate (innerBL) at (intersection of oct0-1--oct4-5 and oct3--oct6);
+    \coordinate (innerTR) at (intersection of oct0-1--oct4-5 and oct2--oct7);
+    \coordinate (innerBR) at (intersection of oct2-3--oct6-7 and oct0--oct5);
+    \node[above] at (innerTL)  {$M$};
+    \node[below left] at (innerTR)  {$O$};
+    \node[above right] at (innerBL)  {$N$};
+    \node[below] at (innerBR)  {$P$};
+    % Schrägen
+    \coordinate (outerDiag1) at (intersection of outerTL--innerTL and oct3--oct4);
+    \coordinate (outerDiag2) at (intersection of outerBR--innerBR and oct0--oct7);
+    \node[left]  at (outerDiag1){$Q$};
+    \node[right] at (outerDiag2) {$R$};
+    \fill[Brilliantblau] % Q, E, F, G, N, M
+    (outerDiag1) --
+    (oct4) --
+    (oct5) --
+    (oct6) --
+    (innerBL) --
+    (innerTL) --
+    cycle;
+    % und C, O, P, R, A, B
+    \fill[Brilliantblau]
+    (outerDiag2) --
+    (oct0) --
+    (oct1) --
+    (oct2) --
+    (innerTR) --
+    (innerBR) --
+    cycle;
+  \end{tikzpicture}
+  \caption{Schritt 5 der Konstruktion des Shapes}
+  \label{fig:step5}
+\end{figure}
+
+Soll der Shape die Größe $c$ besitzen, dann sind die Punkte des Shapes angegeben mit
+\begin{align}
+  a &= \frac{1}{2} c, & b &= \frac{1}{2} c \tan(\num{22.5}), \\
+  A &= \begin{bmatrix}
+    a \\
+    b \\
+  \end{bmatrix}, &
+  B &= \begin{bmatrix}
+    b \\
+    a \\
+  \end{bmatrix}, \\
+  C &= \begin{bmatrix}
+    -b \\
+    a \\
+  \end{bmatrix}, &
+  O &= \begin{bmatrix}
+    \frac{1}{2} a - \frac{1}{2}b \\
+    \frac{1}{2} a - \frac{1}{2}b \\
+  \end{bmatrix}, \\
+  P &= \begin{bmatrix}
+    \frac{1}{2} a - \frac{1}{2}b \\
+    -\frac{1}{2} a + \frac{1}{2}b \\
+  \end{bmatrix}, &
+  R &= \begin{bmatrix}
+    a \\
+    -a + 2b \\
+  \end{bmatrix}, \\
+  E &= \begin{bmatrix}
+    -a \\
+    -b \\
+  \end{bmatrix}, &
+  F &= \begin{bmatrix}
+    -b \\
+    -a \\
+  \end{bmatrix}, \\
+  G &= \begin{bmatrix}
+    b \\
+    -a \\
+  \end{bmatrix}, &
+  N &= \begin{bmatrix}
+    -\frac{1}{2} a + \frac{1}{2}b \\
+    -\frac{1}{2} a + \frac{1}{2}b \\
+  \end{bmatrix}, \\
+  M &= \begin{bmatrix}
+    -\frac{1}{2} a + \frac{1}{2}b \\
+     \frac{1}{2} a - \frac{1}{2}b \\
+  \end{bmatrix}, &
+  Q &= \begin{bmatrix}
+    -a \\
+    a - 2b \\
+  \end{bmatrix}.
+\end{align}
+
+\subsection{Mathematische Eigenschaften des Shapes}
+
+Der Shape besitzt eine Punktsymmetrie um den Mittelpunkt.
+
+Der Shape parkettiert mit den Basisvektoren
+\begin{align}
+  b_1 &= \begin{bmatrix}
+    -\frac{3}{2}a+\frac{1}{2}b \\
+    \frac{3}{2}a - \frac{5}{2}b \\
+  \end{bmatrix}, &
+  b_2 &= \begin{bmatrix}
+    -\frac{3}{2}a + \frac{1}{2}b \\
+     -\frac{1}{2}a - \frac{5}{2}b \\
+  \end{bmatrix},
+\end{align} die Ebene. Ein Eindruck der Parkettierung
+kann in~\ref{fig:tilingtheplane} gewonnen werden.
+Dies ist jedoch nicht nach den Regeln für die Verwendung
+des Shapes erlaubt, weshalb von einer offiziellen Verwendung
+abgesehen werden sollte.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \foreach \p in {0,1,2,...,5}{
+      \foreach \q in {0,1,2,...,5}{
+
+    \begin{scope}[shift={
+      ({\p*(-3/2 *0.5 + 0.25*tan(22.5))+\q*(-3/2*0.5+0.25*tan(22.5))},
+      {\p*(3/2*0.5-5/2*0.5*tan(22.5))+\q*(-1/2*0.5-5/2*0.5*tan(22.5))})}
+    ]
+    \coordinate (origin) at (0,0);
+
+    \coordinate (A) at (0.5,{0.5*tan(22.5)});
+    \coordinate (B) at ({0.5*tan(22.5)},0.5);
+    \coordinate (C) at ({-0.5*tan(22.5)},0.5);
+    \coordinate (O) at ({0.25-0.25*tan(22.5)},{0.25-0.25*tan(22.5)});
+    \coordinate (P) at ({0.25-0.25*tan(22.5)},{-0.25+0.25*tan(22.5)});
+    \coordinate (R) at (0.5,{-0.5+tan(22.5)});
+
+    \coordinate (E) at (-0.5,{-0.5*tan(22.5)});
+    \coordinate (F) at ({-0.5*tan(22.5)},-0.5);
+    \coordinate (G) at ({0.5*tan(22.5)},-0.5);
+    \coordinate (N) at ({-0.25+0.25*tan(22.5)},{-0.25+0.25*tan(22.5)});
+    \coordinate (M) at ({-0.25+0.25*tan(22.5)},{0.25-0.25*tan(22.5)});
+    \coordinate (Q) at (-0.5,{+0.5-tan(22.5)});
+
+    \ifnum \mymod{6*\p+\q}{4}=0
+    \fill[Brilliantblau] (A) -- (B) -- (C) -- (O) -- (P) -- (R);
+    \fill[Brilliantblau] (E) -- (F) -- (G) -- (N) -- (M) -- (Q);
+    \else
+    \ifnum \mymod{6*\p+\q}{4}=1
+    \fill[Dunkelblau] (A) -- (B) -- (C) -- (O) -- (P) -- (R);
+    \fill[Dunkelblau] (E) -- (F) -- (G) -- (N) -- (M) -- (Q);
+    \else
+    \ifnum \mymod{6*\p+\q}{4}=2
+    \fill[Blau1] (A) -- (B) -- (C) -- (O) -- (P) -- (R);
+    \fill[Blau1] (E) -- (F) -- (G) -- (N) -- (M) -- (Q);
+    \else
+    \fill[Blau2] (A) -- (B) -- (C) -- (O) -- (P) -- (R);
+    \fill[Blau2] (E) -- (F) -- (G) -- (N) -- (M) -- (Q);
+    \fi
+    \fi
+    \fi
+    \end{scope}
+      }
+    }
+  \end{tikzpicture}
+  \caption{Die TUD Parkettierung, hier mit 4 Farben um die einzelnen Kacheln voneinander abzugrenzen.}
+  \label{fig:tilingtheplane}
+\end{figure}
+
+
+
+\end{multicols*}
 \end{document}
