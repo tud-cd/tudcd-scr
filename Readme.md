@@ -3,6 +3,13 @@
 > [!CAUTION]
 > Diese Klassen sind noch in einem Entwicklungsstadium! Es können daher beim Updaten auf neuere Versionen Inkompatibilitäten entstehen!
 
+## Welche Klassen gibt es?
+
+Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
+* `tudcdartcl`, eine Artikelklasse
+* `tudcdreprt`, eine Reportklasse
+* sowie ein `beamer` Theme `tudcd`.
+
 ## Wie verwende ich diese Klassen?
 
 ### Lokale Installation
@@ -23,9 +30,17 @@
 Um eine Nutzung der aktuellsten Version auf Overleaf/ShareLaTeX zu ermöglichen, stehen herunterladbare `.zip`
 im Release Bereich bereit.
 
-## Beispieldateien
+### Beispieldateien
 
 Beispieldateien befinden sich innerhalb des `doc` Verzeichnisses sowie innerhalb des Handbuchs.
+
+## Wo kann geholfen werden?
+
+* Einstellungen bzgl. LuaLaTeX
+  * Zur Einstellung der Schriften wird momentan `fontspec` verwendet. Dieses muss umfangreich konfiguriert werden um korrekte Ergebnisse zu erzielen. Jegliche Hilfe ist hier sehr willkommen.
+* Fehler im Handbuch oder Funktionsweise finden und ein Minimalbeispiel zum Reproduzieren erstellen
+* Gestalten von alternativen Titelseiten, die Konstruktion des Shapes befindet sich in der `demo-report.tex`
+* Weitere Eigenschaften des Shapes benennen, welche in der `demo-report.tex` gesammelt werden können.
 
 # Versionsverlauf
 
