@@ -47,6 +47,9 @@ tdslocations = {"tex/latex/tudcdscr/logo/TUD-Logo*.pdf","tex/latex/tudcdscr/logo
 flatten = false
 flattentds = false
 
+specialtypesetting = specialtypesetting or {}
+specialtypesetting["demo-article.tex"] = {  cmd = "lualatex -interaction=nonstopmode" }
+
 local mydate = os.date("!%Y-%m-%d")
 
 function update_tag(file, content, tagname, tagdate)
