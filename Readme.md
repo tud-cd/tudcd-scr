@@ -29,7 +29,7 @@ Beispieldateien befinden sich innerhalb des `doc` Verzeichnisses sowie innerhalb
 
 # Versionsverlauf
 
-* `%dev-version%` Neuschreiben mit `expl3`-Syntax zum Zwecke der Vereinheitlichung und Wartbarkeit.
+* `0.5.6` Neuschreiben mit `expl3`-Syntax zum Zwecke der Vereinheitlichung und Wartbarkeit.
   * Wechseln zum System `l3build`
   * Verbesserte Einstellung von Schriften in LuaLaTeX, Danke an @tipfom für den Input.
   * Einführen von `\TUDCDsetup` als zentrale Schnittstelle für Einstellungen von Klassenoptionen

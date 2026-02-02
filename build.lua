@@ -17,8 +17,8 @@
 
 -- Identifizierung
 module = "tudcdscr"
-pkgversion = "0.5.5"
-pkgdate    = "2026-01-30"
+pkgversion = "0.5.6"
+pkgdate    = "2026-02-02"
 
 -- Dateipfade
 sourcefiledir = "source"
@@ -38,7 +38,7 @@ excludefiles = {"*~","build.lua","config-*.lua","__**/*","demo-*.tex","handbook.
 -- Diese beiden Dateien ergeben die Dokumentation.
 typesetfiles = { "handbook.tex", "tudcd-common.dtx" }
 -- Automatisches Updaten der Version und Datum
-tagfiles = { "tudcd-common.dtx", "handbook.tex" }
+tagfiles = { "*.dtx", "handbook.tex", "Readme.md" }
 
 sourcefiles = { "*.ins", "*.dtx", "logo" }
 installfiles = { "*.sty", "*.cls","logo" }
@@ -83,14 +83,23 @@ function update_tag(file, content, tagname, tagdate)
     content = string.gsub(content,
                           "\\providecommand\\tudcd@common@date{%d%d%d%d/%d%d/%d%d}",
                           "\\providecommand\\tudcd@common@date{"..tagdate.."}")
-    -- Zusätzlich wird "version-dev" mit dem momentanen Tag ersetzt
+    -- Zusätzlich wird "{dev-version}" mit dem momentanen Tag ersetzt
+    content = string.gsub(content,
+                          "{dev-version}",
+                          tagname)
   end
 
   local tagdate = string.gsub(tagdate, "-", ".")
-  if string.match(file, "handbook.tex") then
+  if string.match(file, "handbook%.tex") then
     content = string.gsub(content,
                           "\\date{%d+%p%d+%p%d+}",
                           "\\date{"..tagdate.."}")
+  end
+  if string.match(file, "Readme%.md") then
+    content = string.gsub(content,
+                          "%%dev%-version%%",
+                          tagname
+                          )
   end
 --[[
   if string.match(file, "CTANREADME.md") then
