@@ -163,7 +163,7 @@
     poster,
     koma
   }{
-    \str_set_eq:NN \l_@@_geometry_instance_name_str \l_keys_choice_str
+    \str_set_eq:NN \l_@@_geometry_instance_name_str \l_keys_choice_tl
   },
   papelayout .initial:n = { brochure },
   a5paper .code:n = { \str_set:Nn\l_@@_geometry_paper_size_str{a5paper} },
@@ -184,7 +184,7 @@
     a5paper, a4paper
 %<poster>    ,a3paper, a2paper, a1paper, a0paper
   }{
-    \str_set_eq:NN \l_@@_geometry_paper_size_str \l_keys_choice_str
+    \str_set_eq:NN \l_@@_geometry_paper_size_str \l_keys_choice_tl
   },
 %<*article|report|book|thesis>
   usemargin .bool_set:N = \l_@@_geometry_margin_bool,
