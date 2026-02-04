@@ -23,6 +23,29 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
    l3build install
    ```
    an.
+   * Sollte das Ausführen des Befehls fehlschlagen, so wurde die `TEXMFHOME` Systemumgebungsvariable nicht gesetzt.
+     Dies kann abhängig von Betriebssystem unterschiedlich eingestellt werden:
+     * Windows-basierte Betriebssystem:
+       - Wenn Sie hierzu eine gute Anleitung finden, dann öffen sie bitte ein Issue.
+     * Linux-basierte Betriebssysteme:
+       - Fügen Sie in der `~/.bashrc` Ihres   Benutzerverzeichnisses die Zeilen
+         ```bash
+         TEXMFHOME = "~/texmf"
+         export TEXMFHOME
+         ```
+         ein. Dies bewirkt, dass weitere Kommandozeilen mit einer gesetzten `TEXMFHOME` Umgebungsvariable starten.
+
+         Sollten Sie eine andere Kommandozeile als `bash` nutzen, und die einstellungen sollten dort anders sein, dann öffnen sie bitte ein Issue.
+   * Sie können ein erfolgreiches Setzen der `TEXMFHOME` Umgebungsvariable überprüfen, indem sie nach Modifikation
+   eine Kommandozeile öffnen und den Befehl
+     ```
+     kpsewhich -var-value TEXMFHOME
+     ```
+     ausführen. Es sollte anschließend der gesetzte Wert
+     ```
+     ~/texmf
+     ```
+     auf der Kommandozeile erscheinen.
 3. Die Klassen können nun genutzt werden.
 
 ### Nutzung in Overleaf
