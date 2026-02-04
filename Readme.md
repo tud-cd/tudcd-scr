@@ -3,6 +3,12 @@
 > [!CAUTION]
 > Diese Klassen sind noch in einem Entwicklungsstadium! Es können daher beim Updaten auf neuere Versionen Inkompatibilitäten entstehen!
 
+
+> [!CAUTION]
+> Bitte nutzen Sie keine Large Language Modelle oder Generative Künstliche Ingelligenz zum Beantworten von Dokumentationsfragen / Einstellungsfragen bezüglich dieses Bundles!
+> Die generierten Codesegmente werden, aufgrund der Neuheit dieser Klassen, mitunter inkompatible Einstellungen vornehmen!
+> Bei Fragen zu Einstellungen oder fehlenden Features eröffnen Sie bitte ein [Issue](https://github.com/tud-cd/tudcd-scr/issues).
+
 ## Inhaltsverzeichnis
 
 * [Welche Klassen gibt es?](#welche-klassen-gibt-es)
@@ -25,7 +31,7 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
 1. Wenn nicht geschehen, setzen der `TEXMFHOME` Variable. Hilfe und weiterführende Links hierzu finden Sie unter
    * [TeXLive Installationen](https://tex.stackexchange.com/q/1137)
    * [MikTeX Installationen](https://tex.stackexchange.com/a/2066)
-   * MacTeX Installationen: Hierzu habe ich keine Informationen gefunden, bei Informationen hierzu, ist ein Issue angebracht :D.
+   * MacTeX Installationen: Hierzu habe ich keine Informationen gefunden, bei Informationen hierzu, ist ein [Issue](https://github.com/tud-cd/tudcd-scr/issues) angebracht :D.
 2. Wenden Sie auf der Konsole den Befehl
    ```
    l3build install
@@ -34,7 +40,7 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
    * Sollte das Ausführen des Befehls fehlschlagen, so wurde die `TEXMFHOME` Systemumgebungsvariable nicht gesetzt.
      Dies kann abhängig von Betriebssystem unterschiedlich eingestellt werden:
      * Windows-basierte Betriebssystem:
-       - Wenn Sie hierzu eine gute Anleitung finden, dann öffen sie bitte ein Issue.
+       - Wenn Sie hierzu eine gute Anleitung finden, dann öffen sie bitte ein [Issue](https://github.com/tud-cd/tudcd-scr/issues).
      * Linux-basierte Betriebssysteme:
        - Fügen Sie in der `~/.bashrc` Ihres   Benutzerverzeichnisses die Zeilen
          ```bash
@@ -81,8 +87,8 @@ zu erwirken. Dies bezweckt neben dem Archivzweck und der Würdigung der Arbeit v
 auch eine Nacherhebung des Bedarfs von LaTeX Vorlagen an der TUD.
 
 Zu diesem Zweck der historischen Aufarbeitung nehme ich Beiträge, Git Repositories, Links und Klassendateien
-unter `david.diepelt(at)gmx.net` mit dem Betreff `[TUD LaTeX]: <Hier Persönlichen Betreff einfügen>` dankend an.
-Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann sie ungefähr in der Verwendung waren.
+unter [meiner Email Addresse](mailto:david.diepelt@gmx.net) `david.diepelt(at)gmx.net` mit dem Betreff `[TUD LaTeX]: <Hier Persönlichen Betreff einfügen>` dankend an.
+Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungefähr in der Verwendung waren.
 
 ## Versionsverlauf
 
