@@ -3,6 +3,14 @@
 > [!CAUTION]
 > Diese Klassen sind noch in einem Entwicklungsstadium! Es können daher beim Updaten auf neuere Versionen Inkompatibilitäten entstehen!
 
+## Inhaltsverzeichnis
+
+* [Welche Klassen gibt es?](#welche-klassen-gibt-es)
+* [Wie verwende ich diese Klassen?](#wie-verwende-ich-diese-klassen)
+* [Wo kann geholfen werden?](#wo-kann-geholfen-werden)
+* [In eigener Sache](#in-eigener-sache)
+* [Versionsverlauf](#versionsverlauf)
+
 ## Welche Klassen gibt es?
 
 Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
@@ -65,7 +73,18 @@ Beispieldateien befinden sich innerhalb des `doc` Verzeichnisses sowie innerhalb
 * Gestalten von alternativen Titelseiten, die Konstruktion des Shapes befindet sich in der `demo-report.tex`
 * Weitere Eigenschaften des Shapes benennen, welche in der `demo-report.tex` gesammelt werden können.
 
-# Versionsverlauf
+## In eigener Sache
+
+Die hier vorgestellten Klassen sollen in der Zukunft die Institutseigenen Lösungen ersetzen.
+Es ist dennoch vom großen Interesse, eine historische Aufarbeitung institutseigener Vorlagen für LaTeX
+zu erwirken. Dies bezweckt neben dem Archivzweck und der Würdigung der Arbeit vergangender TeXniker:innen,
+auch eine Nacherhebung des Bedarfs von LaTeX Vorlagen an der TUD.
+
+Zu diesem Zweck der historischen Aufarbeitung nehme ich Beiträge, Git Repositories, Links und Klassendateien
+unter `david.diepelt(at)gmx.net` mit dem Betreff `[TUD LaTeX]: <Hier Persönlichen Betreff einfügen>` dankend an.
+Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann sie ungefähr in der Verwendung waren.
+
+## Versionsverlauf
 
 * `0.5.6` Neuschreiben mit `expl3`-Syntax zum Zwecke der Vereinheitlichung und Wartbarkeit.
   * Wechseln zum System `l3build`
