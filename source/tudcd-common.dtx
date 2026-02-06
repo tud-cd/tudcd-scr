@@ -365,7 +365,7 @@
   },
   logo/language .choices:nn =
   { de, en, auto }
-  { \str_if_eq:nVTF { auto } { \l_keys_choice_str } {
+  { \str_if_eq:nVTF { auto } { \l_keys_choice_tl } {
       \hook_gput_next_code:nn{package/babel/after}{
         \str_set:Ne \l_@@_logolang_str { \BCPdata{main.language} }
       }
@@ -373,20 +373,20 @@
         \str_set:Ne \l_@@_logolang_str { \BCPdata{main.language} }
       }
     }{
-       \str_set_eq:NN \l_@@_logolang_str \l_keys_choice_str
+       \str_set_eq:NN \l_@@_logolang_str \l_keys_choice_tl
     }
   },
   logo/language .initial:n = { de },
   logo/colormodel .choices:nn =
   { cmyk, rgb }
   {
-    \str_set_eq:NN \l_@@_logomodel_str \l_keys_choice_str
+    \str_set_eq:NN \l_@@_logomodel_str \l_keys_choice_tl
   },
   logo/colormodel .initial:n = { rgb },
   logo/color .choices:nn =
   { blue, white, black }
   {
-    \str_set_eq:NN \l_@@_logocolor_str \l_keys_choice_str
+    \str_set_eq:NN \l_@@_logocolor_str \l_keys_choice_tl
   },
   logo/color .initial:n = { blue },
 %</option&peri&class>
