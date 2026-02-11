@@ -7,7 +7,10 @@
 > [!CAUTION]
 > Bitte nutzen Sie keine Large Language Modelle oder Generative Künstliche Ingelligenz zum Beantworten von Dokumentationsfragen / Einstellungsfragen bezüglich dieses Bundles!
 > Die generierten Codesegmente werden, aufgrund der Neuheit dieser Klassen, mitunter inkompatible Einstellungen vornehmen!
+
+
 > Bei Fragen zu Einstellungen oder fehlenden Features eröffnen Sie bitte ein [Issue](https://github.com/tud-cd/tudcd-scr/issues).
+> Sollten Sie keinen Github Account besitzen, dann schreiben Sie bitte eine [Email](mailto:david.diepelt@gmx.net?subject=%5Btudcd-scr%5D%3A%20).
 
 ## Inhaltsverzeichnis
 
@@ -87,13 +90,14 @@ zu erwirken. Dies bezweckt neben dem Archivzweck und der Würdigung der Arbeit v
 auch eine Nacherhebung des Bedarfs von LaTeX Vorlagen an der TUD.
 
 Zu diesem Zweck der historischen Aufarbeitung nehme ich Beiträge, Git Repositories, Links und Klassendateien
-unter [meiner Email Addresse](mailto:david.diepelt@gmx.net) `david.diepelt(at)gmx.net` mit dem Betreff `[TUD LaTeX]: <Hier Persönlichen Betreff einfügen>` dankend an.
+unter [meiner Email Addresse](mailto:david.diepelt@gmx.net?subject=%5BTUD%20LaTeX%5D%3A%20) `david.diepelt(at)gmx.net` mit dem Betreff `[TUD LaTeX]: <Hier Persönlichen Betreff einfügen>` dankend an.
 Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungefähr in der Verwendung waren.
 
 ## Versionsverlauf
 
 * `%dev-version%`
   * Hotfix für ältere TeXLive Distributionen: `\l_key_choice_str` zu `\l_key_choice_tl` geändert.
+  * Umschreiben der Interna der Beamerklasse.
 * `0.5.6` Neuschreiben mit `expl3`-Syntax zum Zwecke der Vereinheitlichung und Wartbarkeit.
   * Wechseln zum System `l3build`
   * Verbesserte Einstellung von Schriften in LuaLaTeX, Danke an @tipfom für den Input.
