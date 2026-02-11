@@ -1,0 +1,446 @@
+% \iffalse meta-comment
+% LTeX: language=de-DE
+%
+%  TUDCD-Script -- Corporate Design of Technische Universität Dresden
+% ----------------------------------------------------------------------------
+%
+%  Copyright (C) Jochen Diepelt <David.diepelt@gmx.net>, 2025
+%
+% ----------------------------------------------------------------------------
+%
+%  This work may be distributed and/or modified under the conditions of the
+%  LaTeX Project Public License, either version 1.3c of this license or
+%  any later version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of
+%  LaTeX version 2008-05-04 or later.
+%
+%  This work has the LPPL maintenance status "maintained".
+%
+%  The current maintainer and author of this work is Jochen Diepelt.
+%
+% ----------------------------------------------------------------------------
+%
+% \fi
+%
+% \iffalse ins:batch + dtx:driver
+%<*ins>
+\ifx\documentclass\undefined
+  \input docstrip.tex
+  \ifToplevel{\batchinput{tudcd.ins}}
+\else
+  \let\endbatchfile\relax
+\fi
+\endbatchfile
+%</ins>
+%<*dtx>
+\ProvidesFile{tudcd-common.dtx}[2025/10/02]
+\documentclass[english,ngerman]{tudcddoc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+\usepackage{babel}
+\usepackage[babel]{microtype}
+\RecordChanges
+\begin{document} % Diese Dokumentation dokumentiert NUR diese Datei
+  \title{\Large Dokumentation der Datei \texttt{\jobname.dtx} \\
+  \normalsize Generiert durch \texttt{\$ enginetex \jobname.dtx}}
+  \author{Jochen Diepelt}
+  \maketitle
+  \tableofcontents
+
+  \DocInput{tudcd-common.dtx}
+
+\end{document}
+%</dtx>
+% \fi
+%
+% \selectlanguage{ngerman}
+%
+% \section{\texttt{tudcd-beamer}: Ein Beamerstil für die Technische Universität Dresden}
+%
+% \subsection{ Vorbemerkung }
+%
+% Des Weiteren können die mit \dpkg{beamer} erstellten Präsentationen
+% \emph{nicht} den Anforderungen an die Barrierefreiheit gerecht werden. Ein \LaTeX{}-Entwicklerteam Mitglied schreibt
+% daher eine neue Klasse~\cite{ltx-talk}, welche vom Aufbau her barrierefrei gestaltet werden kann.
+% Da jedoch die Programmierschnittstelle dieser nicht stabil ist, und neue Präsentationsstile mit Templates~\cite{xtemplate} in
+% \dpkg{expl3} Syntax definiert werden müssen, wird zum Zeitpunkt des Schreibens dieser Klassen davon abgesehen,
+% \cite{ltx-talk} zu unterstützen.
+%
+% In der \dpkg{beamer}~ Klasse wird ein \emph{Layout} aufgeteilt in \begin{itemize}
+%    \item ein Farbenstyle,
+%    \item ein Schriftartenstyle,
+%    \item ein \emph{Inneren} Stil und,
+%    \item ein \emph{äußeren} Stil.
+% \end{itemize}
+% Diese Stile werden dann zu einem \enquote{Gesamtstil} kombiniert, welcher anschließend über
+% \tsmacro{\usetheme}{Stilname} eingebunden werden kann.
+%
+% Da es nicht vorgesehen ist, dass Stildateien einzeln ausgetauscht werden,
+% wird lediglich ein \dpkg{beamer}-Gesamtstil zur Verfügung gestellt.
+%
+% \subsection{ Einstellungen und Allgemeines}
+%
+% Stildateien von Beamer werden intern als Paket gehandhabt, daher wird analog der internen Pakete \dcode{tudcdfonts} und \dcode{tudcdcolors}
+% eine Identifikation durchgeführt.
+%
+% Um von den Vorzügen von \dmacro{\ExplSyntaxOn} zu profitieren, wird auch hier ein \dpkg{expl3} identifiziert.
+%
+%    \begin{macrocode}
+%<*identification&beamer>
+%<@@=tudcd>
+\ProvidesExplPackage{beamerthemetudcdexpl}{\tudcd@common@date}{\tudcd@common@version}{Ein Beamerstil im Corporate Design der Technischen Universität Dresden}
+%</identification&beamer>
+%    \end{macrocode}
+%
+% Um zusätzliche Felder bereitzustellen, wird hier ein entsprechender Befehl bereitgestellt
+%    \begin{macrocode}
+%<*body&peri&beamer>
+\newcommand{\defineparameter}[2][]{%
+  \expandafter\def\csname insert#2\endcsname{#1}%
+  \expandafter\def\csname insertshort#2\endcsname{#1}%
+  \expandafter\NewDocumentCommand\csname #2\endcsname{O{##2} m}{%
+    \expandafter\def\csname insert#2\endcsname{##2}%
+    \expandafter\def\csname insertshort#2\endcsname{##1}%
+  }%
+}
+\defineparameter{group}
+\defineparameter{location}
+\defineparameter{context}
+%    \end{macrocode}
+%
+% Der Beamerstil benötigt die Einstellungen von \dcode{tudcdfonts} und \dcode{tudcdcolor}.
+%
+%    \begin{macrocode}
+\RequirePackage{tudcdfonts}
+\RequirePackage{tudcdcolor}
+%    \end{macrocode}
+%
+%
+% Für die Platzierung der Zweitlogos ist es notwendig, die übergebene kommaseparierte Liste
+% für die Zweitlogos aufzutrennen und in Boxen der richtigen Höhe zu packen.
+%
+% Es ist jedoch noch unklar, inwiefern diese Funktion veröffentlicht werden muss.
+%    \begin{macrocode}
+\NewDocumentCommand{\tudcd@beamer@delimitlist}{ O{,~} m }
+ {
+  \seq_clear:N \l_tmpa_seq
+  \clist_map_inline:nn { #2 }
+   {
+    \tl_if_blank:oF { ##1 } { \seq_put_right:No \l_tmpa_seq { ##1 } }
+   }
+  \seq_use:Nn \l_tmpa_seq {#1}
+ }
+% Hier machen wir eine Kommaliste fuer Dateinamen fuer die Zweitlogos
+\clist_new:N\g_zweitlogos_dateipfade_clist%
+\NewDocumentCommand\secondlogos{m}{
+  \clist_gset:Nn\g_zweitlogos_dateipfade_clist{#1}%
+}
+\NewDocumentCommand\tudcd@beamer@typesetsecondlogos{}{
+  % Tokenliste fuer ausgabe
+  \tl_gset:Nn\g_tmpa_tl{}%
+  %\clist_if_empty:NF\g_zweitlogos_dateipfade_clist{
+  \clist_map_inline:Nn\g_zweitlogos_dateipfade_clist{
+    \tl_gput_right:Nn\g_tmpa_tl{~\includegraphics[height=\l_@@_beamer_secondlogoheight_dim]{##1}}
+  }
+  %}
+  \tl_use:N\g_tmpa_tl%
+}
+%    \end{macrocode}
+%
+% Um im Nachfolgendem die einzelnen Werte mit sinnvollen namen zu versehen, werden hier
+% die relevanten Längen bereitgestellt
+%
+%    \begin{macrocode}
+\dim_new:N\l_@@_beamer_topbottommargin_dim%
+\dim_new:N\l_@@_beamer_leftrightmargin_dim%
+\dim_new:N\l_@@_beamer_logoheight_dim%
+\dim_new:N\l_@@_beamer_secondlogoheight_dim%
+\dim_new:N\l_@@_beamer_smalllogoheight_dim%
+\dim_new:N\l_@@_beamer_exlusionheight_dim%
+\dim_new:N\l_@@_beamer_columnsep_dim%
+\dim_new:N\l_@@_beamer_columnwidth_dim%
+%%
+\dim_set:Nn\l_@@_beamer_topbottommargin_dim{5.2mm}
+\dim_set:Nn\l_@@_beamer_leftrightmargin_dim{8.0mm}
+\dim_set:Nn\l_@@_beamer_logoheight_dim{8.75mm}
+\dim_set:Nn\l_@@_beamer_secondlogoheight_dim{5.2mm}
+\dim_set:Nn\l_@@_beamer_smalllogoheight_dim{2.1mm}
+\dim_set:Nn\l_@@_beamer_exlusionheight_dim{2.9mm}
+\dim_set:Nn\l_@@_beamer_columnsep_dim{2.4mm}
+\dim_set:Nn\l_@@_beamer_columnwidth_dim{\dimexpr((160mm-2\l_@@_beamer_leftrightmargin_dim-11\l_@@_beamer_columnsep_dim)/12)}
+%    \end{macrocode}
+%
+% Das Corporate Design sieht vor, dass Präsentationen im 16:9 Format gehalten werden.
+% Dieses Format wird hiermit festgesetzt.
+%
+%    \begin{macrocode}
+\RequirePackage{geometry}
+\setlength{\beamer@paperwidth}{160mm}
+\setlength{\beamer@paperheight}{90mm}
+\geometry{
+  paperwidth=160mm,
+  paperheight=90mm,
+%  includefoot,
+  top=0mm, %
+%  bottom=13.3mm,
+% footskip=20mm,
+  left=8mm,
+  right=8mm,
+}
+%    \end{macrocode}
+%
+%
+% \subsection{Das Allgemeine Folienraster}
+%
+% Die Beamertemplate \dcode{headline} wird genutzt um den Freihalterand einzustellen.
+% Aus Gründen die zum Zeitpunkt des Schreibens unklar sind, wird immer 1pt zuviel angegeben. Daher wird dieser Punkt hierbei bereits abgezogen.
+%    \begin{macrocode}
+\defbeamertemplate*{headline}{tudcd}{\vspace{\l_@@_beamer_topbottommargin_dim-1pt}}
+%    \end{macrocode}
+%
+% Um das Logo im Kopf zu plazieren, wird die beamertemplate \dcode{tudcd/simple title} angelegt
+%    \begin{macrocode}
+\defbeamertemplate*{headline}{tudcd/simple~title}{
+\vspace*{\l_@@_beamer_topbottommargin_dim}
+%
+\noindent%
+\hspace{\l_@@_beamer_leftrightmargin_dim}%
+\@@_typeset_logo:n{1.1\l_@@_beamer_logoheight_dim}
+}
+%    \end{macrocode}
+%
+% Die Fußzeile unterscheidet sich von Titel zu Normalen Folien, weshalb dafür ebenfalls 2 Fußzeileneinstellungen angeboten werden.
+%
+%    \begin{macrocode}
+\coffin_new:N\l_@@_exclusionzone_coffin
+\coffin_new:N\l_@@_smalllogo_coffin
+\coffin_new:N\l_@@_smallfootline_coffin
+\coffin_new:N\l_@@_secondlogo_coffin
+%    \end{macrocode}
+%
+%
+% Die Fußzeile orientiert sich am Spaltenraster der Präsentationsvorlage. Wichtig ist hierbei jedoch
+% dass dies mit Coffins umgesetzt wird.
+%    \begin{macrocode}
+\defbeamertemplate{footline}{tudcd}
+{%
+  \vcoffin_set:Nnn\l_@@_exclusionzone_coffin{\paperwidth}{%
+  \vspace{\dimexpr(\l_@@_beamer_topbottommargin_dim+\l_@@_beamer_secondlogoheight_dim+\l_@@_beamer_exlusionheight_dim)}
+  }%
+  \hcoffin_set:Nn\l_@@_smalllogo_coffin{
+  \includegraphics[height=\dim_use:N\l_@@_beamer_smalllogoheight_dim]{logo/TUD-Logo_RGB_kurz_blau} % TODO hier sollte unbedingt noch was justierbar gemacht werden!
+  }
+  \coffin_join:NnnNnnnn
+    \l_@@_exclusionzone_coffin{l}{b}
+    \l_@@_smalllogo_coffin{l}{b}
+    {\l_@@_beamer_leftrightmargin_dim}{\l_@@_beamer_topbottommargin_dim}%
+  %%
+  \hcoffin_set:Nn\l_@@_smallfootline_coffin{
+    \usebeamercolor[fg]{footline}\usebeamerfont{footline}
+    {\tudcd@beamer@delimitlist[ \exp_not:n{~} \textbullet \exp_not:n{~}]{\insertshorttitle,\insertshortauthor,\pagename \exp_not:n{~} \insertframenumber}}%
+  }
+  \coffin_join:NnnNnnnn
+    \l_@@_exclusionzone_coffin{l}{b}
+    \l_@@_smallfootline_coffin{l}{H} % Zur Grundlinie des Textes, nicht zur unteren Kante des Sargs
+    {\l_@@_beamer_leftrightmargin_dim+\l_@@_beamer_columnwidth_dim+\l_@@_beamer_columnsep_dim}
+    {\l_@@_beamer_topbottommargin_dim}
+  \vcoffin_set:Nnn\l_@@_secondlogo_coffin{6\l_@@_beamer_columnwidth_dim+5\l_@@_beamer_columnsep_dim}{
+    \raggedleft \tudcd@beamer@typesetsecondlogos
+  }
+  \coffin_join:NnnNnnnn
+    \l_@@_exclusionzone_coffin{l}{b}
+    \l_@@_secondlogo_coffin{l}{H} % Zur Grundlinie des Textes, nicht zur unteren Kante des Sargs
+    {\l_@@_beamer_leftrightmargin_dim+6\l_@@_beamer_columnwidth_dim+6\l_@@_beamer_columnsep_dim}
+    {\l_@@_beamer_topbottommargin_dim}
+  \coffin_typeset:Nnnnn\l_@@_exclusionzone_coffin{l}{b}{0pt}{0pt}
+  \vskip0pt%
+}
+%    \end{macrocode}
+%
+% Die Fußzeile unterscheidet sich von Titel zu Normalen Folien, weshalb dafür ebenfalls 2 Fußzeileneinstellungen angeboten werden.
+%
+%    \begin{macrocode}
+\defbeamertemplate*{footline}{tudcd/simple~title}{
+  \vcoffin_set:Nnn\l_@@_exclusionzone_coffin{\paperwidth}{%
+  \vspace{\dimexpr(\l_@@_beamer_topbottommargin_dim+\l_@@_beamer_secondlogoheight_dim+\l_@@_beamer_exlusionheight_dim)}
+  }%
+  \hcoffin_set:Nn\l_@@_smalllogo_coffin{
+    \usebeamercolor[fg]{title~page/fontcolor}\usebeamerfont{footline/simple~title}\insertdate \exp_not:n{~} \textbullet \exp_not:n{~}\insertlocation
+  }
+  \coffin_join:NnnNnnnn
+    \l_@@_exclusionzone_coffin{l}{b}
+    \l_@@_smalllogo_coffin{l}{b}
+    {\l_@@_beamer_leftrightmargin_dim}{\l_@@_beamer_topbottommargin_dim}%
+  \vcoffin_set:Nnn\l_@@_secondlogo_coffin{6\l_@@_beamer_columnwidth_dim+5\l_@@_beamer_columnsep_dim}{
+    \raggedleft \tudcd@beamer@typesetsecondlogos
+  }
+  \coffin_join:NnnNnnnn
+    \l_@@_exclusionzone_coffin{l}{b}
+    \l_@@_secondlogo_coffin{l}{H} % Zur Grundlinie des Textes, nicht zur unteren Kante des Sargs
+    {\l_@@_beamer_leftrightmargin_dim+6\l_@@_beamer_columnwidth_dim+6\l_@@_beamer_columnsep_dim}
+    {\l_@@_beamer_topbottommargin_dim}
+  \coffin_typeset:Nnnnn\l_@@_exclusionzone_coffin{l}{b}{0pt}{0pt}
+  \vskip0pt%
+}
+
+\setbeamertemplate{footline}[tudcd]
+\setbeamertemplate{headline}[tudcd]
+%    \end{macrocode}
+%
+% Hier ist die Titelseite
+%
+%    \begin{macrocode}
+\defbeamertemplate*{title~page/authorline}{tudcd}{%
+\tudcd@beamer@delimitlist[~|~]{\insertauthor,\insertgroup,\insertinstitute,\insertcontext}%
+}
+
+\defbeamertemplate*{title~page}{tudcd/simple~title}{
+%
+\vspace{\l_@@_beamer_logoheight_dim}
+%
+\vspace{\l_@@_beamer_logoheight_dim}
+%
+\begin{beamercolorbox}{title~page/fontcolor}
+\usebeamerfont{author/simple title}\usebeamertemplate{title~page/authorline}%
+\end{beamercolorbox}
+%
+\vspace{\baselineskip}
+%
+\begin{beamercolorbox}{title~page/fontcolor}
+\usebeamerfont{title}\inserttitle\par%
+\end{beamercolorbox}
+%
+\vspace{\baselineskip}
+%
+\ifx\insertsubtitle\empty\else%
+\begin{beamercolorbox}{title~page/fontcolor}
+\usebeamerfont{subtitle}\insertsubtitle%
+\end{beamercolorbox}\fi%
+%
+\vfill
+%
+\vspace*{0pt}
+}
+
+\providecommand\maketitle{}
+\renewcommand\maketitle{%
+  \ifbeamer@inframe{%
+    \PackageError{beamerouterthemetud}{Cannot set page style.
+      \space Use \string\maketitle \space outside of any frame, please.
+      \space Die Titelseite konnte nicht konfiguriert werden.
+      \space Verwenden Sie bitte \string\maketitle \space ausserhalb von Folien.
+    }%
+    {%
+      \space See the TUD beamer style examples for further information.
+      \space http://GitHub.com/tud-cd/tudcd-scr
+    }%
+    \titlepage%
+  }%
+  \else
+  {%
+  %\usebeamertemplate{title page/color mode}
+    \setbeamercolor{background~canvas}{parent=background~canvas/title~page}
+    \setbeamertemplate{headline}[tudcd/simple~title]%
+    \setbeamertemplate{footline}[tudcd/simple~title]%
+    \frame{\titlepage}%
+    \setbeamercolor{background~canvas}{bg=}
+  }%
+}
+%    \end{macrocode}
+%
+% Um die Symbole für die Navigation auszuschalten, werden hier diese Einstellungen getätigt.
+%
+%    \begin{macrocode}
+% Die Navigation Sidebar ist standardmässig ausgeschaltet
+\defbeamertemplate*{sidebar~left}{tudcd}
+{} % du auch?
+
+\defbeamertemplate*{sidebar~right}{tudcd}
+{}
+
+\defbeamertemplate*{sidebar~canvas left}{tudcd}
+{} % dur wirst gesetzt?
+
+\defbeamertemplate*{sidebar~canvas right}{tudcd}
+{}
+
+\setbeamertemplate{sidebar~left}[tudcd]
+\setbeamertemplate{sidebar~right}[tudcd]
+\setbeamertemplate{sidebar~canvas~left}[tudcd]
+\setbeamertemplate{sidebar~canvas~right}[tudcd]
+
+\defbeamertemplate*{frametitle}{tudcd}[1][left]
+{%
+  \ifx\insertframetitle\empty%
+    \ifx\insertframesubtitle\empty% Beides Leer
+    %\vspace*{\tudcd@beamerouter@logoheight}%
+    \else% Untertitel ohne Titel
+    \vspace*{\dimexpr\l_@@_beamer_logoheight_dim/3}%
+    \usebeamercolor{framesubtitle}\usebeamerfont{framesubtitle}\textcolor{fg}{\insertframesubtitle}%
+    \fi%
+  \else% Titel ist nichtleer
+    \ifx\insertframesubtitle\empty%
+    \parbox[t][\l_@@_beamer_logoheight_dim]{\textwidth}{%
+    \usebeamerfont{frametitle}\insertframetitle%
+    }%
+    \else%
+    \parbox[t]{\textwidth}{%
+    \usebeamercolor{frametitle}\usebeamerfont{frametitle}\textcolor{fg}{\insertframetitle}\\%
+    \usebeamercolor{framesubtitle}\usebeamerfont{framesubtitle}\textcolor{fg}{\insertframesubtitle}%
+    }%
+    \fi%
+  \fi%
+  \usebeamerfont* {normal text}%
+  \usebeamercolor*{normal text}%
+}
+%    \end{macrocode}
+%
+% \subsection{Farbeinstellungen}
+%
+%    \begin{macrocode}
+
+\setbeamercolor{title~page/fontcolor}{fg=Brilliantblau}
+\setbeamercolor{footline}{fg=Brilliantblau}
+\setbeamercolor{frametitle}{fg=Schwarz}
+\setbeamercolor{framesubtitle}{fg=Grau80}
+\setbeamercolor{parttitle}{fg=Schwarz}
+\setbeamercolor{partsubtitle}{fg=Schwarz}
+\setbeamercolor{caption}{fg=Grau100}
+\setbeamercolor{caption name}{fg=Grau100}
+%    \end{macrocode}
+%
+% \subsection{Schrifteinstellungen}
+%
+%    \begin{macrocode}
+
+% Global Definitions
+\setbeamerfont{normal~text}{size*={9\tudpt}{11\tudpt},shape=\upshape,series=\cdslseries}
+\setbeamerfont{structure}{size*={9\tudpt}{11\tudpt}}
+\setbeamerfont{alerted~text}{size*={9\tudpt}{11\tudpt}}
+\setbeamerfont{tiny~structure}{size*={9\tudpt}{11\tudpt}}
+% Titleframe
+\setbeamerfont{title}{size*={19\tudpt}{21\tudpt},series=\bfseries}
+\setbeamerfont{subtitle}{size*={9\tudpt}{11\tudpt},shape=\upshape}
+%
+\setbeamerfont{author/simple~title}{size*={9\tudpt}{11\tudpt},series=\cdmseries}
+% Elements of Frame
+\setbeamerfont{frametitle}{size*={15\tudpt}{17\tudpt},shape=\upshape}
+\setbeamerfont{framesubtitle}{size*={15\tudpt}{17\tudpt}}
+%
+\setbeamerfont{parttitle}{size*={17\tudpt}{21\tudpt},shape=\upshape}
+\setbeamerfont{partsubtitle}{size*={9\tudpt}{11\tudpt}}
+%
+\setbeamerfont{footline}{size*={5.5\tudpt}{7\tudpt},shape=\upshape}
+\setbeamerfont{footline/simple~title}{size*={8\tudpt}{9\tudpt},shape=\upshape} % 9pt != 9pt ?
+%
+% Blocks?
+\setbeamerfont{block}{size*={9\tudpt}{11\tudpt}}
+\setbeamerfont{block~title}{size*={9\tudpt}{11\tudpt}}
+% Captions
+\setbeamerfont{caption}{size*={5.5\tudpt}{7\tudpt},series=\cdslseries,shape=\rmfamily}
+
+
+%</body&peri&beamer>
+%    \end{macrocode}

@@ -219,23 +219,32 @@ LaTeX version 2025-05-04 or later.
   }
 }
 \generate{%
+  \file{beamerthemetudcd.sty}{
+    \from{tudcd-common.dtx}{identification,beamer,pre}%
+    \from{tudcd-beamer.dtx}{identification,beamer}%
+    \from{tudcd-common.dtx}{identification,beamer,post}%
+    \from{tudcd-common.dtx}{prelim-declaration,beamer}%
+    \from{tudcd-beamer.dtx}{prelim-declaration,beamer}
+    %%
+    \from{tudcd-common.dtx}{option,pre,beamer}
+    \from{tudcd-common.dtx}{option,peri,beamer}
+    \from{tudcd-common.dtx}{option,post,beamer}
+    %%
+    \from{tudcd-common.dtx}{optionloading,pre,beamer}
+    \from{tudcd-common.dtx}{optionloading,peri,beamer}
+    \from{tudcd-common.dtx}{optionloading,post,beamer}
+    %% Header
+    \from{tudcd-common.dtx}{header,peri,beamer}
+    \from{tudcd-beamer.dtx}{header,peri,beamer}
+    %% Body
+    \from{tudcd-common.dtx}{body,pre,beamer}
+    \from{tudcd-beamer.dtx}{body,peri,beamer}
+    \from{tudcd-common.dtx}{body,post,beamer}%
+  }
+}
+\generate{%
   \file{tudcddoc.cls}{
     \from{tudcd-doc.dtx}{doc}%
-  }
-  \file{beamerthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beamertheme}%
-  }
-  \file{beamerouterthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beameroutertheme}%
-  }
-  \file{beamerinnerthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beamerinnertheme}%
-  }
-  \file{beamercolorthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beamercolortheme}%
-  }
-  \file{beamerfontthemetudcd.sty}{
-    \from{tudcd-beamertheme.dtx}{beamerfonttheme}%
   }
 }
 \endbatchfile
