@@ -90,7 +90,7 @@
 %    \begin{macrocode}
 %<*identification&beamer>
 %<@@=tudcd>
-\ProvidesExplPackage{beamerthemetudcdexpl}{\tudcd@common@date}{\tudcd@common@version}{Ein Beamerstil im Corporate Design der Technischen Universität Dresden}
+\ProvidesExplPackage{beamerthemetudcd}{\tudcd@common@date}{\tudcd@common@version}{Ein Beamerstil im Corporate Design der Technischen Universität Dresden}
 %</identification&beamer>
 %    \end{macrocode}
 %
@@ -341,7 +341,7 @@
   \else
   {%
   %\usebeamertemplate{title page/color mode}
-    \setbeamercolor{background~canvas}{parent=background~canvas/title~page}
+    \setbeamercolor{background~canvas}{bg=secondarycolor}
     \setbeamertemplate{headline}[tudcd/simple~title]%
     \setbeamertemplate{footline}[tudcd/simple~title]%
     \frame{\titlepage}%
@@ -400,15 +400,33 @@
 % \subsection{Farbeinstellungen}
 %
 %    \begin{macrocode}
-
-\setbeamercolor{title~page/fontcolor}{fg=Brilliantblau}
-\setbeamercolor{footline}{fg=Brilliantblau}
-\setbeamercolor{frametitle}{fg=Schwarz}
+\setbeamercolor{normal~text}{fg=Schwarz,bg=Weiss}
+%
+\setbeamercolor{structure}{fg=highlightcolor}
+%\setbeamercolor{titleshading}{fg=tudbase,bg=Violett1}
+\setbeamercolor{alerted~text}{fg=Rot1}
+\setbeamercolor{alternate~palette}{fg=Grau100}
+%
+\setbeamercolor{title~page/fontcolor}{fg=highlightcolor}
+\setbeamercolor{footline}{fg=highlightcolor}
+\setbeamercolor{frametitle}{fg=highlightcolor}
 \setbeamercolor{framesubtitle}{fg=Grau80}
-\setbeamercolor{parttitle}{fg=Schwarz}
-\setbeamercolor{partsubtitle}{fg=Schwarz}
+\setbeamercolor{parttitle}{fg=highlightcolor}
+\setbeamercolor{partsubtitle}{fg=highlightcolor}
 \setbeamercolor{caption}{fg=Grau100}
-\setbeamercolor{caption name}{fg=Grau100}
+\setbeamercolor{caption~name}{fg=Grau100}
+%
+%
+\setbeamercolor{block~body}{use=normal~text,fg=normal~text.fg,bg=Grau10}
+\setbeamercolor{block~title}{fg=highlightcolor,bg=Grau20}
+%
+\setbeamercolor{block~body~example}{use=normal~text,fg=normal~text.fg,bg=Violett2}
+\setbeamercolor{block~title~example}{fg=Weiss,bg=Violett1}
+\setbeamercolor{block~body~alerted}{use=normal~text,fg=normal~text.fg,bg=Rot2}
+\setbeamercolor{block~title~alerted}{fg=Weiss,bg=Rot1}
+
+\setbeamercolor{part~page/title}{parent=title}
+\setbeamercolor{part~page/subtitle}{parent=subtitle}
 %    \end{macrocode}
 %
 % \subsection{Schrifteinstellungen}
@@ -438,6 +456,7 @@
 % Blocks?
 \setbeamerfont{block}{size*={9\tudpt}{11\tudpt}}
 \setbeamerfont{block~title}{size*={9\tudpt}{11\tudpt}}
+
 % Captions
 \setbeamerfont{caption}{size*={5.5\tudpt}{7\tudpt},series=\cdslseries,shape=\rmfamily}
 

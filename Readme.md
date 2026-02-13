@@ -97,7 +97,9 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
 
 * `%dev-version%`
   * Hotfix für ältere TeXLive Distributionen: `\l_key_choice_str` zu `\l_key_choice_tl` geändert.
-  * Umschreiben der Interna der Beamerklasse.
+  * Umschreiben der Interna der Beamervorlage.
+  * Einführen von Metafarben für das Paket `xcolor`
+  * Neue Farbauswahl für die Beamervorlage
 * `0.5.6` Neuschreiben mit `expl3`-Syntax zum Zwecke der Vereinheitlichung und Wartbarkeit.
   * Wechseln zum System `l3build`
   * Verbesserte Einstellung von Schriften in LuaLaTeX, Danke an @tipfom für den Input.

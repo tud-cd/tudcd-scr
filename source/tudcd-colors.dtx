@@ -136,7 +136,7 @@
   color/highlight-color .tl_set:N = \l_@@_highlight_color_tl,
   color/highlight-color .initial:n = {Brilliantblau},
   color/secondary-color .tl_set:N = \l_@@_background_color_tl,
-  color/secondary-color .initial:n = {.},
+  color/secondary-color .initial:n = {Weiss},
   color/tertiary-color .tl_set:N = \l_@@_second_background_color_tl,
   color/tertiary-color .initial:n = {.},
   color/model .choices:nn = {
@@ -223,6 +223,24 @@
 \@@_definecolor:nnn{Grau40}{RGB/cmyk}{165,174,184/18,8,2,32}%
 \@@_definecolor:nnn{Grau20}{RGB/cmyk}{208,213,220/9,4,1,16}%
 \@@_definecolor:nnn{Grau10}{RGB/cmyk}{231,233,237/5,2,1,8}%
+
+
+%    \end{macrocode}
+% Es ist bis zur Lösung der Kompatibilitätprobleme von \dpkg{xcolor} und \dcode{l3color} wichtig,
+% dass für \dpkg{xcolor} Metafarben definiert werden.
+% Dies muss jedoch laden des Pakets \dcode{xcolor} geschehen, welches erst nach der Optionverarbeitung geladen werden kann.
+%
+% Daher bedarf es zwei zusätzlichen Codeabschnitten. Eine Codeabschnitt, welcher die festgelegten globalen Optionen
+% als Metafarben ausgibt, sowie ein Codeabschnitt, welcher beim weiteren Setzen der Schlüssel die Farben überschreibt.
+%    \begin{macrocode}
+\colorlet{highlightcolor}{\tl_use:N\l_@@_highlight_color_tl}
+\colorlet{secondarycolor}{\tl_use:N\l_@@_background_color_tl}
+\colorlet{tertiarycolor} {\tl_use:N\l_@@_second_background_color_tl}
+\keys_define:nn { tudcd }{
+  color/highlight-color .code:n = { \colorlet{highlightcolor}{#1} },
+  color/secondary-color .code:n = { \colorlet{secondarycolor}{#1} },
+  color/tertiary-color  .code:n = { \colorlet{tertiarycolor}{#1} }
+}
 %</header&peri>
 %    \end{macrocode}
 %
