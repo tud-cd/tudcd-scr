@@ -539,15 +539,33 @@ Zweitlogos ermöglicht.
 Da \lstinline|\secondlogos| eine kommaseparierte Liste an Einträgen erwartet, können die Dateipfade keine Kommata enthalten.
 Die Logos werden von Links nach Rechts rechtsbündig in den dafür vorgesehenen Bereich platziert.
 
-Die Titelfolie, welche mit \lstinline|\maketitle| gesetzt wird, hat mehrere \emph{Farbmodi},
-welche die Farbe beeinflussen.
-Diese können durch das Umschalten der Beamertemplate \lstinline|title page/colormode| eingestellt werden.
+Die Titelfolie, welche mit \lstinline|\maketitle| gesetzt wird, kann mittels der verschiedenen Einstellungen über
+die allgemeine Farbauswahl beeinflusst werden.
 \begin{lstlisting}
-  \setbeamertemplate{title page/colormode}[blue]
-
-  \setbeamertemplate{title page/colormode}[white]
+\TUDCDsetup{
+  color = {
+    highlight-color=Weiss,
+    secondary-color=Brilliantblau
+  },
+  logo = {
+    color = white
+  }
+}
 \end{lstlisting}
 
+Die Fußzeilen der Folien können über die Schlüssel \lstinline|beamer/footline| bzw.\@ \lstinline|beamer/title-footline|
+konfiguriert werden. Es wird dabei eine Kommaseparierte Liste von Feldern erwartet, welche durch ein \lstinline|\textbullet|
+voneinander getrennt werden.
+\begin{lstlisting}
+\TUDCDsetup{
+  beamer = {
+    title-footline = {\insertdate,\insertlocation},
+    footline = {\insertshorttitle,\insertshortauthor,\pagename \ \insertframenumber}
+  }
+}
+\end{lstlisting}
+
+Leerzeichen müssen manuell mit \lstinline[showspaces=true]|\ | eingefügt werden.
 
 \section{Fertige Beispielpräsentationen}
 

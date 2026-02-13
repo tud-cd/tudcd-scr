@@ -237,9 +237,18 @@
 \colorlet{secondarycolor}{\tl_use:N\l_@@_background_color_tl}
 \colorlet{tertiarycolor} {\tl_use:N\l_@@_second_background_color_tl}
 \keys_define:nn { tudcd }{
-  color/highlight-color .code:n = { \colorlet{highlightcolor}{#1} },
-  color/secondary-color .code:n = { \colorlet{secondarycolor}{#1} },
-  color/tertiary-color  .code:n = { \colorlet{tertiarycolor}{#1} }
+  color/highlight-color .code:n = {
+    \tl_set:Nn\l_@@_highlight_color_tl{#1}
+    \colorlet{highlightcolor}{#1}
+  },
+  color/secondary-color .code:n = {
+    \tl_set:Nn\l_@@_background_color_tl{#1}
+    \colorlet{secondarycolor}{#1}
+  },
+  color/tertiary-color  .code:n = {
+    \tl_set:Nn\l_@@_second_background_color_tl{#1}
+    \colorlet{tertiarycolor}{#1}
+  }
 }
 %</header&peri>
 %    \end{macrocode}

@@ -94,6 +94,33 @@
 %</identification&beamer>
 %    \end{macrocode}
 %
+%
+%    \begin{macrocode}
+%<*prelim-declaration&peri>
+\tl_new:N\l_@@_title_footline_tl
+\tl_new:N\l_@@_footline_tl
+%</prelim-declaration&peri>
+%    \end{macrocode}
+% Die Fußzeilen des Titels und der Folien sollten konfigurierbar sein. Um dennoch eine einheitliche Darstellung
+% zu gewährleisten, wird eine kommaseparierte Liste von Werten abgespeichert, welche in den Fußzeilen gesetzt wird.
+%    \begin{macrocode}
+%<*option&peri>
+  beamer .code:n = {
+    \keys_set:nn{ tudcd / beamer }{ #1 }
+  },
+  beamer / title-footline .code:n = {
+    \tl_set:Nn\l_@@_title_footline_tl{#1}
+  },
+  beamer / title-footline .value_required:n = true,
+  beamer / title-footline .initial:n = {\insertdate,\insertlocation},
+  beamer / footline .code:n = {
+    \tl_set:Nn\l_@@_footline_tl{#1}
+  },
+  beamer / footline .value_required:n = true,
+  beamer / footline .initial:n = {\insertshorttitle,\insertshortauthor,\pagename \ \insertframenumber},
+%</option&peri>
+%    \end{macrocode}
+%
 % Um zusätzliche Felder bereitzustellen, wird hier ein entsprechender Befehl bereitgestellt
 %    \begin{macrocode}
 %<*body&peri&beamer>
@@ -132,6 +159,17 @@
    }
   \seq_use:Nn \l_tmpa_seq {#1}
  }
+\cs_new:Nn \@@_format_textbullet:nN {
+  \clist_set:NV \l_tmpa_clist #2
+  \clist_log:N\l_tmpa_clist
+  \seq_clear:N \l_tmpa_seq
+  \clist_map_inline:Nn \l_tmpa_clist
+   {
+    \tl_if_blank:oF { ##1 } { \seq_put_right:Nn \l_tmpa_seq { ##1 } }
+   }
+  \seq_log:N\l_tmpa_seq
+  \seq_use:Nn \l_tmpa_seq {#1}
+}
 % Hier machen wir eine Kommaliste fuer Dateinamen fuer die Zweitlogos
 \clist_new:N\g_zweitlogos_dateipfade_clist%
 \NewDocumentCommand\secondlogos{m}{
@@ -239,7 +277,7 @@
   %%
   \hcoffin_set:Nn\l_@@_smallfootline_coffin{
     \usebeamercolor[fg]{footline}\usebeamerfont{footline}
-    {\tudcd@beamer@delimitlist[ \exp_not:n{~} \textbullet \exp_not:n{~}]{\insertshorttitle,\insertshortauthor,\pagename \exp_not:n{~} \insertframenumber}}%
+    {\@@_format_textbullet:nN{ \exp_not:n{~} \textbullet \exp_not:n{~} }\l_@@_footline_tl}%
   }
   \coffin_join:NnnNnnnn
     \l_@@_exclusionzone_coffin{l}{b}
@@ -267,7 +305,8 @@
   \vspace{\dimexpr(\l_@@_beamer_topbottommargin_dim+\l_@@_beamer_secondlogoheight_dim+\l_@@_beamer_exlusionheight_dim)}
   }%
   \hcoffin_set:Nn\l_@@_smalllogo_coffin{
-    \usebeamercolor[fg]{title~page/fontcolor}\usebeamerfont{footline/simple~title}\insertdate \exp_not:n{~} \textbullet \exp_not:n{~}\insertlocation
+    \usebeamercolor[fg]{title~page/fontcolor}\usebeamerfont{footline/simple~title}
+    \@@_format_textbullet:nN{ \exp_not:n{~} \textbullet \exp_not:n{~} }\l_@@_title_footline_tl
   }
   \coffin_join:NnnNnnnn
     \l_@@_exclusionzone_coffin{l}{b}
