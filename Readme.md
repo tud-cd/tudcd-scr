@@ -17,8 +17,8 @@
 * [Welche Klassen gibt es?](#welche-klassen-gibt-es)
 * [Wie verwende ich diese Klassen?](#wie-verwende-ich-diese-klassen)
 * [Wo kann geholfen werden?](#wo-kann-geholfen-werden)
-* [In eigener Sache](#in-eigener-sache)
 * [Versionsverlauf](#versionsverlauf)
+<!-- * [In eigener Sache](#in-eigener-sache) -->
 
 ## Welche Klassen gibt es?
 
@@ -82,6 +82,7 @@ Beispieldateien befinden sich innerhalb des `doc` Verzeichnisses sowie innerhalb
 * Gestalten von alternativen Titelseiten, die Konstruktion des Shapes befindet sich in der `demo-report.tex`
 * Weitere Eigenschaften des Shapes benennen, welche in der `demo-report.tex` gesammelt werden können.
 
+<!--comment
 ## In eigener Sache
 
 Die hier vorgestellten Klassen sollen in der Zukunft die Institutseigenen Lösungen ersetzen.
@@ -92,6 +93,7 @@ auch eine Nacherhebung des Bedarfs von LaTeX Vorlagen an der TUD.
 Zu diesem Zweck der historischen Aufarbeitung nehme ich Beiträge, Git Repositories, Links und Klassendateien
 unter [meiner Email Addresse](mailto:david.diepelt@gmx.net?subject=%5BTUD%20LaTeX%5D%3A%20) `david.diepelt(at)gmx.net` mit dem Betreff `[TUD LaTeX]: <Hier Persönlichen Betreff einfügen>` dankend an.
 Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungefähr in der Verwendung waren.
+-->
 
 ## Versionsverlauf
 
@@ -100,6 +102,7 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
   * Umschreiben der Interna der Beamervorlage.
   * Einführen von Metafarben für das Paket `xcolor`
   * Neue Farbauswahl für die Beamervorlage
+  * Konfigurierbare Fußzeilen für alle Folien.
 * `0.5.6` Neuschreiben mit `expl3`-Syntax zum Zwecke der Vereinheitlichung und Wartbarkeit.
   * Wechseln zum System `l3build`
   * Verbesserte Einstellung von Schriften in LuaLaTeX, Danke an @tipfom für den Input.
