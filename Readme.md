@@ -1,14 +1,6 @@
 # LaTeX Klassen für das Corporate Design der Technischen Universität Dresden
 
-> [!CAUTION]
-> Diese Klassen sind noch in einem Entwicklungsstadium! Es können daher beim Updaten auf neuere Versionen Inkompatibilitäten entstehen!
-
-
-> [!CAUTION]
-> Bitte nutzen Sie keine Large Language Modelle oder Generative Künstliche Ingelligenz zum Beantworten von Dokumentationsfragen / Einstellungsfragen bezüglich dieses Bundles!
-> Die generierten Codesegmente werden, aufgrund der Neuheit dieser Klassen, mitunter inkompatible Einstellungen vornehmen!
-
-
+> [!IMPORTANT]
 > Bei Fragen zu Einstellungen oder fehlenden Features eröffnen Sie bitte ein [Issue](https://github.com/tud-cd/tudcd-scr/issues).
 > Sollten Sie keinen Github Account besitzen, dann schreiben Sie bitte eine [Email](mailto:david.diepelt@gmx.net?subject=%5Btudcd-scr%5D%3A%20).
 
@@ -21,6 +13,10 @@
 <!-- * [In eigener Sache](#in-eigener-sache) -->
 
 ## Welche Klassen gibt es?
+
+> [!CAUTION]
+> Diese Klassen sind noch in einem Entwicklungsstadium! Es können daher beim Updaten auf neuere Versionen Inkompatibilitäten entstehen!
+
 
 Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
 * `tudcdartcl`, eine Artikelklasse
@@ -93,6 +89,12 @@ auch eine Nacherhebung des Bedarfs von LaTeX Vorlagen an der TUD.
 Zu diesem Zweck der historischen Aufarbeitung nehme ich Beiträge, Git Repositories, Links und Klassendateien
 unter [meiner Email Addresse](mailto:david.diepelt@gmx.net?subject=%5BTUD%20LaTeX%5D%3A%20) `david.diepelt(at)gmx.net` mit dem Betreff `[TUD LaTeX]: <Hier Persönlichen Betreff einfügen>` dankend an.
 Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungefähr in der Verwendung waren.
+
+> [!CAUTION]
+> Bitte nutzen Sie keine Large Language Modelle oder Generative Künstliche Ingelligenz zum Beantworten von Dokumentationsfragen / Einstellungsfragen bezüglich dieses Bundles!
+> Die generierten Codesegmente werden, aufgrund der Neuheit dieser Klassen, mitunter inkompatible Einstellungen vornehmen!
+
+
 -->
 
 ## Versionsverlauf
