@@ -99,7 +99,7 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
 
 ## Versionsverlauf
 
-* `%dev-version%`
+* `0.6.0`
   * Hotfix für ältere TeXLive Distributionen: `\l_key_choice_str` zu `\l_key_choice_tl` geändert.
   * Umschreiben der Interna der Beamervorlage.
   * Einführen von Metafarben für das Paket `xcolor`
