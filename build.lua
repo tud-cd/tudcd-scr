@@ -21,7 +21,7 @@ require "build-sharelatex-template.lua"
 
 -- Identifizierung
 module = "tudcdscr"
-pkgversion = "0.5.6"
+pkgversion = "0.6.0"
 pkgdate    = "2026-02-02"
 
 -- Dateipfade
