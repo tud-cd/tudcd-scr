@@ -1,7 +1,8 @@
 # LaTeX Klassen für das Corporate Design der Technischen Universität Dresden
 
 > [!IMPORTANT]
-> Bei Fragen zu Einstellungen oder fehlenden Features eröffnen Sie bitte ein [Issue](https://github.com/tud-cd/tudcd-scr/issues).
+> Bei Fehlern, Fragen zu Einstellungen oder fehlenden Features eröffnen Sie bitte ein [Issue](https://github.com/tud-cd/tudcd-scr/issues).
+>
 > Sollten Sie keinen Github Account besitzen, dann schreiben Sie bitte eine [Email](mailto:david.diepelt@gmx.net?subject=%5Btudcd-scr%5D%3A%20).
 
 ## Inhaltsverzeichnis
