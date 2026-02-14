@@ -14,6 +14,10 @@
   https://www.latex-project.org/lppl.txt
 ]]
 
+-- Erweiterung des Build Scripts
+require "build-sharelatex-template.lua"
+
+
 
 -- Identifizierung
 module = "tudcdscr"
@@ -49,6 +53,26 @@ flattentds = false
 
 specialtypesetting = specialtypesetting or {}
 specialtypesetting["demo-article.tex"] = {  cmd = "lualatex -interaction=nonstopmode" }
+
+-- Einträge für ShareLatex Zips
+sharelatex_template_files["beamer"] = {
+  name = module .. "-sharelatex-beamer-" .. pkgversion,
+  stylefiles = { "beamer*.sty", "tudcdcolor.sty", "tudcdfonts.sty", "logo" },
+  demofiles = { "demo-pres.tex" },
+  latexmkfile = "sharelatex-latexmkrc"
+}
+sharelatex_template_files["report"] = {
+  name = module .. "-sharelatex-report-" .. pkgversion,
+  stylefiles = { "tudcdreprt.cls", "logo" },
+  demofiles = { "demo-report.tex" },
+  latexmkfile = "sharelatex-latexmkrc"
+}
+sharelatex_template_files["article"] = {
+  name = module .. "-sharelatex-article-" .. pkgversion,
+  stylefiles = { "tudcdarticle.cls", "logo" },
+  demofiles = { "demo-article.tex" },
+  latexmkfile = "sharelatex-latexmkrc"
+}
 
 local mydate = os.date("!%Y-%m-%d")
 
@@ -113,6 +137,11 @@ function update_tag(file, content, tagname, tagdate)
   end
 ]]
   return content
+end
+
+function tag_hook(tagname)
+  os.execute('git commit -a -m "Step release tag"')
+  os.execute('git tag -a -m "" ' .. tagname)
 end
 
 -- Configuration for ctan
