@@ -180,9 +180,11 @@
 \setmainfont{NotoSerif}
 \setsansfont{NotoSans}
 }{ % Hier ist pdfTeX verwendet worden.
-
-\renewcommand{\bfdefault}{sb}
-\renewcommand{\mddefault}{medium}
+% Leider überschreibt notomath gerade hardcoded die Voreinstellungen.
+% Solange das so ist, muss das hier zusätzlich ausgewählt werden.
+\renewcommand*{\bfdefault}{sb}
+\renewcommand*{\mddefault}{medium}
+}
 %    \end{macrocode}
 %
 % Dabei werden für die Auswahl der einzelnen Schriftschnitte separate Befehle bereitgestellt.
