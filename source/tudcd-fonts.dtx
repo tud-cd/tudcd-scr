@@ -116,11 +116,13 @@
 % Um die Schriftart \texttt{Noto} einzustellen, wird das Paket \dpkg{noto} geladen
 %    \begin{macrocode}
 %<*body&peri>
-\bool_if:nTF{\l_@@_use_seriffont_bool}{
-  % Noto stellt standardmäßig die Serifenschrift ein.
-}{
+\bool_if:nF{\l_@@_use_seriffont_bool}{
+  % Falls nicht die Serifenschrift verwendet werden soll, wird der Default auf die Serifenlose gesetzt.
   \PassOptionsToPackage{sfdefault}{notomath}
+  \renewcommand*{\familydefault}{\sfdefault}
 }
+% Wählen der Basisschnitte für das Noto Paket.
+% Wegen eines Bugs funktioniert wird das allerdings aktuell durch notomath nochmal überschrieben.
 \PassOptionsToPackage{semibold,medium}{noto-sans}
 \PassOptionsToPackage{semibold,medium}{noto-serif}
 \RequirePackage{notomath}
@@ -147,12 +149,6 @@
 
 \renewcommand{\bfdefault}{sb}
 \renewcommand{\mddefault}{medium}
-
-\bool_if:nTF{\l_@@_use_seriffont_bool}{
-  \renewcommand*{\familydefault}{\rmdefault}
-}{
-  \renewcommand*{\familydefault}{\sfdefault}
-}
 %    \end{macrocode}
 %
 % Dabei werden für die Auswahl der einzelnen Schriftschnitte separate Befehle bereitgestellt.
