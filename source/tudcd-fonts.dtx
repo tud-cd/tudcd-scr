@@ -136,43 +136,49 @@
 \sys_if_engine_opentype:TF{
 \RequirePackage{fontspec}
   % Hier wird LuaTeX oder XeTeX verwendet
-
-\setmainfont{NotoSerif}[
-  FontFace = {medium}{n}{*-Medium},
-  FontFace = {sb}{n}{*-SemiBold}
-]
-\setsansfont{NotoSans}[
-  FontFace = {medium}{n}{*-Medium},
-  FontFace = {sb}{n}{*-SemiBold}
-]
-\setmonofont{NotoSansMono}
-
-\renewcommand{\bfdefault}{sb}
-\renewcommand{\mddefault}{medium}
 %    \end{macrocode}
 %
 % Dabei werden für die Auswahl der einzelnen Schriftschnitte separate Befehle bereitgestellt.
 % Danke hierbei an Tim Pokart für das finden dieser Einstellungen %FIXME: Contributing Liste erstellen!
 %
 %    \begin{macrocode}
-\DeclareRobustCommand{\cdulseries}{\fontseries{UltraLight}\selectfont}
-\DeclareTextFontCommand{\textcdul}{\cdulseries}
-\DeclareRobustCommand{\cdelseries}{\fontseries{ExtraLight}\selectfont}
-\DeclareTextFontCommand{\textcdel}{\cdelseries}
-\DeclareRobustCommand{\cdlseries}{\fontseries{Light}\selectfont}
-\DeclareTextFontCommand{\textcdl}{\cdlseries}
-\DeclareRobustCommand{\cdslseries}{\fontseries{SemiLight}\selectfont}
-\DeclareTextFontCommand{\textcdsl}{\cdslseries}
-\DeclareRobustCommand{\cdmseries}{\fontseries{Medium}\selectfont}
-\DeclareTextFontCommand{\textcdm}{\cdmseries}
-\DeclareRobustCommand{\cdsbseries}{\fontseries{SemiBold}\selectfont}
-\DeclareTextFontCommand{\textcdsb}{\cdsbseries}
-\DeclareRobustCommand{\cdbseries}{\fontseries{Bold}\selectfont}
-\DeclareTextFontCommand{\textcdb}{\cdbseries}
-\DeclareRobustCommand{\cdebseries}{\fontseries{ExtraBold}\selectfont}
-\DeclareTextFontCommand{\textcdeb}{\cdebseries}
-\DeclareRobustCommand{\cdubseries}{\fontseries{Black}\selectfont}
-\DeclareTextFontCommand{\textcdub}{\cdubseries}
+\setmonofont{NotoSansMono}[
+  UprightFont=*-Medium,
+  BoldFont=*-SemiBold,
+  FontFace={ul}{n}{*-Thin},
+  FontFace={el}{n}{*-ExtraLight},
+  FontFace={l}{n}{*-Light},
+  FontFace={sb}{n}{*-Semibold},
+  FontFace={b}{n}{*-Bold},
+  FontFace={eb}{n}{*-ExtraBold},
+  FontFace={ub}{n}{*-Black},
+  FontFace = {medium}{n}{*-Medium},
+  FontFace = {sb}{n}{*-SemiBold}
+]
+\defaultfontfeatures{
+  UprightFont=*-Medium,
+  ItalicFont=*-MediumItalic,
+  BoldFont=*-SemiBold,
+  BoldItalicFont=*-SemiBoldItalic,
+  FontFace={ul}{n}{*-Thin},
+  FontFace={ul}{it}{*-ThinItalic},
+  FontFace={el}{n}{*-ExtraLight},
+  FontFace={el}{it}{*-ExtraLightItalic},
+  FontFace={l}{n}{*-Light},
+  FontFace={l}{it}{*-LightItalic},
+  FontFace={sb}{n}{*-Semibold},
+  FontFace={sb}{it}{*-SemiboldItalic},
+  FontFace={b}{n}{*-Bold},
+  FontFace={b}{it}{*-BoldItalic},
+  FontFace={eb}{n}{*-ExtraBold},
+  FontFace={eb}{it}{*-ExtraBoldItalic},
+  FontFace={ub}{n}{*-Black},
+  FontFace={ub}{it}{*-BlackItalic},
+  FontFace = {medium}{n}{*-Medium},
+  FontFace = {medium}{it}{*-MediumItalic},
+}
+\setmainfont{NotoSerif}
+\setsansfont{NotoSans}
 }{ % Hier ist pdfTeX verwendet worden.
 
 \renewcommand{\bfdefault}{sb}
@@ -200,7 +206,6 @@
 \DeclareTextFontCommand{\textcdeb}{\cdebseries}
 \DeclareRobustCommand{\cdubseries}{\fontseries{ub}\selectfont}
 \DeclareTextFontCommand{\textcdub}{\cdubseries}
-}
 %</body&peri>
 %    \end{macrocode}
 %
