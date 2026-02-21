@@ -31,7 +31,6 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
 1. Wenn nicht geschehen, setzen der `TEXMFHOME` Variable. Hilfe und weiterführende Links hierzu finden Sie unter
    * [TeXLive Installationen](https://tex.stackexchange.com/q/1137)
    * [MikTeX Installationen](https://tex.stackexchange.com/a/2066)
-   * MacTeX Installationen: Hierzu habe ich keine Informationen gefunden, bei Informationen hierzu, ist ein [Issue](https://github.com/tud-cd/tudcd-scr/issues) angebracht :D.
 2. Wenden Sie auf der Konsole den Befehl
    ```
    l3build install
@@ -73,8 +72,6 @@ Beispieldateien befinden sich innerhalb des `doc` Verzeichnisses sowie innerhalb
 
 ## Wo kann geholfen werden?
 
-* Einstellungen bzgl. LuaLaTeX
-  * Zur Einstellung der Schriften wird momentan `fontspec` verwendet. Dieses muss umfangreich konfiguriert werden um korrekte Ergebnisse zu erzielen. Jegliche Hilfe ist hier sehr willkommen.
 * Fehler im Handbuch oder Funktionsweise finden und ein Minimalbeispiel zum Reproduzieren erstellen
 * Gestalten von alternativen Titelseiten, die Konstruktion des Shapes befindet sich in der `demo-report.tex`
 * Weitere Eigenschaften des Shapes benennen, welche in der `demo-report.tex` gesammelt werden können.
@@ -100,6 +97,10 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
 
 ## Versionsverlauf
 
+* `%dev-version`
+  * Korrektere Schrifteinstellungen bei `fontspec`, danke an @TeXHaeckse dafür.
+  * Beheben eines Fehlers in der `build.lua`
+  *
 * `0.6.0`
   * Hotfix für ältere TeXLive Distributionen: `\l_key_choice_str` zu `\l_key_choice_tl` geändert.
   * Umschreiben der Interna der Beamervorlage.

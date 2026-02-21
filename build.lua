@@ -69,7 +69,7 @@ sharelatex_template_files["report"] = {
 }
 sharelatex_template_files["article"] = {
   name = module .. "-sharelatex-article-" .. pkgversion,
-  stylefiles = { "tudcdarticle.cls", "logo" },
+  stylefiles = { "tudcdartcl.cls", "logo" },
   demofiles = { "demo-article.tex" },
   latexmkfile = "sharelatex-latexmkrc"
 }
