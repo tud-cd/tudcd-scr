@@ -100,7 +100,8 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
 * `%dev-version`
   * Korrektere Schrifteinstellungen bei `fontspec`, danke an @TeXHaeckse dafür.
   * Beheben eines Fehlers in der `build.lua`
-  *
+  * Beheben von falschen Schriften bei geschachtelten `itemize` Umgebungen in der `beamer` Klasse.
+  * Entfernen von Dokumentation für nicht-existente Features
 * `0.6.0`
   * Hotfix für ältere TeXLive Distributionen: `\l_key_choice_str` zu `\l_key_choice_tl` geändert.
   * Umschreiben der Interna der Beamervorlage.
