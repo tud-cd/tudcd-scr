@@ -112,6 +112,9 @@
 \KOMAoption{backaddress}{plain}
 \KOMAoption{addrfield}{topaligned}
 %%
+\setkomavar{backaddress}{}
+
+%%
 
 %% move@topt -> move to page top
 %% move@frompt -> move from page top
@@ -241,8 +244,15 @@
 \usepackage{geometry}
 \geometry{
   left=25mm,
-  textwidth=129mm
+  textwidth=129mm,
+  footskip=\dimexpr27mm-13mm-7\tudpt\relax%
 }
+
+\setplength{firstfootvpos}{297mm-13mm-7\tudpt}
+\setplength{firstfoothpos}{25mm}
+\setplength{firstfootwidth}{129mm}
+\setkomavar{firstfoot}{Seite~\thepage/\ref{tudcd@LastPage}}
+\AddToHook{shipout/lastpage}{\label{tudcd@LastPage}}
 
 %% Option addfield hat nun keinen Effekt mehr, da \@addrfield umdefiniert worden ist.
 %% Genausowenig hat Option backaddr keinen Effekt mehr.
