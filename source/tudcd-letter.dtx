@@ -1,0 +1,252 @@
+% \iffalse meta-comment
+% LTeX: language=de-DE
+%
+%  TUDCD-Script -- Corporate Design of Technische Universität Dresden
+% ----------------------------------------------------------------------------
+%
+%  Copyright (C) Jochen Diepelt <David.diepelt@gmx.net>, 2025
+%
+% ----------------------------------------------------------------------------
+%
+%  This work may be distributed and/or modified under the conditions of the
+%  LaTeX Project Public License, either version 1.3c of this license or
+%  any later version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of
+%  LaTeX version 2008-05-04 or later.
+%
+%  This work has the LPPL maintenance status "maintained".
+%
+%  The current maintainer and author of this work is Jochen Diepelt.
+%
+% ----------------------------------------------------------------------------
+%
+% \fi
+%
+% \iffalse ins:batch + dtx:driver
+%<*ins>
+\ifx\documentclass\undefined
+  \input docstrip.tex
+  \ifToplevel{\batchinput{tudcd.ins}}
+\else
+  \let\endbatchfile\relax
+\fi
+\endbatchfile
+%</ins>
+%<*dtx>
+\ProvidesFile{tudcd-common.dtx}[2025/10/02]
+\documentclass[english,ngerman]{tudcddoc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+\usepackage{babel}
+\usepackage[babel]{microtype}
+\RecordChanges
+\begin{document} % Diese Dokumentation dokumentiert NUR diese Datei
+  \title{\Large Dokumentation der Datei \texttt{\jobname.dtx} \\
+  \normalsize Generiert durch \texttt{\$ enginetex \jobname.dtx}}
+  \author{Jochen Diepelt}
+  \maketitle
+  \tableofcontents
+
+  \DocInput{tudcd-common.dtx}
+
+\end{document}
+%</dtx>
+% \fi
+%
+% \selectlanguage{ngerman}
+%
+% \section{\texttt{tudcd-letter}: Briefe für die Technische Universität Dresden}
+%
+% Für eine angenehme Einbindung der Hauspost in \LaTeX{} wird eine Briefklasse bereitgestellt.
+% Hierbei fußt der Brief auf der \KOMAScript-Klasse \dpkg{scrlttr2}, welche umfangreiche Zusatzbefehle
+% für bspw.\@ die Erstellung von Serienbriefen bereitstellt.
+%
+% Gerade Briefe sollten im Sinne des PDF Standards UA2 tagbar und damit barrierearm sein. Leider
+% besitzen weder \dpkg{letter} noch \dpkg{scrlttr2} bisher die Möglichkeit hierfür.
+%
+% \subsection{Identifikation des Pakets}
+%
+% Es gibt zwei Arten Briefe zu erstellen: Einmal als Klassendatei und einmal als Briefformatdatei, welche in \dpkg{scrlttr2}
+% geladen wird.
+% Hierbei wird sich entschieden, eine Klassendatei anzubieten.
+%
+%    \begin{macrocode}
+%<*identification&letter>
+%<@@=tudcd>
+\ProvidesExplClass{tudcdlttr}{\tudcd@common@date}{\tudcd@common@version}{Briefe im Corporate Design der Technischen Universität Dresden}
+%</identification&letter>
+%    \end{macrocode}
+%
+% Standardmäßig wird die Option \dcode{DIN.lco} geladen.
+%
+%    \begin{macrocode}
+%<*baseclassloading&peri>
+\PassOptionsToClass{visualize}{scrlttr2}
+\LoadClass{scrlttr2}%
+%</baseclassloading&peri>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*body&peri>
+%%\setplength[Faktor ]{Pseudolänge }{Wert }
+%%\setplength
+%%\setplength{Pseudolänge }{Wert }
+
+%% Kopfzeile
+\setkomavar{firsthead}{\@@_typeset_logo:n{18.7mm}}
+\setplength{firstheadhpos}{25mm}
+\setplength{firstheadvpos}{18mm}
+\setplength{firstheadwidth}{129mm}
+
+%% Addressfenster
+%% Und alles was dazugehört
+\setplength{toaddrhpos}{25mm}
+\setplength{toaddrvpos}{52mm-7\tudpt}
+\setplength{toaddrwidth}{80mm}
+\setplength{toaddrheight}{38mm+7\tudpt}
+\setplength{backaddrheight}{7\tudpt}
+%%
+\KOMAoption{fromrule}{false}
+\KOMAoption{backaddress}{plain}
+\KOMAoption{addrfield}{topaligned}
+%%
+
+%% move@topt -> move to page top
+%% move@frompt -> move from page top
+%% move@topl -> move to page left
+\coffin_new:N\l_@@_addressfield_coffin %% Coffin für alles addressfeldmäßige
+\coffin_new:N\l_@@_backaddress_coffin
+\coffin_new:N\l_@@_address_coffin
+\renewcommand*{\@addrfield}{%
+\move@topt\vskip\useplength{toaddrvpos}%
+\vb@t@z{{\setparsizes{\z@}{\z@}{\z@ plus 1fil}\par@updaterelative
+  \rlap{\move@topl \hskip\useplength{toaddrhpos}%
+  \hcoffin_set:Nn\l_@@_addressfield_coffin{\mbox{}}
+  \vcoffin_set:Nnn\l_@@_backaddress_coffin{\useplength{toaddrwidth}}{
+    \def\\{\usekomavar{backaddressseparator}\@ogobble}%
+                        \usekomafont{backaddress}%
+                        {\usekomavar{backaddress}}%
+  }
+  \vcoffin_set:Nnn\l_@@_address_coffin{\useplength{toaddrwidth}}{
+    \usekomafont{addressee}{%
+     {\usekomafont{toname}{\usekomavar{toname}\\}}%
+     {\usekomafont{toaddress}{\usekomavar{toaddress}\endgraf}}}}
+  \coffin_attach:NnnNnnnn
+    \l_@@_addressfield_coffin{l}{t}
+    \l_@@_backaddress_coffin{l}{B}
+    {0pt}{-7\tudpt}
+  \coffin_join:NnnNnnnn
+    \l_@@_addressfield_coffin{l}{t}
+    \l_@@_address_coffin{l}{t}
+    {0pt}{-4mm-7\tudpt}
+  \coffin_typeset:Nnnnn\l_@@_addressfield_coffin{l}{t}{0pt}{0pt}
+}}}%
+\vskip-\useplength{toaddrvpos}\move@frompt%
+}
+
+
+%% Geschäftszeile ist abgeschalten, weil diese woanders gesetzt wird
+\removereffields
+\KOMAoption{refline}{nodate}
+
+\setplength{refhpos}{25mm}
+\setplength{refvpos}{94mm}
+\setplength{refwidth}{129mm}
+\setplength{refaftervskip}{-4mm} % Der Wert ist visuell geschätzt
+
+%% Absenderergänzung
+\setplength{locvpos}{52mm-7\tudpt}
+\setplength{lochpos}{7mm}
+\setplength{locheight}{297mm-52mm-13mm+7\tudpt}
+\setplength{locwidth}{43mm}
+
+
+\coffin_new:N\l_@@_location_coffin
+\coffin_new:N\l_@@_top_location_coffin
+\coffin_new:N\l_@@_bottom_location_coffin
+
+%% Das wäre die Variable
+\newkomavar{toplocation}
+\newkomavar{bottomlocation}
+\newkomafont{toplocation}{
+\fontsize{7\tudpt}{9\tudpt}\selectfont
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10\tudpt}
+}
+\newkomafont{bottomlocation}{
+\color{Brilliantblau}
+\fontsize{7\tudpt}{9\tudpt}\selectfont
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10\tudpt}
+}
+
+\newkomavar{fromentity}
+\newkomavar{fromposition}
+\setkomavar*{fromphone}{T~}
+\setkomavar*{fromfax}{F~}
+
+\setkomavar*{fromaddress}{Besuchsaddresse}
+\setkomavar*{yourref}{Aktenzeichen}
+
+
+\setkomavar{toplocation}{%
+\Ifkomavarempty{fromentity}{}{\usekomavar{fromentity}\par }
+%
+\Ifkomavarempty{fromname}{}{\usekomavar{fromname}}
+\Ifkomavarempty{fromposition}{}{\\ \usekomavar{fromposition}} \par
+%
+\Ifkomavarempty{fromphone}{}{\usekomavar*{fromphone}\usekomavar{fromphone}}
+\Ifkomavarempty{fromfax}{}{\\ \usekomavar*{fromfax}\usekomavar{fromfax}}
+\Ifkomavarempty{fromemail}{}{\\ \usekomavar{fromemail}}
+\Ifkomavarempty{fromurl}{}{\\ \usekomavar{fromurl}} \par
+%
+\Ifkomavarempty{fromaddress}{}{\usekomavar*{fromaddress} \\ \usekomavar{fromaddress} \par}
+%
+\Ifkomavarempty{yourref}{}{\usekomavar*{yourref} \\ \usekomavar{yourref} \\}
+\Ifkomavarempty{date}{}{\usekomavar{date}}
+}
+
+
+
+\setkomavar{bottomlocation}{%
+  Test~2 \\
+  Test~3 \\
+  Test~3
+}
+
+\setkomavar{location}{
+\hcoffin_set:Nn\l_@@_location_coffin{\mbox{}}
+\vcoffin_set:Nnn\l_@@_top_location_coffin{43mm}{
+\usekomafont{toplocation}{\usekomavar{toplocation}}
+}
+\vcoffin_set:Nnn\l_@@_bottom_location_coffin{43mm}{
+\usekomafont{bottomlocation}{\usekomavar{bottomlocation}}
+}
+
+\coffin_attach:NnnNnnnn
+  \l_@@_location_coffin{l}{t}
+  \l_@@_top_location_coffin{l}{T}
+  {0pt}{-7\tudpt}
+\coffin_attach:NnnNnnnn
+  \l_@@_location_coffin{l}{t}
+  \l_@@_bottom_location_coffin{l}{B}
+  {0pt}{-297mm+52mm+13mm-7\tudpt}
+\coffin_typeset:Nnnnn\l_@@_location_coffin{l}{t}{0pt}{0pt}
+}
+
+
+%% Textbereich
+\usepackage{geometry}
+\geometry{
+  left=25mm,
+  textwidth=129mm
+}
+
+%% Option addfield hat nun keinen Effekt mehr, da \@addrfield umdefiniert worden ist.
+%% Genausowenig hat Option backaddr keinen Effekt mehr.
+%% specialmail ist auch rausgeflogen aus den funktionierenden KOMAVars
+
+%</body&peri>
+%    \end{macrocode}

@@ -1,0 +1,111 @@
+
+\documentclass{tudcdlttr}
+
+
+%\setkomavar{Name }[Bezeichnung ]{Inhalt }
+
+%\setkomavar{addresseeimage}[addresseeimage]{Content of addresseeimage}
+%\setkomavar{backaddress}[backaddress]{Content of backaddress} % Rücksendeaddresse
+%\setkomavar{backaddressseparator}[backaddressseparator]{Content of backaddressseparator} % Rücksendeaddressseparator
+\setkomavar{ccseparator}[ccseparator]{Content of ccseparator}
+\setkomavar{customer}[customer]{Content of customer}
+%\setkomavar{emailseparator}[emailseparator]{Content of emailseparator}
+%\setkomavar{enclseparator}[enclseparator]{Content of enclseparator}
+%\setkomavar{faxseparator}[faxseparator]{Content of faxseparator}
+\setkomavar{firstfoot}[firstfoot]{Content of firstfoot}
+\setkomavar{frombank}[frombank]{Content of frombank}
+\setkomavar{frommobilephone}[frommobilephone]{Content of frommobilephone}
+
+
+\setkomavar{fromzipcode}[fromzipcode]{Content of fromzipcode}
+%\setkomavar{invoice}[invoice]{Content of invoice}
+%\setkomavar{location}[location]{Content of location}
+%\setkomavar{mobilephoneseparator}[mobilephoneseparator]{Content of mobilephoneseparator}
+%\setkomavar{phoneseparator}[phoneseparator]{Content of phoneseparator}
+\setkomavar{myref}[myref]{Content of myref}
+
+\setkomavar{yourmail}[yourmail]{Content of yourmail}
+
+\showfields{head,address,location,refline,foot}
+
+% TODO
+\setkomavar{fromlogo}[fromlogo]{Content of fromlogo}
+
+% Das sind alle Angaben im oberen Teil der Infospalte
+\setkomavar{fromentity}{Struktureinheit}
+%
+\setkomavar{fromname}{Yoshi Diepelt}
+\setkomavar{fromposition}{Wissenschaftliche Mitarbeiterin}
+%
+\setkomavar{fromphone}{0351 463 - XXXXXX}
+\setkomavar{fromfax}{0351 463- XXXXXX}
+\setkomavar{fromemail}{yoshi.diepelt@tu-dresden.de}
+\setkomavar{fromurl}{tu-dresden.de/xxx}
+%
+\setkomavar{fromaddress}{Von-Mises Bau \\ Georg-Schumann-Straße 7 \\ 01887 Dresden \\ Zimmer 206}
+%
+\setkomavar{yourref}{XXXX}
+\setkomavar{date}{\today}
+% Alle Angaben im unteren Teil der Infospalte
+
+% Alle Angaben im Brieftext
+\setkomavar{title}[Titel]{Mahnung}
+\setkomavar{subject}[subject]{Content of subject}
+\setkomavar{signature}[signature]{Content of signature}
+\setkomavar{toname}[toname]{Content of toname}
+\setkomavar{toaddress}[toaddress]{Content of toaddress}
+
+\usepackage{tikz}
+%\iffalse
+\AddToHook{shipout/foreground}{
+\begin{tikzpicture}[remember picture,overlay]
+    \coordinate (topleft) at (current page.north west);
+    \coordinate (bottomleft) at (current page.south west);
+    % Kopf
+    \fill[magenta,opacity=0.4] (topleft) ++(25mm,-18mm) rectangle +(129mm,-17mm) node[pos=0.5,black] {Briefkopf};
+    % Absenderfeld DIN 5008b
+    \draw[magenta,dashed,opacity=0.4] (topleft) ++(20mm,-45mm) rectangle +(85mm,-45mm) node[pos=0.5,black] {Absenderfeld};
+    \fill[magenta,opacity=0.4] (topleft) ++(25mm,-52mm) rectangle +(80mm,7\tudpt) node[pos=0.5,font=\fontsize{7\tudpt}{9\tudpt}\selectfont,black] {Zusatz- und Vermerkzone mit integrierter Rücksendeangabe};
+    \fill[magenta,opacity=0.4] (topleft) ++(25mm,-56mm) rectangle +(80mm,-34mm) node[pos=0.5,black] {Absenderbereich};
+
+    % Rechte Spalte für Daten
+    \fill[magenta,opacity=0.4] (topleft) ++(160mm,-35mm) rectangle +(43mm,10\tudpt) node[pos=0.5,font=\fontsize{10\tudpt}{11\tudpt}\selectfont,black] {Rektorzeile};
+    %
+    \fill[magenta,opacity=0.4] (topleft) ++(160mm,-52mm+7\tudpt) rectangle +(43mm,-7\tudpt-80mm) node[pos=0.5,font=\fontsize{7\tudpt}{9\tudpt}\selectfont,black] {Bearbeiterzeile};
+    %
+    \fill[magenta,opacity=0.4] (bottomleft) ++(160mm,13mm) rectangle +(43mm,80mm) node[pos=0.5,font=\fontsize{7\tudpt}{9\tudpt}\selectfont,black] {Bearbeiterzeile};
+    % Briefspalte
+    \fill[magenta,opacity=0.4] (topleft) ++(25mm,-94mm) rectangle +(129mm,-13mm) node[pos=0.5,black] {Elastischer Betreffzeilenbereich};
+    %
+    \fill[magenta,opacity=0.2] (topleft) ++(25mm,-107mm) rectangle +(129mm,-163mm) node[pos=0.5,black] {Brieftext};
+    %
+    \fill[magenta,opacity=0.4] (bottomleft) ++(25mm,13mm) rectangle +(129mm,14mm) node[pos=0.5,black] {Sperrbereich};
+    \fill[magenta,opacity=0.2] (bottomleft) ++(25mm,13mm) rectangle +(129mm,7\tudpt) node[pos=0.5,font=\fontsize{7\tudpt}{9\tudpt}\selectfont,black] {Seitenzahl};
+    %
+  \end{tikzpicture}
+}
+
+
+\begin{document}
+\begin{letter}{
+Technische Universität Dresden \\
+Sachgebiet 7 | Corporate Design \\
+Helmholtzstr. 10 \\
+01069 Dresden}
+
+\opening{Sehr geehrte Damen und Herren und alle dazwischen und außerhalb,}
+
+was ein Text vermögen könnte in einem solchem Brief zu stehen...
+
+\noindent\hrulefill
+
+\closing{Mit freundlichen Grüßen}
+
+\ps
+
+Postscriptum
+
+\encl{Anlagen}
+\cc{Verteiler}
+\end{letter}
+\end{document}

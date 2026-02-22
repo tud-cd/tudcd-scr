@@ -248,4 +248,41 @@ LaTeX version 2025-05-04 or later.
     \from{tudcd-doc.dtx}{doc}%
   }
 }
+\generate{%
+  \file{tudcdlttr.cls}{
+    \from{tudcd-common.dtx}{identification,class,pre}
+    \from{tudcd-letter.dtx}{identification,letter}
+    \from{tudcd-fonts.dtx}{prelim-declaration,letter}
+    \from{tudcd-colors.dtx}{prelim-declaration,letter}
+    \from{tudcd-common.dtx}{identification,class,post}
+    \from{tudcd-common.dtx}{prelim-declaration,class}
+    %% Optionen!
+    \from{tudcd-common.dtx}{option,pre,class}
+    \from{tudcd-common.dtx}{option,peri,class}
+    \from{tudcd-letter.dtx}{option,peri,letter}
+    \from{tudcd-fonts.dtx}{option-useserif,peri,letter}
+    \from{tudcd-fonts.dtx}{option-fontsize,peri,letter}
+    \from{tudcd-colors.dtx}{option,peri,letter}
+    \from{tudcd-common.dtx}{option,post,class}
+    %% ProcessKeyOptions
+    \from{tudcd-common.dtx}{optionloading,pre,class}
+    \from{tudcd-common.dtx}{optionloading,peri,class}
+    \from{tudcd-common.dtx}{optionloading,post,class}
+    %% Header
+    \from{tudcd-common.dtx}{header,peri,class}
+    \from{tudcd-fonts.dtx}{header,peri,letter}
+    \from{tudcd-colors.dtx}{header,peri,letter}
+    %% \LoadClass
+    \from{tudcd-common.dtx}{baseclassloading,pre,class}
+    \from{tudcd-letter.dtx}{baseclassloading,peri,letter}
+    \from{tudcd-common.dtx}{baseclassloading,post,class}
+    %% Body
+    \from{tudcd-common.dtx}{body,pre,class}
+    \from{tudcd-fonts.dtx}{body,peri,letter}
+    \from{tudcd-letter.dtx}{body,peri,letter}%
+    \from{tudcd-common.dtx}{body,post,class}
+  }
+}
+
+
 \endbatchfile
