@@ -80,6 +80,8 @@
 %    \end{macrocode}
 %
 % Standardmäßig wird die Option \dcode{DIN.lco} geladen.
+% Diese definiert erstmal ein Standardformat.
+% Es wäre vielleicht von Vorteil eine eigene \dcode{.lco} Datei zu schreiben und diese lediglich in tudcdletter einzubinden.
 %
 %    \begin{macrocode}
 %<*baseclassloading&peri>
@@ -88,11 +90,15 @@
 %</baseclassloading&peri>
 %    \end{macrocode}
 %
+% \subsection{Einstellungen des Briefkopfes}
+%
+% Die Klasse \dpkg{scrlttr2} definiert sogenannte \emph{Pseudolängen}, welche das Briefformat entsprechend konfigurieren.
+% Für die Kopfzeile wird zusätzlich in der Variable \dcode{firsthead} der Kopfinhalt gespeichert.
+%
+% Da der Befehl \dmacro{\@@_typeset_logo:n} genutzt wird, passt sich das Logo der momentanen Einstellung an.
+%
 %    \begin{macrocode}
 %<*body&peri>
-%%\setplength[Faktor ]{Pseudolänge }{Wert }
-%%\setplength
-%%\setplength{Pseudolänge }{Wert }
 
 %% Kopfzeile
 \setkomavar{firsthead}{\@@_typeset_logo:n{18.7mm}}
@@ -100,6 +106,13 @@
 \setplength{firstheadvpos}{18mm}
 \setplength{firstheadwidth}{129mm}
 
+%    \end{macrocode}
+%
+% \subsection{Einstellungen des Addressfeldes}
+%
+% Da \dpkg{scrlttr2} alle Inhaltsboxen von oben beginnend setzt, muss der Abstand, welcher zu Grundlinie angegeben ist,
+% um den entsprechenden Schriftgrößenwert verringert werden.
+%    \begin{macrocode}
 %% Addressfenster
 %% Und alles was dazugehört
 \setplength{toaddrhpos}{25mm}
@@ -107,15 +120,25 @@
 \setplength{toaddrwidth}{80mm}
 \setplength{toaddrheight}{38mm+7\tudpt}
 \setplength{backaddrheight}{7\tudpt}
-%%
+%    \end{macrocode}
+% Um sicherzugehen, werden die entsprechenden Optionen eingestellt
+%    \begin{macrocode}
 \KOMAoption{fromrule}{false}
 \KOMAoption{backaddress}{plain}
 \KOMAoption{addrfield}{topaligned}
 %%
 \setkomavar{backaddress}{}
-
-%%
-
+%    \end{macrocode}
+%
+% Um die Ausrichtung der Absenderaddresse mit dem Bearbeiterfeld zu synchronisieren,
+% wird der Interne Befehl \dmacro{\@addrfield} umdefiniert. Damit verlieren die \dmacro{\KOMAoptions} Schlüssel
+% \dcode{backaddress} und \dcode{addrfield} ihre Funktion.
+%
+% Um dennoch erwartetes Verhalten der Klasse zurückzugewinnen, werden die Inhalte der Variablen
+% \dcode{backaddress} und \dcode{toname} und \dcode{toaddress} manuell verarbeitet.
+% Die Variable \dcode{specialmail} ist momentan unbrauchbar.
+%
+%    \begin{macrocode}
 %% move@topt -> move to page top
 %% move@frompt -> move from page top
 %% move@topl -> move to page left
@@ -148,31 +171,48 @@
 }}}%
 \vskip-\useplength{toaddrvpos}\move@frompt%
 }
-
-
-%% Geschäftszeile ist abgeschalten, weil diese woanders gesetzt wird
+%    \end{macrocode}
+%
+% \subsection{Einstellungen der Geschäftszeile}
+%
+% Die Geschäftszeile mit Absenderdaten wird in die Infospalte gesetzt.
+% Daher wird diese Geschäftszeile vollständig abgeschalten.
+%
+%    \begin{macrocode}
 \removereffields
 \KOMAoption{refline}{nodate}
-
 \setplength{refhpos}{25mm}
 \setplength{refvpos}{94mm}
 \setplength{refwidth}{129mm}
 \setplength{refaftervskip}{-4mm} % Der Wert ist visuell geschätzt
-
+%    \end{macrocode}
+%
+% \subsection{Einstellungen der Absenderergänzung}
+%
+% Die Absenderergänzung wird kreativ umfunktioniert, um als Infozeile zu fungieren.
+% Dabei wird für die korrekte Platzierung der Grundlinie der ersten Zeile,
+% sowie für die Grundlinie der letzten Zeile mit \dcode{coffins} getrickst.
+%
+% Daher werden zusätzlich zu den Einstellungen des Feldes drei weitere \dcode{coffins}
+% definiert.
+%
+%    \begin{macrocode}
 %% Absenderergänzung
 \setplength{locvpos}{52mm-7\tudpt}
 \setplength{lochpos}{7mm}
 \setplength{locheight}{297mm-52mm-13mm+7\tudpt}
 \setplength{locwidth}{43mm}
 
-
 \coffin_new:N\l_@@_location_coffin
 \coffin_new:N\l_@@_top_location_coffin
 \coffin_new:N\l_@@_bottom_location_coffin
-
-%% Das wäre die Variable
-\newkomavar{toplocation}
-\newkomavar{bottomlocation}
+%    \end{macrocode}
+% Um am meisten Konfigurierbarkeit zu bieten, werden zwei weitere Variablen für
+% die obere Infobox sowie für die untere Infobox bereitgestellt.
+% Damit können Nutzer den kompletten Inhalt, oder die Formatierung überschreiben.
+%    \begin{macrocode}
+\newkomavar{toplocation} % Obere Infobox
+\newkomavar{bottomlocation} % Untere Infobox
 \newkomafont{toplocation}{
 \fontsize{7\tudpt}{9\tudpt}\selectfont
 \setlength{\parindent}{0pt}
@@ -184,18 +224,46 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{10\tudpt}
 }
-
-\newkomavar{fromentity}
-\newkomavar{fromposition}
+%    \end{macrocode}
+% Hier werden die entsprechenden zusätzlichen Variablen definiert, welche die einzelnen
+% zusätzlichen Felder definieren. Dabei ist insbesondere die Position einer Person oder die
+% Struktureinheit eine zusätzliche Information dar.
+%    \begin{macrocode}
+\newkomavar{fromentity} % Struktureinheit
+\newkomavar{fromposition} % Position in der Fakultät
+%    \end{macrocode}
+% Weiterhin werden die textuellen Bezeichner auf sinnvolle Standardwerte gesetzt.
+%    \begin{macrocode}
 \setkomavar*{fromphone}{T~}
 \setkomavar*{fromfax}{F~}
-
 \setkomavar*{fromaddress}{Besuchsaddresse}
 \setkomavar*{yourref}{Aktenzeichen}
-
-
+%    \end{macrocode}
+% Innerhalb der Vorlage wurden mehrere \emph{Blöcke} an Informationen
+% identifiziert, welche zusammen gesetzt werden. Zwischen diesen Blöcken sollen jeweils 10 pt platz sein.
+%
+% \begin{table}[H]
+%   \centering
+%   \begin{tabular}{rll}
+%     Struktureinheit  & \texttt{fromentity} & Struktureinheit \\ \hline
+%     Personalangaben  & \texttt{fromname} & Name der Person \\
+%                      & \texttt{fromposition} & Position der Person \\ \hline
+%     Kontaktdaten     & \texttt{fromphone} & Telefonnummer \\
+%                      & \texttt{fromfax} & Faxnummer \\
+%                      & \texttt{fromemail} & Email-Addressen \\
+%                      & \texttt{fromurl} & Website \\ \hline
+%     Besuchsaddresse  & \texttt{fromaddress} & Besuchsaddresse \\ \hline
+%     Aktenzeichen     & \texttt{yourref} & Aktenzeichen \\
+%                      & \texttt{date} & Datum \\
+%   \end{tabular}
+% \end{table}
+%
+% Um die einzelnen Blöcke korrekt zu setzen wird \dmacro{\par}s Funktionalität bei leeren Zeilen
+% sich nicht verdoppeln ausgenutzt.
+%
+%    \begin{macrocode}
 \setkomavar{toplocation}{%
-\Ifkomavarempty{fromentity}{}{\usekomavar{fromentity}\par }
+\Ifkomavarempty{fromentity}{}{\usekomavar{fromentity}} \par
 %
 \Ifkomavarempty{fromname}{}{\usekomavar{fromname}}
 \Ifkomavarempty{fromposition}{}{\\ \usekomavar{fromposition}} \par
@@ -205,14 +273,24 @@
 \Ifkomavarempty{fromemail}{}{\\ \usekomavar{fromemail}}
 \Ifkomavarempty{fromurl}{}{\\ \usekomavar{fromurl}} \par
 %
-\Ifkomavarempty{fromaddress}{}{\usekomavar*{fromaddress} \\ \usekomavar{fromaddress} \par}
+\Ifkomavarempty{fromaddress}{}{\usekomavar*{fromaddress} \\ \usekomavar{fromaddress}} \par
 %
 \Ifkomavarempty{yourref}{}{\usekomavar*{yourref} \\ \usekomavar{yourref} \\}
 \Ifkomavarempty{date}{}{\usekomavar{date}}
 }
-
-
-
+%    \end{macrocode}
+%
+% Eine analoge Vorgehensweise ergibt sich bei dem unteren Teil der Infobox.
+% Hierbei werden jedoch neue Variablen definiert, welche die relevanten Informationen setzen.
+% Es wird auch die Variable \dcode{backaddress} entsprechend umdefiniert um die Postaddresse der TU Dresden dort zu hinterlassen.
+%
+%    \begin{macrocode}
+\newkomavar{tudpostaladdress}
+\newkomavar{tudtaxid} % Steuerid
+\newkomavar{tudturnovertaxid} % Umsatzsteuernummer
+\newkomavar{fromiban} %IBAN
+\newkomavar{frombic} %BIC
+% TODO: Der hier muss noch gesetzt werden
 \setkomavar{bottomlocation}{%
   Test~2 \\
   Test~3 \\
@@ -248,10 +326,13 @@
   footskip=\dimexpr27mm-13mm-7\tudpt\relax%
 }
 
+%% Fußbereich
+\newkomafont{lttrpagenumber}{\fontsize{7\tudpt}{9\tudpt}\selectfont}
+
 \setplength{firstfootvpos}{297mm-13mm-7\tudpt}
 \setplength{firstfoothpos}{25mm}
 \setplength{firstfootwidth}{129mm}
-\setkomavar{firstfoot}{Seite~\thepage/\ref{tudcd@LastPage}}
+\setkomavar{firstfoot}{\usekomafont{lttrpagenumber}{Seite~\thepage/\ref{tudcd@LastPage}}} % TODO: auf die Grundlinie packen!
 \AddToHook{shipout/lastpage}{\label{tudcd@LastPage}}
 
 %% Option addfield hat nun keinen Effekt mehr, da \@addrfield umdefiniert worden ist.
@@ -260,3 +341,21 @@
 
 %</body&peri>
 %    \end{macrocode}
+% \iffalse Ungenutzte standardattribute
+%\setkomavar{addresseeimage}[addresseeimage]{Content of addresseeimage}
+%\setkomavar{backaddress}[backaddress]{Content of backaddress} % Rücksendeaddresse
+%\setkomavar{backaddressseparator}[backaddressseparator]{Content of backaddressseparator} % Rücksendeaddressseparator
+%\setkomavar{ccseparator}[ccseparator]{Content of ccseparator}
+%\setkomavar{customer}[customer]{Content of customer}
+%\setkomavar{emailseparator}[emailseparator]{Content of emailseparator}
+%\setkomavar{enclseparator}[enclseparator]{Content of enclseparator}
+%\setkomavar{faxseparator}[faxseparator]{Content of faxseparator}
+%\setkomavar{frommobilephone}[frommobilephone]{Content of frommobilephone}
+%\setkomavar{fromzipcode}[fromzipcode]{Content of fromzipcode}
+%\setkomavar{invoice}[invoice]{Content of invoice}
+%\setkomavar{location}[location]{Content of location}
+%\setkomavar{mobilephoneseparator}[mobilephoneseparator]{Content of mobilephoneseparator}
+%\setkomavar{phoneseparator}[phoneseparator]{Content of phoneseparator}
+%\setkomavar{myref}[myref]{Content of myref}
+%\setkomavar{yourmail}[yourmail]{Content of yourmail}
+% \fi
