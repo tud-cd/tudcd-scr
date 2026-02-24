@@ -106,6 +106,9 @@
 \setplength{firstheadvpos}{18mm}
 \setplength{firstheadwidth}{129mm}
 
+\setkomafont{lettertitle}{\fontsize{12\tudpt}{14\tudpt}\selectfont\cdmseries}
+\setkomafont{lettersubject}{\fontsize{10\tudpt}{12\tudpt}\selectfont\cdmseries }
+\renewcommand{\normalsize}{\fontsize{10\tudpt}{12\tudpt}\selectfont}
 %    \end{macrocode}
 %
 % \subsection{Einstellungen des Addressfeldes}
@@ -115,6 +118,7 @@
 %    \begin{macrocode}
 %% Addressfenster
 %% Und alles was dazugehört
+\setkomafont{addressee}{\fontsize{10\tudpt}{12\tudpt}\selectfont}
 \setplength{toaddrhpos}{25mm}
 \setplength{toaddrvpos}{52mm-7\tudpt}
 \setplength{toaddrwidth}{80mm}
@@ -127,6 +131,7 @@
 \KOMAoption{backaddress}{plain}
 \KOMAoption{addrfield}{topaligned}
 %%
+\setkomafont{backaddress}{\fontsize{7\tudpt}{9\tudpt}\selectfont}
 \setkomavar{backaddress}{}
 %    \end{macrocode}
 %
@@ -285,16 +290,35 @@
 % Es wird auch die Variable \dcode{backaddress} entsprechend umdefiniert um die Postaddresse der TU Dresden dort zu hinterlassen.
 %
 %    \begin{macrocode}
+\newkomavar{tudpostalname}
 \newkomavar{tudpostaladdress}
 \newkomavar{tudtaxid} % Steuerid
 \newkomavar{tudturnovertaxid} % Umsatzsteuernummer
 \newkomavar{fromiban} %IBAN
 \newkomavar{frombic} %BIC
+%    \end{macrocode}
+% Die neu definierten Variablen werden nun mit sinnvollen Standardwerten belegt.
+%    \begin{macrocode}
+\setkomavar{tudpostalname}{Technische~Universität~Dresden}
+\setkomavar{tudpostaladdress}[Postaddresse]{Helmholtzstraße~10 \\ 01069~Dresden}
+\setkomavar{backaddress}{\usekomavar{tudpostalname} | \usekomavar{tudpostaladdress}}
+
+\setkomavar{tudtaxid}[Steuernummer]{203/149/02549}
+\setkomavar{tudturnovertaxid}[Umsatzsteuer-Id-Nr.]{DE~188~369~991}
+\setkomavar{frombank}[Bankverbindung]{Commerzbank~AG \\ Filiale~Dresden}
+\setkomavar{fromiban}[IBAN]{DE52~8504~0000~0800~4004~00}
+\setkomavar{frombic}[BIC]{COBADEFF850}
 % TODO: Der hier muss noch gesetzt werden
 \setkomavar{bottomlocation}{%
-  Test~2 \\
-  Test~3 \\
-  Test~3
+  \Ifkomavarempty{tudpostaladdress}{}{\usekomavar*{tudpostaladdress} \\ \usekomavar{tudpostaladdress}} \par
+  %
+  \Ifkomavarempty{tudtaxid}{}{\usekomavar*{tudtaxid} \\ \usekomavar{tudtaxid}}
+  \Ifkomavarempty{tudturnovertaxid}{}{\\ \usekomavar*{tudturnovertaxid} \\ \usekomavar{tudturnovertaxid}} \par
+  %
+  \Ifkomavarempty{frombank}{}{\usekomavar*{frombank} \\ \usekomavar{frombank}}\par
+  %
+  \Ifkomavarempty{fromiban}{}{\usekomavar*{fromiban} \\ \usekomavar{fromiban}}
+  \Ifkomavarempty{frombic}{}{\\ \usekomavar*{frombic}~\usekomavar{frombic}}
 }
 
 \setkomavar{location}{
@@ -325,23 +349,33 @@
   textwidth=129mm,
   footskip=\dimexpr27mm-13mm-7\tudpt\relax%
 }
-
-%% Fußbereich
+%    \end{macrocode}
+% D
+%    \begin{macrocode}
+\coffin_new:N\l_@@_page_anchor_coffin
+\coffin_new:N\l_@@_page_number_box_coffin
 \newkomafont{lttrpagenumber}{\fontsize{7\tudpt}{9\tudpt}\selectfont}
 
 \setplength{firstfootvpos}{297mm-13mm-7\tudpt}
 \setplength{firstfoothpos}{25mm}
 \setplength{firstfootwidth}{129mm}
-\setkomavar{firstfoot}{\usekomafont{lttrpagenumber}{Seite~\thepage/\ref{tudcd@LastPage}}} % TODO: auf die Grundlinie packen!
-\AddToHook{shipout/lastpage}{\label{tudcd@LastPage}}
+\setkomavar{firstfoot}{
+\hcoffin_set:Nn\l_@@_page_anchor_coffin{\mbox{}}
+\vcoffin_set:Nnn\l_@@_page_number_box_coffin{129mm}{\usekomafont{lttrpagenumber}{Seite~\thepage/\ref{tudcdLastPage}}}
 
-%% Option addfield hat nun keinen Effekt mehr, da \@addrfield umdefiniert worden ist.
-%% Genausowenig hat Option backaddr keinen Effekt mehr.
-%% specialmail ist auch rausgeflogen aus den funktionierenden KOMAVars
-
+\coffin_attach:NnnNnnnn
+  \l_@@_page_anchor_coffin{l}{t}
+  \l_@@_page_number_box_coffin{l}{T}
+  {0pt}{-7\tudpt}
+\coffin_typeset:Nnnnn\l_@@_page_anchor_coffin{l}{t}{0pt}{0pt}
+}
+\AddToHook{shipout/lastpage}{\label{tudcdLastPage}}
 %</body&peri>
 %    \end{macrocode}
 % \iffalse Ungenutzte standardattribute
+%% Option addfield hat nun keinen Effekt mehr, da \@addrfield umdefiniert worden ist.
+%% Genausowenig hat Option backaddr keinen Effekt mehr.
+%% specialmail ist auch rausgeflogen aus den funktionierenden KOMAVars
 %\setkomavar{addresseeimage}[addresseeimage]{Content of addresseeimage}
 %\setkomavar{backaddress}[backaddress]{Content of backaddress} % Rücksendeaddresse
 %\setkomavar{backaddressseparator}[backaddressseparator]{Content of backaddressseparator} % Rücksendeaddressseparator
