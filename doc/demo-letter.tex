@@ -5,10 +5,6 @@
 \usepackage[ngerman]{babel}
 %\setkomavar{Name }[Bezeichnung ]{Inhalt }
 
-
-%\showfields{head,address,location,refline,foot}
-
-% TODO
 \setkomavar{fromlogo}[fromlogo]{Content of fromlogo}
 
 % * Das sind alle Angaben im oberen Teil der Infospalte
@@ -27,14 +23,10 @@
 \setkomavar{yourref}{XXXX}
 \setkomavar{date}{\today}
 % * Alle Angaben im unteren Teil der Infospalte
-%\setkomavar{frombank}[frombank]{Content of frombank}
 % * Alle Angaben im Brieftext
-\setkomavar{title}[Titel]{Titel des Briefs}
-\setkomavar{subject}[subject]{Betreffzeile}
-\setkomavar{signature}[signature]{Signatur}
-
-\setkomavar{toname}[toname]{Content of toname}
-\setkomavar{toaddress}[toaddress]{Content of toaddress}
+\setkomavar{title}[Titel]{Fragen zur Brieklasse}
+\setkomavar{subject}{Diese Briefklasse sollte funktional vollständig sein. Abseits der nichtvorhandenen Logos}
+\setkomavar{signature}[signature]{Yoshi Diepelt}
 
 \iffalse
 \usepackage{tikz}
@@ -76,104 +68,28 @@ Helmholtzstr. 10 \\
 
 \opening{Sehr geehrte Damen und Herren und alle dazwischen und außerhalb,}
 
-Weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte.
-Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans.
-Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien.
-Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen.
-Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht -- ein geradezu unorthographisches Leben.
-Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik.
+um einen aktuellen Stand für den Fortschritt der Briefklasse zu liefern, habe ich einen
+Beispielbrief verfasst, welcher alle Vorgaben der mir gegebenen Referenz umsetzen sollte.
+
+Ein Augenmerk möchte ich hierbei auf die Infospalte wenden, welche dynamisch ihre Formatierung anhand der gegebenen Werte
+des Briefes anpasst.
+Auch kann sowohl die Rücksenderadresse als auch die Besucheradresse unabhängig voneinander
+eingestellt werden. Sollte die Besucheradresse beispielsweise leer sein,
+dann wird diese nicht gesetzt.
+
+Noch funktioniert leider die zweite Seite des Briefes nicht, auch ist die Seitenzahl etwas verbuggt.
+Ebenfalls ist die Rektor:innen / Kanzler:innen Box, wo der Schriftzug \emph{Der Kanzler} oder \emph{Die Rektorin},
+noch nicht angelegt, weshalb dieser Schriftzug in diesem Dokument fehlt.
+
 
 \closing{Mit freundlichen Grüßen}
 
 \ps
 
-Postscriptum
+Das wäre die momentane Briefklasse, welche \LaTeX-Nutzende wahrscheinlich weiter nutzen und anpassen werden.
 
-\encl{Anlagen}
-\cc{Verteiler}
-\end{letter}
-
-
-% * Das sind alle Angaben im oberen Teil der Infospalte
-\setkomavar{fromentity}{Fakultät Bauingenieurwesen \\ Institut für Mechanik und Flächentragwerke}
-%
-\setkomavar{fromname}{}
-\setkomavar{fromposition}{}
-%
-\setkomavar{fromphone}{0351 463 - XXXXXX}
-\setkomavar{fromfax}{0351 463- XXXXXX}
-\setkomavar{fromemail}{yoshi.diepelt@tu-dresden.de}
-\setkomavar{fromurl}{tu-dresden.de/xxx}
-%
-\setkomavar{fromaddress}{Von-Mises Bau \\ Georg-Schumann-Straße 7 \\ 01887 Dresden \\ Zimmer 206}
-%
-\setkomavar{yourref}{XXXX}
-\setkomavar{date}{\today}
-%
-\begin{letter}{
-Technische Universität Dresden \\
-Sachgebiet 7 | Corporate Design \\
-Helmholtzstr. 10 \\
-01069 Dresden}
-
-\opening{Sehr geehrte Damen und Herren und alle dazwischen und außerhalb,}
-
-Weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte.
-Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans.
-Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien.
-Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen.
-Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht -- ein geradezu unorthographisches Leben.
-Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik.
-
-\closing{Mit freundlichen Grüßen}
-
-\ps
-
-Postscriptum
-
-\encl{Anlagen}
-\cc{Verteiler}
-\end{letter}
-
-% * Das sind alle Angaben im oberen Teil der Infospalte
-\setkomavar{fromentity}{}
-%
-\setkomavar{fromname}{Yoshi Diepelt}
-\setkomavar{fromposition}{Wissenschaftliche Mitarbeiterin}
-%
-\setkomavar{fromphone}{0351 463 - XXXXXX}
-\setkomavar{fromfax}{0351 463- XXXXXX}
-\setkomavar{fromemail}{yoshi.diepelt@tu-dresden.de}
-\setkomavar{fromurl}{tu-dresden.de/xxx}
-%
-\setkomavar{fromaddress}{Von-Mises Bau \\ Georg-Schumann-Straße 7 \\ 01887 Dresden \\ Zimmer 206}
-%
-\setkomavar{yourref}{XXXX}
-\setkomavar{date}{\today}
-%
-\begin{letter}{
-Technische Universität Dresden \\
-Sachgebiet 7 | Corporate Design \\
-Helmholtzstr. 10 \\
-01069 Dresden}
-
-\opening{Sehr geehrte Damen und Herren und alle dazwischen und außerhalb,}
-
-Weit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte.
-Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans.
-Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien.
-Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen.
-Nicht einmal von der allmächtigen Interpunktion werden die Blindtexte beherrscht -- ein geradezu unorthographisches Leben.
-Eines Tages aber beschloß eine kleine Zeile Blindtext, ihr Name war Lorem Ipsum, hinaus zu gehen in die weite Grammatik.
-
-\closing{Mit freundlichen Grüßen}
-
-\ps
-
-Postscriptum
-
-\encl{Anlagen}
-\cc{Verteiler}
+%\encl{Anlagen}
+%\cc{Verteiler}
 \end{letter}
 
 \end{document}

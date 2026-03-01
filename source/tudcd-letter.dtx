@@ -100,15 +100,20 @@
 %    \begin{macrocode}
 %<*body&peri>
 
+\newkomavar{tudprincipalline}
+\setkomavar{tudprincipalline}{Die~Rektorin}
 %% Kopfzeile
-\setkomavar{firsthead}{\@@_typeset_logo:n{18.7mm}}
+\setkomavar{firsthead}{\@@_typeset_logo:n{18.7mm} \hfill \parbox{43mm}{
+\color{Brilliantblau}
+\fontsize{7\tudpt}{9\tudpt}\selectfont \usekomavar{tudprincipalline}}}
 \setplength{firstheadhpos}{25mm}
 \setplength{firstheadvpos}{18mm}
-\setplength{firstheadwidth}{129mm}
+\setplength{firstheadwidth}{178mm}
 
 \setkomafont{lettertitle}{\fontsize{12\tudpt}{14\tudpt}\selectfont\cdmseries}
 \setkomafont{lettersubject}{\fontsize{10\tudpt}{12\tudpt}\selectfont\cdmseries }
 \renewcommand{\normalsize}{\fontsize{10\tudpt}{12\tudpt}\selectfont}
+\setlength{\parindent}{0pt}
 %    \end{macrocode}
 %
 % \subsection{Einstellungen des Addressfeldes}
@@ -177,6 +182,7 @@
 \vskip-\useplength{toaddrvpos}\move@frompt%
 }
 %    \end{macrocode}
+%
 %
 % \subsection{Einstellungen der Geschäftszeile}
 %
@@ -308,7 +314,6 @@
 \setkomavar{frombank}[Bankverbindung]{Commerzbank~AG \\ Filiale~Dresden}
 \setkomavar{fromiban}[IBAN]{DE52~8504~0000~0800~4004~00}
 \setkomavar{frombic}[BIC]{COBADEFF850}
-% TODO: Der hier muss noch gesetzt werden
 \setkomavar{bottomlocation}{%
   \Ifkomavarempty{tudpostaladdress}{}{\usekomavar*{tudpostaladdress} \\ \usekomavar{tudpostaladdress}} \par
   %
@@ -350,7 +355,8 @@
   footskip=\dimexpr27mm-13mm-7\tudpt\relax%
 }
 %    \end{macrocode}
-% D
+% Die Seitenzahl soll auf derselben Grundlinie sein, wie die unterste Zeile der Infobox.
+% Um dies zu gewährleisten, wird der Trick mit zwei Coffins wieder angewandt.
 %    \begin{macrocode}
 \coffin_new:N\l_@@_page_anchor_coffin
 \coffin_new:N\l_@@_page_number_box_coffin
@@ -361,7 +367,7 @@
 \setplength{firstfootwidth}{129mm}
 \setkomavar{firstfoot}{
 \hcoffin_set:Nn\l_@@_page_anchor_coffin{\mbox{}}
-\vcoffin_set:Nnn\l_@@_page_number_box_coffin{129mm}{\usekomafont{lttrpagenumber}{Seite~\thepage/\ref{tudcdLastPage}}}
+\vcoffin_set:Nnn\l_@@_page_number_box_coffin{129mm}{\usekomafont{lttrpagenumber}{Seite~\thepage/\letterlastpage}}
 
 \coffin_attach:NnnNnnnn
   \l_@@_page_anchor_coffin{l}{t}
@@ -369,7 +375,6 @@
   {0pt}{-7\tudpt}
 \coffin_typeset:Nnnnn\l_@@_page_anchor_coffin{l}{t}{0pt}{0pt}
 }
-\AddToHook{shipout/lastpage}{\label{tudcdLastPage}}
 %</body&peri>
 %    \end{macrocode}
 % \iffalse Ungenutzte standardattribute
