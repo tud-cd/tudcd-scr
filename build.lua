@@ -73,6 +73,12 @@ sharelatex_template_files["article"] = {
   demofiles = { "demo-article.tex" },
   latexmkfile = "sharelatex-latexmkrc"
 }
+sharelatex_template_files["letter"] = {
+  name = module .. "-sharelatex-letter-" .. pkgversion,
+  stylefiles = { "tudcdlttr.cls", "logo" },
+  demofiles = { "demo-letter.tex" },
+  latexmkfile = "sharelatex-latexmkrc"
+}
 
 local mydate = os.date("!%Y-%m-%d")
 
