@@ -101,7 +101,7 @@
 %<*body&peri>
 
 \newkomavar{tudprincipalline}
-\setkomavar{tudprincipalline}{Die~Rektorin}
+\setkomavar{tudprincipalline}{}
 %% Kopfzeile
 \setkomavar{firsthead}{\@@_typeset_logo:n{18.7mm} \hfill \parbox{43mm}{
 \color{Brilliantblau}
@@ -256,7 +256,8 @@
 % \begin{table}[H]
 %   \centering
 %   \begin{tabular}{rll}
-%     Struktureinheit  & \texttt{fromentity} & Struktureinheit \\ \hline
+%     Struktureinheit  & \texttt{fromentity} & Struktureinheit \\
+%                      & \texttt{fromlogo} & Zweitlogo der Struktureinheit \\ \hline
 %     Personalangaben  & \texttt{fromname} & Name der Person \\
 %                      & \texttt{fromposition} & Position der Person \\ \hline
 %     Kontaktdaten     & \texttt{fromphone} & Telefonnummer \\
@@ -274,7 +275,10 @@
 %
 %    \begin{macrocode}
 \setkomavar{toplocation}{%
-\Ifkomavarempty{fromentity}{}{\usekomavar{fromentity}} \par
+\Ifkomavarempty{fromentity}{}{\usekomavar{fromentity} \par }
+\group_begin:
+\Ifkomavarempty{fromlogo}{}{ \leavevmode \usekomavar{fromlogo} } \par
+\group_end:
 %
 \Ifkomavarempty{fromname}{}{\usekomavar{fromname}}
 \Ifkomavarempty{fromposition}{}{\\ \usekomavar{fromposition}} \par
@@ -291,17 +295,42 @@
 }
 %    \end{macrocode}
 %
+% Um Zweitlogos eines Instituts mit der richtigen Höhe zu versehen, wird ein Interner und Externer Befehl bereitgestellt,
+% welcher das Logo auf $2/3$ des TUD Logos skaliert.
+% Dabei wird zuerst das Logo als Box gesetzt, und diese Box wird ausgemessen.
+% Anschließend werden die Verhältnisse der Breiten und Höhen zu den zulässigen Breiten und Höhen
+% berechnet und die Box wird um das kleinere der beiden Verhältnisse skaliert.
+%
+%    \begin{macrocode}
+\box_new:N \l_@@_second_logo_box
+\cs_new:Nn \@@_second_logo_typeset:n {
+  \hbox_set:Nn \l_@@_second_logo_box { #1 }
+  % Verhältnis zwischen den Höhen
+  \tl_set:Ne \l_tmpa_tl { \dim_ratio:nn { 11.3333 mm } { \dim_max:nn{ 11.3333 mm }{ \box_ht:N \l_@@_second_logo_box } } }
+  % Verhältnis zwischen den Breiten.
+  \tl_set:Ne \l_tmpb_tl { \dim_ratio:nn { 43 mm } { \dim_max:nn{ 43 mm }{ \box_wd:N \l_@@_second_logo_box } } }
+  % Nutze l3box!
+  \box_scale:Nnn \l_@@_second_logo_box { min( \l_tmpa_tl ,\l_tmpb_tl) } { min( \l_tmpa_tl, \l_tmpb_tl) }
+  % Jetzt hat die Box die Richtige Größe
+  \box_use_drop:N\l_@@_second_logo_box
+}
+\NewDocumentCommand\TypesetSecondLogo{m}{
+  \@@_second_logo_typeset:n{#1}
+}
+%    \end{macrocode}
+%
+%
 % Eine analoge Vorgehensweise ergibt sich bei dem unteren Teil der Infobox.
 % Hierbei werden jedoch neue Variablen definiert, welche die relevanten Informationen setzen.
 % Es wird auch die Variable \dcode{backaddress} entsprechend umdefiniert um die Postaddresse der TU Dresden dort zu hinterlassen.
 %
 %    \begin{macrocode}
-\newkomavar{tudpostalname}
-\newkomavar{tudpostaladdress}
+\newkomavar{tudpostalname} % Postaddressat
+\newkomavar{tudpostaladdress} % Postaddresse
 \newkomavar{tudtaxid} % Steuerid
 \newkomavar{tudturnovertaxid} % Umsatzsteuernummer
-\newkomavar{fromiban} %IBAN
-\newkomavar{frombic} %BIC
+\newkomavar{fromiban} % IBAN
+\newkomavar{frombic} % BIC
 %    \end{macrocode}
 % Die neu definierten Variablen werden nun mit sinnvollen Standardwerten belegt.
 %    \begin{macrocode}

@@ -5,16 +5,18 @@
 \usepackage[ngerman]{babel}
 %\setkomavar{Name }[Bezeichnung ]{Inhalt }
 
+\setkomavar{tudprincipalline}{}
 \setkomavar{fromlogo}[fromlogo]{Content of fromlogo}
 
 % * Das sind alle Angaben im oberen Teil der Infospalte
 \setkomavar{fromentity}{Fakultät Bauingenieurwesen \\ Institut für Mechanik und Flächentragwerke}
+\setkomavar{fromlogo}{\centering \TypesetSecondLogo{\includegraphics{example-image-a}} }
 %
 \setkomavar{fromname}{Yoshi Diepelt}
 \setkomavar{fromposition}{Wissenschaftliche Mitarbeiterin}
 %
-\setkomavar{fromphone}{0351 463 - XXXXXX}
-\setkomavar{fromfax}{0351 463- XXXXXX}
+\setkomavar{fromphone}{0351 463 - XXXXX}
+\setkomavar{fromfax}{0351 463 - XXXXX}
 \setkomavar{fromemail}{yoshi.diepelt@tu-dresden.de}
 \setkomavar{fromurl}{tu-dresden.de/xxx}
 %
@@ -77,16 +79,12 @@ Auch kann sowohl die Rücksenderadresse als auch die Besucheradresse unabhängig
 eingestellt werden. Sollte die Besucheradresse beispielsweise leer sein,
 dann wird diese nicht gesetzt.
 
-Noch funktioniert leider die zweite Seite des Briefes nicht, auch ist die Seitenzahl etwas verbuggt.
-Ebenfalls ist die Rektor:innen / Kanzler:innen Box, wo der Schriftzug \emph{Der Kanzler} oder \emph{Die Rektorin},
-noch nicht angelegt, weshalb dieser Schriftzug in diesem Dokument fehlt.
+Zweitlogos können Corporate Design Conform mit dem Macko \verb|\TypesetSecondLogo| gesetzt werde, welches automagisch die Größe anpasst.
 
+Noch funktioniert leider die zweite Seite des Briefes nicht (= der Satzspiegel ist falsch), auch ist die Seitenzahl etwas verbuggt.
 
 \closing{Mit freundlichen Grüßen}
 
-\ps
-
-Das wäre die momentane Briefklasse, welche \LaTeX-Nutzende wahrscheinlich weiter nutzen und anpassen werden.
 
 %\encl{Anlagen}
 %\cc{Verteiler}
