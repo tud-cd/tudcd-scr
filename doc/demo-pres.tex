@@ -1,8 +1,12 @@
 % Start
 \documentclass{beamer}
 \usetheme{tudcd}
-
-\usepackage[T1]{fontenc}
+\iftutex
+  \usepackage{fontspec}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+\fi
 \usepackage[ngerman]{babel}
 
 \usepackage{lipsum}
