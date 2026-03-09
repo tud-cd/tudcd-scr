@@ -1,0 +1,91 @@
+% Start
+\documentclass{tudcdlttr}
+\usepackage[T1]{fontenc}
+
+\usepackage[ngerman]{babel}
+%\setkomavar{Name }[Bezeichnung ]{Inhalt }
+
+\setkomavar{tudprincipalline}{}
+\setkomavar{fromlogo}[fromlogo]{Content of fromlogo}
+
+% * Das sind alle Angaben im oberen Teil der Infospalte
+\setkomavar{fromentity}{Fakultät Bauingenieurwesen \\ Institut für Mechanik und Flächentragwerke}
+\setkomavar{fromlogo}{\centering \TypesetSecondLogo{\includegraphics{example-image-a}} }
+%
+\setkomavar{fromname}{Yoshi Diepelt}
+\setkomavar{fromposition}{Wissenschaftliche Mitarbeiterin}
+%
+\setkomavar{fromphone}{0351 463 - XXXXX}
+\setkomavar{fromfax}{0351 463 - XXXXX}
+\setkomavar{fromemail}{yoshi.diepelt@tu-dresden.de}
+\setkomavar{fromurl}{tu-dresden.de/xxx}
+%
+\setkomavar{fromaddress}{Von-Mises Bau \\ Georg-Schumann-Straße 7 \\ 01887 Dresden \\ Zimmer 206}
+%
+\setkomavar{yourref}{XXXX}
+\setkomavar{date}{\today}
+% * Alle Angaben im unteren Teil der Infospalte
+% * Alle Angaben im Brieftext
+\setkomavar{title}[Titel]{Fragen zur Brieklasse}
+\setkomavar{subject}{Diese Briefklasse sollte funktional vollständig sein. Abseits der nichtvorhandenen Logos}
+\setkomavar{signature}[signature]{Yoshi Diepelt}
+
+\usepackage{tikz}
+\AddToHook{shipout/foreground}{
+\begin{tikzpicture}[remember picture,overlay]
+    \coordinate (topleft) at (current page.north west);
+    \coordinate (bottomleft) at (current page.south west);
+    % Kopf
+    \fill[magenta,opacity=0.4] (topleft) ++(25mm,-18mm) rectangle +(129mm,-17mm) node[pos=0.5,black] {Briefkopf};
+    % Absenderfeld DIN 5008b
+    \draw[magenta,dashed,opacity=0.4] (topleft) ++(20mm,-45mm) rectangle +(85mm,-45mm) node[pos=0.5,black] {Absenderfeld};
+    \fill[magenta,opacity=0.4] (topleft) ++(25mm,-52mm) rectangle +(80mm,7\tudpt) node[pos=0.5,font=\fontsize{7\tudpt}{9\tudpt}\selectfont,black] {Zusatz- und Vermerkzone mit integrierter Rücksendeangabe};
+    \fill[magenta,opacity=0.4] (topleft) ++(25mm,-56mm) rectangle +(80mm,-34mm) node[pos=0.5,black] {Absenderbereich};
+
+    % Rechte Spalte für Daten
+    \fill[magenta,opacity=0.4] (topleft) ++(160mm,-35mm) rectangle +(43mm,10\tudpt) node[pos=0.5,font=\fontsize{10\tudpt}{11\tudpt}\selectfont,black] {Rektor:innenbox};
+    %
+    \fill[magenta,opacity=0.4] (topleft) ++(160mm,-52mm+7\tudpt) rectangle +(43mm,-7\tudpt-80mm) node[pos=0.5,font=\fontsize{7\tudpt}{9\tudpt}\selectfont,black] {};
+    %
+    \fill[magenta,opacity=0.4] (bottomleft) ++(160mm,13mm) rectangle +(43mm,80mm) node[pos=0.5,font=\fontsize{7\tudpt}{9\tudpt}\selectfont,black] {};
+    % Briefspalte
+    \fill[magenta,opacity=0.4] (topleft) ++(25mm,-94mm) rectangle +(129mm,-13mm) node[pos=0.5,black] {Elastischer Betreffzeilenbereich};
+    %
+    \fill[magenta,opacity=0.2] (topleft) ++(25mm,-107mm) rectangle +(129mm,-163mm) node[pos=0.5,black] {Brieftext};
+    %
+    \fill[magenta,opacity=0.4] (bottomleft) ++(25mm,13mm) rectangle +(129mm,14mm) node[pos=0.5,black] {Sperrbereich};
+    \fill[magenta,opacity=0.2] (bottomleft) ++(25mm,13mm) rectangle +(129mm,7\tudpt) node[pos=0.5,font=\fontsize{7\tudpt}{9\tudpt}\selectfont,black] {Seitenzahl};
+    %
+  \end{tikzpicture}
+}
+
+\begin{document}
+\begin{letter}{
+Technische Universität Dresden \\
+Sachgebiet 7 | Corporate Design \\
+Helmholtzstr. 10 \\
+01069 Dresden}
+
+\opening{Sehr geehrte Damen und Herren und alle dazwischen und außerhalb,}
+
+um einen aktuellen Stand für den Fortschritt der Briefklasse zu liefern, habe ich einen
+Beispielbrief verfasst, welcher alle Vorgaben der mir gegebenen Referenz umsetzen sollte.
+
+Ein Augenmerk möchte ich hierbei auf die Infospalte wenden, welche dynamisch ihre Formatierung anhand der gegebenen Werte
+des Briefes anpasst.
+Auch kann sowohl die Rücksenderadresse als auch die Besucheradresse unabhängig voneinander
+eingestellt werden. Sollte die Besucheradresse beispielsweise leer sein,
+dann wird diese nicht gesetzt.
+
+Zweitlogos können Corporate Design Conform mit dem Macko \verb|\TypesetSecondLogo| gesetzt werde, welches automagisch die Größe anpasst.
+
+Noch funktioniert leider die zweite Seite des Briefes nicht (= der Satzspiegel ist falsch), auch ist die Seitenzahl etwas verbuggt.
+
+\closing{Mit freundlichen Grüßen}
+
+
+%\encl{Anlagen}
+%\cc{Verteiler}
+\end{letter}
+
+\end{document}

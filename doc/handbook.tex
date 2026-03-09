@@ -25,6 +25,7 @@
 \usepackage{subcaption}
 \usepackage{siunitx}
 \usepackage{attachfile}
+\usepackage{booktabs}
 \DeclareSIUnit{\texpt}{pt}
 \DeclareSIUnit{\texbp}{bt}
 \DeclareSIUnit{\texsp}{sp}
@@ -498,6 +499,76 @@ Marginalie eingeschaltet ist. Um daher Broschüren zu setzen, ist bei eingeschal
   \caption{Resultat der Beispieldatei}
 \end{figure}
 
+\chapter{Briefe im Stil der TU Dresden}
+
+Briefe für die Hauspost, sowie interne und externe Kommunikation werden mit der Klasse \lstinline|tudcdlttr|
+umgesetzt. Hierbei wurde die Klasse \texttt{scrlttr}~\cite{ctan-scrlttr2} erweitert und mit den entsprechenden
+Einstellungen konfiguriert.
+
+Um ein einheitliches Interface der TUDCD-Klassen zu gewährleisten, wird zum Zeitpunkt des Schreibens
+\emph{keine} \texttt{.lco} Datei im Sinne von \cite{ctan-scrlttr2} bereitgestellt, sondern lediglich eine
+Klassendatei.
+
+\section{Erweiterungen von \texttt{ctan-scrlttr2}}
+
+Die Einstellungen für zusätzliche Merkmale des Briefes sind mittels der
+folgend angegebenen \KOMAScript-Variablen konfigurierbar.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{rl}
+    \toprule
+ \KOMAScript-Variable & Beschreibung \\
+    \midrule
+ \texttt{tudprincipalline} & Schriftzug für \emph{Die Rektorin} \\
+ \texttt{tudpostaladdress} & Postaddresse der TU Dresden \\
+ \texttt{tudtaxid} & Steueridentifikationsnummer \\
+ \texttt{tudturnovertaxid} & Umsatzsteuernummer \\
+ \texttt{backaddress} & Rücksendeadresse \\
+ \texttt{toname} & Addressat \\
+ \texttt{toaddress} & Adresse des Addressaten \\
+ \texttt{fromentity} & Struktureinheit \\
+ \texttt{fromlogo} & Zweitlogo der Struktureinheit \\
+ \texttt{fromname} & Name der Person \\
+ \texttt{fromposition} & Position der Person \\
+ \texttt{fromphone} & Telefonnummer \\
+ \texttt{fromfax} & Faxnummer \\
+ \texttt{fromemail} & Email-Addressen \\
+ \texttt{fromurl} & Website \\
+ \texttt{fromaddress} & Besuchsaddresse \\
+ \texttt{frombank} & Bankverbindung \\
+ \texttt{frombic} & Bank Identifier Code \\
+ \texttt{yourref} & Aktenzeichen \\
+ \texttt{date} & Datum \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Alle angegebenen Informationen können mittels \lstinline|\setkomavar| auf entsprechende Werte gesetzt werden.
+
+Fast alle Informationen werden in der \emph{Absenderergänzung} gesetzt und werden mittels der \KOMAScript-Variablen
+\lstinline|toplocation| und \lstinline|bottomlocation| gesetzt. Sollte die Anordnung nicht dem Zweck entsprechen, dann können
+diese Informationen angepasst werden.
+
+\section{Setzen von Zweitlogos}
+
+Zweitlogos haben die Vorgabe maximal $2/3$ des TUD Logos einzunehmen. Um diese Größenskalierung zu automatisieren,
+wird der Befehle \lstinline|TypesetSecondLogo| bereitgestellt, welcher den Inhalt automatisch auf die zulässige Größe verkleinert.
+Um beispielsweise ein Zweitlogo zentriert unter der Struktureinheit platzieren zu können, kann
+\begin{lstlisting}
+\setkomavar{fromlogo}{\centering \TypesetSecondLogo{\includegraphics{example-image-a}} }
+\end{lstlisting}
+genutzt werden.
+
+\section{Fertiger Beispielbrief}
+
+Ein fertiges Beispiel für einen Brief wird bereitgestellt.
+
+\lstinputlisting[linerange=\%\ Start-\%\ End]{demo-pres.tex}
+\marginpar{Klicken Sie hier um die Datei aus der PDF zu extrahieren.
+\textattachfile{demo-pres.tex}{\texttt{demo-pres.tex}}}
+
+
 \TUDCDsetup{
   color={
     highlight-color=Violett1,
@@ -593,6 +664,7 @@ Leerzeichen müssen manuell mit \lstinline[showspaces=true]|\ | eingefügt werde
   }
 }
 \printbibliography%
+
 
 
 
