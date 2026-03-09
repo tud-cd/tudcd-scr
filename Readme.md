@@ -65,6 +65,7 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
 
 Um eine Nutzung der aktuellsten Version auf Overleaf/ShareLaTeX zu ermöglichen, stehen herunterladbare `.zip`
 im Release Bereich bereit.
+Es ist hierbei wichtig, dass die TeXLive-Version der ShareLaTeX Instanz auf die aktuellste TeXLive Version gesetzt wird.
 
 ### Beispieldateien
 
