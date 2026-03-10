@@ -98,7 +98,7 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
 
 ## Versionsverlauf
 
-* `%dev-version`
+* `0.7.0`
   * Korrektere Schrifteinstellungen bei `fontspec`, danke an @TeXHaeckse dafür.
   * Beheben eines Fehlers in der `build.lua`
   * Beheben von falschen Schriften bei geschachtelten `itemize` Umgebungen in der `beamer` Klasse.
