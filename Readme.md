@@ -5,6 +5,10 @@
 >
 > Sollten Sie keinen Github Account besitzen, dann schreiben Sie bitte eine [Email](mailto:david.diepelt@gmx.net?subject=%5Btudcd-scr%5D%3A%20).
 
+> [!IMPORTANT]
+> Stellen Sie sicher, dass mindestens eine TeXLive Version von `> 2023.3` haben!
+
+
 ## Inhaltsverzeichnis
 
 * [Welche Klassen gibt es?](#welche-klassen-gibt-es)
@@ -98,6 +102,8 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
 
 ## Versionsverlauf
 
+* `%dev-version%`
+  * Hinzufügen von Versionsinformationen in der `README.md`
 * `0.7.0`
   * Korrektere Schrifteinstellungen bei `fontspec`, danke an @TeXHaeckse dafür.
   * Beheben eines Fehlers in der `build.lua`
