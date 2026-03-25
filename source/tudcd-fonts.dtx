@@ -131,9 +131,19 @@
 % Anschließend werden die einzelnen Schriftarten in Abhängigkeit der verwendeten Engine eingestellt.
 % \todo{Leider werden von \texttt{noto} nicht alle Schriftfamilien eingebunden, dies muss mittels \texttt{\textbackslash setmainfont} nochmals manuell erfolgen.}
 %    \begin{macrocode}
-\iow_log:n{Test}
-\iow_log:n{FONT 0: '\str_use:N\c_sys_engine_exec_str'}
-\sys_if_engine_opentype:TF{
+\bool_new:N\l_@@_if_engine_opentype_bool
+
+\cs_if_exist_use:NTF\sys_if_engine_opentype:TF{
+  {\bool_set_true:N\l_@@_if_engine_opentype_bool}
+  {\bool_set_false:N\l_@@_if_engine_opentype_bool}
+}{
+\RequirePackage{iftex}
+\legacy_if:nTF{tutex}
+  {\bool_set_true:N\l_@@_if_engine_opentype_bool}
+  {\bool_set_false:N\l_@@_if_engine_opentype_bool}
+}
+
+\bool_if:nTF{\l_@@_if_engine_opentype_bool}{
 \RequirePackage{fontspec}
   % Hier wird LuaTeX oder XeTeX verwendet
 %    \end{macrocode}
