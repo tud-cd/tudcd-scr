@@ -54,7 +54,7 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
 
          Sollten Sie eine andere Kommandozeile als `bash` nutzen, und die einstellungen sollten dort anders sein, dann öffnen sie bitte ein Issue.
    * Sie können ein erfolgreiches Setzen der `TEXMFHOME` Umgebungsvariable überprüfen, indem sie nach Modifikation
-   eine Kommandozeile öffnen und den Befehl
+     eine Kommandozeile öffnen und den Befehl
      ```
      kpsewhich -var-value TEXMFHOME
      ```
@@ -103,6 +103,8 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
 ## Versionsverlauf
 
 * `%dev-version%`
+  * Hinzufügen der prominent platzierten Struktureinheit in der allgemeinen Dokumentenvorlage
+  * Hinzufügen von einem Workaround für `\sys_if_engine_opentype:TF`
   * Hinzufügen von Versionsinformationen in der `README.md`
 * `0.7.0`
   * Korrektere Schrifteinstellungen bei `fontspec`, danke an @TeXHaeckse dafür.
