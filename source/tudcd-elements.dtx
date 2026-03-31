@@ -225,6 +225,20 @@
 
 \group_end:
 }
+\newcommand\makeshorttitle{
+  \thispagestyle{tudcdtitleheadpage}
+\group_begin:
+  %\setlength{\tudcd@gridcolumnwidth}{\tudcd@getgridcolumnwidth{4}}%
+  \setlength{\parindent}{0pt}%
+  \raggedright%
+  \vspace*{\dimexpr(\l_@@_logoheight_dim+10\tudpt)}%
+  \group_begin:
+  \noprotrusion\noindent\usekomafont{entity}\tudcd@entity\par
+  \group_end:
+
+  \vspace*{\dimexpr(\l_@@_logoheight_dim-10\tudpt)}%
+\group_end:
+}
 %</article>
 %<*report|book>
 \renewcommand{\maketitle}{%
