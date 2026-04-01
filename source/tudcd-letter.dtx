@@ -303,9 +303,9 @@
 %    \begin{macrocode}
 \box_new:N \l_@@_second_logo_box
 \cs_new:Nn \@@_second_logo_typeset:n {
-  \hbox_set:Nn \l_@@_second_logo_box { #1 }
+  \hbox_set:Nn \l_@@_second_logo_box {\noindent #1 }
   % Verhältnis zwischen den Höhen
-  \tl_set:Ne \l_tmpa_tl { \dim_ratio:nn { 11.3333 mm } { \dim_max:nn{ 11.3333 mm }{ \box_ht:N \l_@@_second_logo_box } } }
+  \tl_set:Ne \l_tmpa_tl { \dim_ratio:nn { 13 mm } { \dim_max:nn{ 13 mm }{ \box_ht:N \l_@@_second_logo_box } } }
   % Verhältnis zwischen den Breiten.
   \tl_set:Ne \l_tmpb_tl { \dim_ratio:nn { 43 mm } { \dim_max:nn{ 43 mm }{ \box_wd:N \l_@@_second_logo_box } } }
   % Nutze l3box!
@@ -330,6 +330,7 @@
 \newkomavar{tudturnovertaxid} % Umsatzsteuernummer
 \newkomavar{fromiban} % IBAN
 \newkomavar{frombic} % BIC
+\newkomavar{tudddcbanner} % Verbindung zu DDC Feld
 %    \end{macrocode}
 % Die neu definierten Variablen werden nun mit sinnvollen Standardwerten belegt.
 %    \begin{macrocode}
@@ -342,16 +343,26 @@
 \setkomavar{frombank}[Bankverbindung]{Commerzbank~AG \\ Filiale~Dresden}
 \setkomavar{fromiban}[IBAN]{DE52~8504~0000~0800~4004~00}
 \setkomavar{frombic}[BIC]{COBADEFF850}
+\setkomavar{tudddcbanner}{
+\vspace{9\tudpt}
+\TypesetSecondLogo{\includegraphics[height=12.75mm]{logo/DDC-Logo_RGB_kurz_farbe}}
+\vspace{-1.3mm}
+Die~TUD~ist~Gründungspartnerin \\
+der~Forschungsallianz \\
+DRESDEN-concept~e.V.}
 \setkomavar{bottomlocation}{%
   \Ifkomavarempty{tudpostaladdress}{}{\usekomavar*{tudpostaladdress} \\ \usekomavar{tudpostaladdress}} \par
   %
   \Ifkomavarempty{tudtaxid}{}{\usekomavar*{tudtaxid} \\ \usekomavar{tudtaxid}}
   \Ifkomavarempty{tudturnovertaxid}{}{\\ \usekomavar*{tudturnovertaxid} \\ \usekomavar{tudturnovertaxid}} \par
   %
-  \Ifkomavarempty{frombank}{}{\usekomavar*{frombank} \\ \usekomavar{frombank}}\par
+  \Ifkomavarempty{frombank}{}{\usekomavar*{frombank} \\ \usekomavar{frombank}}
   %
-  \Ifkomavarempty{fromiban}{}{\usekomavar*{fromiban} \\ \usekomavar{fromiban}}
-  \Ifkomavarempty{frombic}{}{\\ \usekomavar*{frombic}~\usekomavar{frombic}}
+  %\Ifkomavarempty{tudddcbanner}{}{\vspace*{\dimexpr(2.9mm-\parskip)}}
+  \Ifkomavarempty{fromiban}{}{\\[2.9mm] \usekomavar*{fromiban} \\ \usekomavar{fromiban}}
+  \Ifkomavarempty{frombic}{}{\\ \usekomavar*{frombic}~\usekomavar{frombic}}\par
+  %
+  \Ifkomavarempty{tudddcbanner}{}{\usekomavar{tudddcbanner}} \par
 }
 
 \setkomavar{location}{
