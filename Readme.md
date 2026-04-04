@@ -31,11 +31,11 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
 ## Wie verwende ich diese Klassen?
 
 ### Lokale Installation
-
-1. Wenn nicht geschehen, setzen der `TEXMFHOME` Variable. Hilfe und weiterführende Links hierzu finden Sie unter
+1. Clonen Sie das Repository mit Git oder laden es als Zip-File herunter und packen es aus.
+2. Falls noch nicht geschehen, setzen bzw. prüfen Sie die `TEXMFHOME` Variable. Hilfe und weiterführende Links hierzu finden Sie unter
    * [TeXLive Installationen](https://tex.stackexchange.com/q/1137)
    * [MikTeX Installationen](https://tex.stackexchange.com/a/2066)
-2. Wenden Sie auf der Konsole den Befehl
+3. Wechseln Sie ins Hauptverzeichnis des heruntergeladenen Repositories und wenden Sie auf der Konsole den Befehl
    ```
    l3build install
    ```
@@ -43,7 +43,9 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
    * Sollte das Ausführen des Befehls fehlschlagen, so wurde die `TEXMFHOME` Systemumgebungsvariable nicht gesetzt.
      Dies kann abhängig von Betriebssystem unterschiedlich eingestellt werden:
      * Windows-basierte Betriebssystem:
-       - Wenn Sie hierzu eine gute Anleitung finden, dann öffen sie bitte ein [Issue](https://github.com/tud-cd/tudcd-scr/issues).
+       - Bei der Installation von Texlive wird die `TEXMFHOME`-Variable zwar nicht gesetzt aber die Standardpfade werden trotzdem gefunden.
+       - Der Pfad kann mit `kpsewhich -var-value TEXMFHOME` angezeigt werden. Er lautet bei einer typischen Windows-Installation `C:/Users/<name des benutzers>/texmf`.
+       - Alternativ kann die Umgebungsvariable auch über die Windows-Sytemeinstellungen gesetzt werden.
      * Linux-basierte Betriebssysteme:
        - Fügen Sie in der `~/.bashrc` Ihres   Benutzerverzeichnisses die Zeilen
          ```bash
@@ -63,7 +65,7 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
      ~/texmf
      ```
      auf der Kommandozeile erscheinen.
-3. Die Klassen können nun genutzt werden.
+4. Die Klassen können nun genutzt werden.
 
 ### Nutzung in Overleaf
 
