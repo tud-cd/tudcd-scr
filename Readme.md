@@ -45,7 +45,7 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
      * Windows-basierte Betriebssystem:
        - Bei der Installation von Texlive wird die `TEXMFHOME`-Variable zwar nicht gesetzt aber die Standardpfade werden trotzdem gefunden.
        - Der Pfad kann mit `kpsewhich -var-value TEXMFHOME` angezeigt werden. Er lautet bei einer typischen Windows-Installation `C:/Users/<name des benutzers>/texmf`.
-       - Alternativ kann die Umgebungsvariable auch über die Windows-Sytemeinstellungen gesetzt werden.
+       - Alternativ kann die Umgebungsvariable auch über die Windows-Systemeinstellungen gesetzt werden.
      * Linux-basierte Betriebssysteme:
        - Fügen Sie in der `~/.bashrc` Ihres   Benutzerverzeichnisses die Zeilen
          ```bash
