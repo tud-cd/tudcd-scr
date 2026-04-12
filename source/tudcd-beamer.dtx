@@ -436,6 +436,32 @@
 }
 %    \end{macrocode}
 %
+% Um die Option \doption{plain} von der \denv{frame} Umgebung zu unterstützen, muss der dazugehörige Schlüssel
+% neu definiert werden. Hierbei wird lediglich die Fußzeile nicht gesetzt, dafür jedoch die Kopfzeile.
+% Dabei muss der interne Befehl \dmacro{\define@key} genutzt werden, welcher die Optionen der \denv{frame}
+% umgebung steuert.
+%
+% Die Umgebung wird \emph{vor} setzen des Inhalts der \denv{frame} Umgebung ausgegeben.
+% Daher wird ein Mechanismus bedient, welcher nach Ausführung wieder die Templates zurücksetzt.
+%
+% Da die Umgebung \denv{frame} merkwürdig funktioniert, kann das zurücksetzen nicht an
+% den Haken \dhook{env/frame/after} gehängt werden.
+%    \begin{macrocode}
+\bool_new:N\l_@@_plain_frame_bool
+\define@key{beamerframe}{plain}[true]{
+  \setbeamertemplate{frametitle}[tudcd]
+  \setbeamertemplate{headline}[tudcd]
+  \setbeamertemplate{footline}{}
+  \bool_set_true:N\l_@@_plain_frame_bool
+}
+\hook_gput_code:nnn{env/frame/before}{resetplainstyle}{
+  \bool_if:nT{\l_@@_plain_frame_bool}{
+    \setbeamertemplate{footline}[tudcd]
+    \bool_set_false:N\l_@@_plain_frame_bool
+  }
+}
+%    \end{macrocode}
+%
 % \subsection{Farbeinstellungen}
 %
 %    \begin{macrocode}

@@ -105,6 +105,7 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
 ## Versionsverlauf
 
 * `%dev-version%`
+  * Anpassen der `plain` Option von Beamerfolien auf eine sinnvolle Standardoption.
   * Hinzufügen der prominent platzierten Struktureinheit in der allgemeinen Dokumentenvorlage
   * Hinzufügen von einem Workaround für `\sys_if_engine_opentype:TF`
   * Hinzufügen von Versionsinformationen in der `README.md`
