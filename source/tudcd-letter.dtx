@@ -135,7 +135,7 @@
 \KOMAoption{backaddress}{plain}
 \KOMAoption{addrfield}{topaligned}
 %%
-\setkomafont{backaddress}{\fontsize{7\tudpt}{9\tudpt}\selectfont}
+\setkomafont{backaddress}{\fontsize{7\tudpt}{9\tudpt}\selectfont\color{Brilliantblau}}
 \setkomavar{backaddress}{}
 %    \end{macrocode}
 %
@@ -414,8 +414,15 @@ DRESDEN-concept~e.V.}
   {0pt}{-7\tudpt}
 \coffin_typeset:Nnnnn\l_@@_page_anchor_coffin{l}{t}{0pt}{0pt}
 }
+%    \end{macrocode}
+%
+% Das Signaturfeld sollte nicht eingerückt sein, daher wird die Pseudolänge entsprechend angepasst.
+%    \begin{macrocode}
+\setplength{sigindent}{0mm}
+\renewcommand\raggedsignature{\raggedright}
 %</body&peri>
 %    \end{macrocode}
+%
 % \iffalse Ungenutzte standardattribute
 %% Option addfield hat nun keinen Effekt mehr, da \@addrfield umdefiniert worden ist.
 %% Genausowenig hat Option backaddr keinen Effekt mehr.
