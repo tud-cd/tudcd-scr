@@ -23,9 +23,10 @@
 > Diese Klassen sind noch in einem Entwicklungsstadium! Es können daher beim Updaten auf neuere Versionen Inkompatibilitäten entstehen!
 
 
-Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
-* `tudcdartcl`, eine Artikelklasse
-* `tudcdreprt`, eine Reportklasse
+Zum Zeitpunkt des Schreibens beinhaltet das Bundle eine
+* `tudcdartcl`, eine Artikelklasse,
+* `tudcdreprt`, eine Reportklasse,
+* `tudcdletter`, eine Briefklasse und
 * sowie ein `beamer` Theme `tudcd`.
 
 ## Wie verwende ich diese Klassen?
@@ -70,7 +71,7 @@ Zum Zeitpunkt des Schreibens beinhaltet das Bundle ein
 ### Nutzung in Overleaf
 
 Um eine Nutzung der aktuellsten Version auf Overleaf/ShareLaTeX zu ermöglichen, stehen herunterladbare `.zip`
-im Release Bereich bereit.
+im [Release Bereich](https://github.com/tud-cd/tudcd-scr/releases) bereit.
 Es ist hierbei wichtig, dass die TeXLive-Version der ShareLaTeX Instanz auf die aktuellste TeXLive Version gesetzt wird.
 
 ### Beispieldateien
