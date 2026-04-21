@@ -235,7 +235,7 @@
 % Die Beamertemplate \dcode{headline} wird genutzt um den Freihalterand einzustellen.
 % Aus Gründen die zum Zeitpunkt des Schreibens unklar sind, wird immer 1pt zuviel angegeben. Daher wird dieser Punkt hierbei bereits abgezogen.
 %    \begin{macrocode}
-\defbeamertemplate*{headline}{tudcd}{\vspace{\l_@@_beamer_topbottommargin_dim-1pt}}
+\defbeamertemplate*{headline}{tudcd}{\vspace{\dim_eval:n{\l_@@_beamer_topbottommargin_dim - 1pt}}} 
 %    \end{macrocode}
 %
 % Um das Logo im Kopf zu plazieren, wird die beamertemplate \dcode{tudcd/simple title} angelegt
