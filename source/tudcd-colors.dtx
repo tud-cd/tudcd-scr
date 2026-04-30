@@ -96,8 +96,13 @@
 \tl_new:N\l_@@_highlight_color_tl
 %    \end{macrocode}
 % Um die einzelnen Farben anzuwenden, werden entsprechende Makros bereitgestellt.
-% Dies sind die internen Makros
+% Dies sind die internen Makros.
+% Um Abwärtskompatibilität zu ermöglichen, wird jedoch ein Makro vorgehalten,
+% welches das \dmacro{\color_select:V} Makro definiert, sollte es noch nicht definiert worden sein.
 %    \begin{macrocode}
+\cs_if_exist:NF\color_select:V{
+  \cs_generate_variant:Nn\color_select:n{ V }
+}
 \cs_new:Nn \@@_select_highlight_color:
 {
   \tl_if_empty:NF\l_@@_highlight_color_tl{\color_select:V\l_@@_highlight_color_tl}

@@ -105,6 +105,8 @@ Schreiben Sie bitte dazu, wer sie entwickelt hat, und ab wann bis wann sie ungef
 
 ## Versionsverlauf
 
+* `%dev-version%`
+  * Hinzufügen eines Fixes von `\color_select:V`
 * `0.7.1`
   * Hinzufügen des DDC Logos auf der Briefklasse.
   * Anpassen der `plain` Option von Beamerfolien auf eine sinnvolle Standardoption.
