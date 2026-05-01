@@ -23,6 +23,15 @@
 \author{Yoshi Diepelt}
 \date{2026}
 
+\ExplSyntaxOn
+\newcommand{\mymod}[2]{\int_mod:nn{#1}{#2}}
+
+\newcommand{\measureText}[1]{
+\hbox_set:Nn \l_tmpa_box{#1}
+#1\rule{\box_wd:N\l_tmpa_box}{\box_ht:N\l_tmpa_box} = \qty{\dim_to_decimal_in_unit:nn{\box_ht:N\l_tmpa_box}{1mm}}{\mm},1ex = \qty{\dim_to_decimal_in_unit:nn{1ex}{1mm}}{\mm}
+}
+\ExplSyntaxOff
+
 \TUDCDsetup{
   titlepage={
     highlight-color=Brilliantblau,

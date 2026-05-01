@@ -28,11 +28,12 @@ pkgdate    = "2026-02-02"
 sourcefiledir = "source"
 docfiledir = "doc"
 supportdir = "support"
+-- Hier liegen alle Tests
+testfiledir = "tests"
 --[[
   Die Examples müssen in diesem Verzeichnis sein.
 ]]
 demofiledir = "examples"
-testfiledir = "tests"
 imagefiles = { "logo/*.pdf", "logo/*.eps" }
 -- Ich habe Literaturverweise, diese müssen mit in das Verzeichnis für die Dokumentation kopiert werden.
 typesetsuppfiles = { "*.bib" }
@@ -41,6 +42,8 @@ typesetdemofiles = { "demo-*.tex" }
 excludefiles = {"*~","build.lua","config-*.lua","__**/*","demo-*.tex","handbook.tex"}
 -- Diese beiden Dateien ergeben die Dokumentation.
 typesetfiles = { "handbook.tex", "tudcd-doc.dtx" }
+-- Diese Konfiguration erlaubt spezielle dtx Dateien zum entpacken
+unpackfiles = { "*.ins", "test-*.dtx" }
 -- Automatisches Updaten der Version und Datum
 tagfiles = { "*.dtx", "handbook.tex", "Readme.md" }
 
@@ -53,6 +56,10 @@ flattentds = false
 
 specialtypesetting = specialtypesetting or {}
 specialtypesetting["demo-article.tex"] = {  cmd = "lualatex -interaction=nonstopmode" }
+-- Testing configs
+checkconfigs = {
+  "config-compile"
+}
 
 -- Einträge für ShareLatex Zips
 sharelatex_template_files["beamer"] = {
@@ -81,6 +88,19 @@ sharelatex_template_files["letter"] = {
 }
 
 local mydate = os.date("!%Y-%m-%d")
+
+function docinit_hook()
+  -- Aquire all Docstrip Files from the test repo
+  print("** Collecting all .dtx files in test repository.")
+  globstub = "**/test-*.dtx"
+  for _,p in ipairs(tree(testfiledir,globstub)) do
+    local path,srcname = splitpath(p.cwd)
+    print(path .. "/" .. srcname .. " -- cp --> " .. typesetdir .. "/" .. srcname)
+    cp(srcname,"./" .. path,typesetdir .. "/" .. srcname)
+    -- print(srcname .. " .. " .. path)
+  end
+  return 0
+end
 
 function update_tag(file, content, tagname, tagdate)
   if not tagname and tagdate == mydate then
