@@ -1,0 +1,111 @@
+%
+% \selectlanguage{ngerman}
+%
+% \section{Grundlegende Test für die Artikelklasse}
+%
+% Die Grundlegenden Tests der Artikelklasse soll gewährleisten,
+% dass diese bei Änderung von Interna oder beim testen gegen eine
+% andere TeXLive Distribution nicht mehr kompiliert.
+%
+% Dafür werden die einzelnen unterstützten Komponenten
+% der Artikelklasse in jeweils einzelnen Testdokumenten genutzt.
+%
+% \subsection{Entpacken der Tests}
+%
+% Um eine Dokumentation der Tests zu gewährleisten, werden die Tests
+% mittels \dpkg{docstrip} entpackt und erst dann getestet.
+%
+%    \begin{macrocode}
+%<*ins>
+\input docstrip.tex
+
+\generate{\file{\jobname-0001.lvt}{\from{\jobname.dtx}{0001,preamble}}}
+\generate{\file{\jobname-0002.lvt}{\from{\jobname.dtx}{0002,preamble}}}
+\generate{\file{\jobname-0003.lvt}{\from{\jobname.dtx}{0003,preamble}}}
+\generate{\file{\jobname-0004.lvt}{\from{\jobname.dtx}{0004,preamble}}}
+%\generate{\file{\jobname-0005.lvt}{\from{\jobname.dtx}{0005,preamble}}}
+
+\endbatchfile%
+%</ins>
+%    \end{macrocode}
+%
+% \subsection{Kompilationstests}
+%
+% Diese Folge an Test ist genau dann erfolgreich, wenn die Kompilation
+% ohne Fehler abbricht und eine PDF generiert.
+%
+% Mit dem folgenden Guard wird die bereitgestellte Testsuite von \dpkg{l3build}
+% in alle Tests dieser Suite eingebunden.
+%    \begin{macrocode}
+%<*preamble>
+\input{regression-test.tex}
+%</preamble>
+%    \end{macrocode}
+%
+% In dem ersten Test wird eine erfolgreiche Kompilation der Artikelklasse
+% getestet.
+% Und dies ohne jegliche zusätzliche Pakete.
+%    \begin{macrocode}
+%<*0001>
+\documentclass{tudcdartcl}
+
+\begin{document}
+Hallo Welt!
+\end{document}
+%</0001>
+%    \end{macrocode}
+%
+% In diesem Test wird eine erfolgreiche Kompilation der Reportklasse
+% getestet.
+% Und dies ohne jegliche zusätzliche Pakete.
+%    \begin{macrocode}
+%<*0002>
+\documentclass{tudcdreprt}
+
+\begin{document}
+Hallo Welt!
+\end{document}
+%</0002>
+%    \end{macrocode}
+%
+%
+% In diesem Test wird eine erfolgreiche Kompilation der Buchklasse
+% getestet.
+% Und dies ohne jegliche zusätzliche Pakete.
+%    \begin{macrocode}
+%<*0003>
+\documentclass{tudcdbook}
+
+\begin{document}
+Hallo Welt!
+\end{document}
+%</0003>
+%    \end{macrocode}
+%
+% In diesem Test wird eine erfolgreiche Kompilation der Briefklasse
+% getestet.
+% Und dies ohne jegliche zusätzliche Pakete.
+%    \begin{macrocode}
+%<*0004>
+\documentclass{tudcdlttr}
+
+\begin{document}
+Hallo Welt!
+\end{document}
+%</0004>
+%    \end{macrocode}
+%
+%
+%
+% In diesem Test wird eine erfolgreiche Kompilation der Posterklasse
+% getestet.
+% Und dies ohne jegliche zusätzliche Pakete.
+%    \begin{macrocode}
+%<*0005>
+\documentclass{tudcdpstr}
+
+\begin{document}
+Hallo Welt!
+\end{document}
+%</0005>
+%    \end{macrocode}
