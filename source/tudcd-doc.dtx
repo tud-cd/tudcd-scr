@@ -41,6 +41,8 @@
 
 \usepackage{babel}
 \usepackage[babel]{microtype}
+\RecordChanges%
+
 \begin{document} % Diese Dokumentation dokumentiert NUR diese Datei
   \title{\Large Dokumentation des \texttt{tudcd}-Quelltexts}
   \subtitle{ Stand von \today }
@@ -55,11 +57,8 @@
   \DocInput{tudcd-colors.dtx}
   \DocInput{tudcd-pagestyles.dtx}
   \DocInput{tudcd-elements.dtx}
-
   \DocInput{tudcd-letter.dtx}
-
   \DocInput{tudcd-beamer.dtx}
-
   \DocInput{tudcd-doc.dtx}
 
   \printbibliography%
@@ -69,6 +68,9 @@
   \appendix
 
   \DocInput{test-article.dtx}
+
+  \PrintIndex%
+  \PrintChanges%
 \end{document}
 %</dtx>
 % \fi
@@ -118,34 +120,6 @@
 %    \end{macrocode}
 % Hier wird die von \dpkg{doc} definierte Umgebung \denv{macrocode} umdefiniert, um unter anderem Zeilenumbrüche zu erlauben.
 %    \begin{macrocode}
-\RequirePackage{listings}
-\newcounter{codelinenum}
-\setcounter{codelinenum}{1}
-\let\macrocode\relax
-\lstnewenvironment{macrocode}
-{\edef\test@thecodeline{\arabic{codelinenum}}
-  \lstset{language={[LaTeX]TeX},
-    basicstyle=\footnotesize\ttfamily,
-    literate=%
-    {Ö}{{\"O}}1
-    {Ä}{{\"A}}1
-    {Ü}{{\"U}}1
-    {ß}{{\ss}}1
-    {ü}{{\"u}}1
-    {ä}{{\"a}}1
-    {ö}{{\"o}}1
-    {~}{{\textasciitilde}}1,
-    numberstyle=\footnotesize,
-    numbers=left,
-    numbersep=5pt,
-    breaklines,
-    xleftmargin=2em,
-    firstnumber=\test@thecodeline,
-    morecomment=[s][\color{blue}]{\%<}{>},
-    morecomment=[il]\^^M\%\ \ \ \ ,
-    }}
-{\setcounter{codelinenum}{\value{lstnumber}}}
-\AddToHook{cmd/section/before}{\setcounter{codelinenum}{1}}
 \addbibresource{source.bib}
 \selectcolormodel{rgb}
 %    \end{macrocode}
@@ -167,13 +141,8 @@
 %
 % \subsection{Besondere Makros für die Dokumentation}
 %
-% \begin{codedescribe}[
-% macro,
-% new=0.5.1
-% ]{\dmacro,\dpkg,\dhook,\dsocket,\dplug,\doptionglobal,\doption,\denv}
-% \begin{codesyntax}
-% \dmacro{\macroname}\tsargs[marg]{Text}
-% \end{codesyntax}
+% \begin{macro}{\dmacro,\dpkg,\dhook,\dsocket,\dplug,\doptionglobal,\doption,\denv}
+% \changes{0.5.1}{2025/10/12}{Hinzugefügt}
 % Die Hilfsmakros helfen bei der korrekten Darstellung von Makros, Paketen, Haken, Steckdosen und Steckern.
 %    \begin{macrocode}
 \newcommand{\dmacro}[1]{\tsobj[macro]{#1}}%
@@ -187,15 +156,19 @@
 \newcommand{\denv}[1]{\tsobj[env]{#1}}%
 \newcommand{\dcode}[1]{\tsobj[code]{#1}}%
 %    \end{macrocode}
-% \end{codedescribe}
+% \end{macro}
+% ^^X \end{codedescribe}
 %
-% \begin{codedescribe}[
-% macro,
-% new=0.5.1
-% ]{\tstuddocglobaloption}
-% \begin{codesyntax}
-% \tsmacro{\tstuddocglobaloption}{Optionsname}
-% \end{codesyntax}
+% ^^X \begin{codedescribe}[
+% ^^X macro,
+% ^^X new=0.5.1
+% ^^X ]{\tstuddocglobaloption}
+% ^^X \begin{codesyntax}
+% ^^X \tsmacro{\tstuddocglobaloption}{Optionsname}
+% ^^X \end{codesyntax}
+%
+% \begin{macro}{\tstuddocglobaloption}
+% \changes{0.5.1}{2025/10/12}{Hinzugefügt}
 % Für die Dokumentation von globalen Optionen (Klassenoptionen) wird für die Umgebung \denv{codesyntax}
 % eine Standarddokumentation erzeugt.
 %    \begin{macrocode}
@@ -203,16 +176,18 @@
 \tsobj[macro]{\documentclass}[\tsobj[key]{#2}\IfArgIsEmpty{#1}{}{=\tsobj[option, meta or]{#1}}]\tsargs[marg]{Klassenname}
 }
 %    \end{macrocode}
-% \end{codedescribe}
+% \end{macro}
 %
 %
-% \begin{codedescribe}[
-% macro,
-% new=0.5.1
-% ]{\tstuddoclateoption}
-% \begin{codesyntax}
-% \tsmacro{\tstuddoclatekeyvaloption}{Optionsname}
-% \end{codesyntax}
+% ^^X \begin{codedescribe}[
+% ^^X macro,
+% ^^X new=0.5.1
+% ^^X ]{\tstuddoclateoption}
+% ^^X \begin{codesyntax}
+% ^^X \tsmacro{\tstuddoclatekeyvaloption}{Optionsname}
+% ^^X \end{codesyntax}
+% \begin{macro}{\tstuddoclateoption}
+% \changes{0.5.1}{2025/10/12}{Hinzugefügt}
 % Für die Dokumentation von späten Optionen wird für die Umgebung \denv{codesyntax}
 % eine Standarddokumentation erzeugt.
 %    \begin{macrocode}
@@ -222,15 +197,17 @@
 \tsobj[macro]{\TUDCDOption}\{\tsobj[key]{#1}\}\tsargs[marg]{Wert}%
 }
 %    \end{macrocode}
-% \end{codedescribe}
+% \end{macro}
 %
 %
-% \begin{codedescribe}[
-% macro,
-% new=0.5.1]{\tstuddocif}
-% \begin{codesyntax}
-% \tsmacro{\tstuddocif}{Schaltername}
-% \end{codesyntax}
+% ^^X \begin{codedescribe}[
+% ^^X macro,
+% ^^X new=0.5.1]{\tstuddocif}
+% ^^X \begin{codesyntax}
+% ^^X \tsmacro{\tstuddocif}{Schaltername}
+% ^^X \end{codesyntax}
+% \begin{macro}{\tstuddocif}
+% \changes{0.5.1}{2025/10/12}{Hinzugefügt}
 % Für die Dokumentation von Schaltern wird für die Umgebung \denv{codesyntax} eine
 % Standarddokumentation erzeugt.
 %    \begin{macrocode}
@@ -252,12 +229,13 @@
 \tsobj[macro]{\fi}%
 }
 %    \end{macrocode}
-% \end{codedescribe}
+% \end{macro}
 %
-% \begin{codedescribe}[macro,new=0.5.2]{\tstuddochook}
-% \begin{codesyntax}
-% \tsmacro{\tstuddochook}{Hakenname}
-% \end{codesyntax}
+% ^^X \begin{codedescribe}[macro,new=0.5.2]{\tstuddochook}
+% ^^X \begin{codesyntax}
+% ^^X \tsmacro{\tstuddochook}{Hakenname}
+% ^^X \end{codesyntax}
+% \begin{macro}{\tstuddochook}
 % Für die Dokumentation von Haken wird für die Umgebung \tsobj[env]{condesyntax} eine
 % Standarddokumentation erzeugt.
 %    \begin{macrocode}
@@ -267,13 +245,14 @@
 \tsobj[macro]{\DeclareHookRule}\{\tsobj[hook]{#1}\}\tsargs[marg]{Bezeichnung1,Relation,Bezeichnung2}%
 }%
 %    \end{macrocode}
-% \end{codedescribe}
+% \end{macro}
 %
-% \begin{codedescribe}[macro,new=0.5.0]{\tstudcdsocket,\tstudcdplug}
-% \begin{codesyntax}
-% \tsmacro{\tstuddocsocket}{Steckdosenname}
-% \tsmacro{\tstuddocplug}{Steckdosenname,Steckername}
-% \end{codesyntax}
+% ^^X \begin{codedescribe}[macro,new=0.5.0]{\tstudcdsocket,\tstudcdplug}
+% ^^X \begin{codesyntax}
+% ^^X \tsmacro{\tstuddocsocket}{Steckdosenname}
+% ^^X \tsmacro{\tstuddocplug}{Steckdosenname,Steckername}
+% ^^X \end{codesyntax}
+% \begin{macro}{\tstudcdsocket,\tstudcdplug}
 % Für die Dokumentation von Steckdosen (Sockets) und Steckern (Plugs) wird für die Umgebung \tsobj[env]{condesyntax}
 % eine Standarddokumentation erzeugt.
 %    \begin{macrocode}
@@ -291,7 +270,7 @@
 \tsobj[macro]{\AssignSocketPlug}\{\tsobj[socket]{#1}\}\{\tsobj[plug]{#2}\}
 }
 %    \end{macrocode}
-% \end{codedescribe}
+% \end{macro}
 %
 % Anschließend werden spezielle Auszeichnungsbefehle definiert
 %    \begin{macrocode}
@@ -303,12 +282,6 @@
 % Um Todos in der Dokumentation zu hinterlassen, werden hier Makros bereitgestellt, welche die Todos in eine Liste
 % packen und ein Verzeichnis erzeugt.
 %    \begin{macrocode}
-\addtotoclist{todos}%
-\newcommand{\todo}[1]{
-  \noindent\textbf{Todo:} #1%
-  \addxcontentsline{todos}{section}[\thesection]{#1}\par%
-}
-\newcommand{\listoftodos}{
-  \listoftoc[Liste der Todos]{todos}%
-}
+\RequirePackage[microtype=false]{zebra-goodies}
+\let\comment\zebracomment%
 %    \end{macrocode}
