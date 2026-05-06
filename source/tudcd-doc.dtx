@@ -67,7 +67,8 @@
 
   \appendix
 
-  \DocInput{test-article.dtx}
+  \listoftests
+  \DocInput{test-compile.dtx}
 
   \PrintIndex%
   \PrintChanges%
@@ -284,4 +285,19 @@
 %    \begin{macrocode}
 \RequirePackage[microtype=false]{zebra-goodies}
 \let\comment\zebracomment%
+%    \end{macrocode}
+%
+% Um für automatisierte Tests ein extra Verzeichnis zu bekommen, wird
+% mittels \dpkg{tocbasic} ein neues Verzeichnis angelegt:
+%    \begin{macrocode}
+\addtotoclist[float]{lotest}
+\newcounter{testnumber}
+\DeclareDocumentCommand\testsection{m}{
+  \refstepcounter{testnumber}
+  \minisec{Test~\thetestnumber : #1}
+  \addxcontentsline{lotest}{section}[\thetestnumber]{#1}
+}
+\DeclareDocumentCommand\listoftests{}{
+  %\listoftoc[Verzeichnis der Tests]{lotest}
+}
 %    \end{macrocode}

@@ -15,17 +15,13 @@
 % Um eine Dokumentation der Tests zu gewährleisten, werden die Tests
 % mittels \dpkg{docstrip} entpackt und erst dann getestet.
 %
+% Um die generierung der Testdatei und die Docstrip-Anweisung nah beieinander zu haben
+% wird ein Hilfsbefehl deklariert
+%
 %    \begin{macrocode}
 %<*ins>
 \input docstrip.tex
-
-\generate{\file{\jobname-0001.lvt}{\from{\jobname.dtx}{0001,preamble}}}
-\generate{\file{\jobname-0002.lvt}{\from{\jobname.dtx}{0002,preamble}}}
-\generate{\file{\jobname-0003.lvt}{\from{\jobname.dtx}{0003,preamble}}}
-\generate{\file{\jobname-0004.lvt}{\from{\jobname.dtx}{0004,preamble}}}
-%\generate{\file{\jobname-0005.lvt}{\from{\jobname.dtx}{0005,preamble}}}
-
-\endbatchfile%
+\def\tudcdbatchfilemode{\relax}
 %</ins>
 %    \end{macrocode}
 %
@@ -36,16 +32,35 @@
 %
 % Mit dem folgenden Guard wird die bereitgestellte Testsuite von \dpkg{l3build}
 % in alle Tests dieser Suite eingebunden.
+% Da die Batchdatei zum erstellen des Tests zerstückelt geschrieben wird,
+% müssen Guards um die Präambel der Tests geschrieben werden.
 %    \begin{macrocode}
+%<*ins>
+\ifx\tudcdbatchfilemode\undefined%
+%</ins>
 %<*preamble>
 \input{regression-test.tex}
 %</preamble>
+%<*ins>
+\fi
+%</ins>
 %    \end{macrocode}
+%
+% \testsection{Kompilation der Artikelklasse}
 %
 % In dem ersten Test wird eine erfolgreiche Kompilation der Artikelklasse
 % getestet.
+%
+%    \begin{macrocode}
+%<*ins>
+\generate{\file{\jobname-0001.lvt}{\from{\jobname.dtx}{0001,preamble}}}
+%</ins>
+%    \end{macrocode}
 % Und dies ohne jegliche zusätzliche Pakete.
 %    \begin{macrocode}
+%<*ins>
+\ifx\tudcdbatchfilemode\undefined%
+%</ins>
 %<*0001>
 \documentclass{tudcdartcl}
 
@@ -53,12 +68,25 @@
 Hallo Welt!
 \end{document}
 %</0001>
+%<*ins>
+\fi
+%</ins>
 %    \end{macrocode}
+%
+% \testsection{Kompilation der Reportklasse}
 %
 % In diesem Test wird eine erfolgreiche Kompilation der Reportklasse
 % getestet.
+%    \begin{macrocode}
+%<*ins>
+\generate{\file{\jobname-0002.lvt}{\from{\jobname.dtx}{0002,preamble}}}
+%</ins>
+%    \end{macrocode}
 % Und dies ohne jegliche zusätzliche Pakete.
 %    \begin{macrocode}
+%<*ins>
+\ifx\tudcdbatchfilemode\undefined%
+%</ins>
 %<*0002>
 \documentclass{tudcdreprt}
 
@@ -66,13 +94,25 @@ Hallo Welt!
 Hallo Welt!
 \end{document}
 %</0002>
+%<*ins>
+\fi
+%</ins>
 %    \end{macrocode}
 %
+% \testsection{Kompilation der Buchklasse}
 %
 % In diesem Test wird eine erfolgreiche Kompilation der Buchklasse
 % getestet.
+%    \begin{macrocode}
+%<*ins>
+\generate{\file{\jobname-0003.lvt}{\from{\jobname.dtx}{0003,preamble}}}
+%</ins>
+%    \end{macrocode}
 % Und dies ohne jegliche zusätzliche Pakete.
 %    \begin{macrocode}
+%<*ins>
+\ifx\tudcdbatchfilemode\undefined%
+%</ins>
 %<*0003>
 \documentclass{tudcdbook}
 
@@ -80,12 +120,25 @@ Hallo Welt!
 Hallo Welt!
 \end{document}
 %</0003>
+%<*ins>
+\fi
+%</ins>
 %    \end{macrocode}
+%
+% \testsection{Kompilation der Briefklasse}
 %
 % In diesem Test wird eine erfolgreiche Kompilation der Briefklasse
 % getestet.
+%    \begin{macrocode}
+%<*ins>
+\generate{\file{\jobname-0004.lvt}{\from{\jobname.dtx}{0004,preamble}}}
+%</ins>
+%    \end{macrocode}
 % Und dies ohne jegliche zusätzliche Pakete.
 %    \begin{macrocode}
+%<*ins>
+\ifx\tudcdbatchfilemode\undefined%
+%</ins>
 %<*0004>
 \documentclass{tudcdlttr}
 
@@ -93,19 +146,41 @@ Hallo Welt!
 Hallo Welt!
 \end{document}
 %</0004>
+%<*ins>
+\fi
+%</ins>
 %    \end{macrocode}
 %
 %
+% \testsection{Kompilation der Beamerklasse}
 %
-% In diesem Test wird eine erfolgreiche Kompilation der Posterklasse
+% In diesem Test wird eine erfolgreiche Kompilation der Beamerklasse
 % getestet.
+%    \begin{macrocode}
+%<*ins>
+\generate{\file{\jobname-0005.lvt}{\from{\jobname.dtx}{0005,preamble}}}
+%</ins>
+%    \end{macrocode}
 % Und dies ohne jegliche zusätzliche Pakete.
 %    \begin{macrocode}
+%<*ins>
+\ifx\tudcdbatchfilemode\undefined%
+%</ins>
 %<*0005>
-\documentclass{tudcdpstr}
+\documentclass{beamer}
+
+\usetheme{tudcd}
 
 \begin{document}
 Hallo Welt!
 \end{document}
 %</0005>
+%<*ins>
+\fi
+%</ins>
+%    \end{macrocode}
+%    \begin{macrocode}
+%<*ins>
+\endbatchfile
+%</ins>
 %    \end{macrocode}

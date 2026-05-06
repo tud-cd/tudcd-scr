@@ -57,6 +57,7 @@ flattentds = false
 specialtypesetting = specialtypesetting or {}
 specialtypesetting["demo-article.tex"] = {  cmd = "lualatex -interaction=nonstopmode" }
 -- Testing configs
+checkengines = { "pdftex", "luatex" }
 checkconfigs = {
   "config-compile"
 }
