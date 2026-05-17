@@ -1,0 +1,127 @@
+%
+% \selectlanguage{ngerman}
+%
+% \subsection{\texttt{test-auto-options}: Tests für die Optionenauswahl}
+%
+% Um bei Regressionstests neue Optionen sicher einführen zu können,
+% werden die einzelnen Optionen der entsprechenden Klassen auf korrekte Funktionsweise überprüft.
+%
+% Dabei werden für die einzelnen Optionstypen \emph{global},\emph{spät} und \emph{einfach}
+% folgende Tests durchgeführt: \begin{description}
+%   \item[Globale Optionen]
+%   Für globale Optionen ist es notwendig, dass diese nach der möglichen Angabe in \dmacro{\documentclass}
+%   ungültig sind, und den Übersetzungsprozess abbrechen, sollte detektiert werden,
+%   dass sie dennoch geladen werden.
+%   \item[Späte Optionen]
+%   Für späte Optionen ist es notwendig, dass diese nach der Dokumentenpräambel im Dokument ungültig sind.
+%   \item[Einfache Optionen]
+%   Für einfache Optionen ist es notwendig, dass diese jederzeit geändert werden können, und die Änderung
+%   nicht zu Übersetzungsabrüchen führt.
+% \end{description}
+%
+%    \begin{macrocode}
+%<*ins>
+\input docstrip.tex
+\def\tudcdbatchfilemode{\relax}
+%</ins>
+%<*ins>
+\ifx\tudcdbatchfilemode\undefined%
+%</ins>
+%<*preamble>
+\input{regression-test.tex}
+%</preamble>
+%<*ins>
+\fi
+%</ins>
+%    \end{macrocode}
+%
+% \subsubsection{Testen der Optioneninferenz}
+%
+% \begin{unittest}{dev-version}{Automatische Inferenz der Logosprache: \texttt{logo/language}}
+%
+% In dem ersten Test wird eine erfolgreiche Kompilation der Artikelklasse
+% getestet.
+%
+%    \begin{macrocode}
+%<*ins>
+\begingroup
+\def\testsuiteglobalforclass#1{
+  \file{\jobname-0001-logolang-#1-global-babel-en.lvt}{\from{\jobname.dtx}{0001,preamble,#1,babel,global,english,test}}
+  \file{\jobname-0001-logolang-#1-global-babel-en.lve}{\from{\jobname.dtx}{0001,preamble,#1,babel,global,english}}
+  %%
+  \file{\jobname-0001-logolang-#1-global-babel-de.lvt}{\from{\jobname.dtx}{0001,preamble,#1,babel,global,german,test}}
+  \file{\jobname-0001-logolang-#1-global-babel-de.lve}{\from{\jobname.dtx}{0001,preamble,#1,babel,global,german}}
+}
+
+\def\testsuitelateforclass#1{
+  \file{\jobname-0001-logolang-#1-late-babel-en.lvt}{\from{\jobname.dtx}{0001,preamble,#1,babel,late,english,test}}
+  \file{\jobname-0001-logolang-#1-late-babel-en.lve}{\from{\jobname.dtx}{0001,preamble,#1,babel,late,english}}
+  %%
+  \file{\jobname-0001-logolang-#1-late-babel-de.lvt}{\from{\jobname.dtx}{0001,preamble,#1,babel,late,german,test}}
+  \file{\jobname-0001-logolang-#1-late-babel-de.lve}{\from{\jobname.dtx}{0001,preamble,#1,babel,late,german}}
+}
+\generate{
+  \testsuiteglobalforclass{article}
+  \testsuitelateforclass{article}
+  \testsuiteglobalforclass{report}
+  \testsuitelateforclass{report}
+  \testsuiteglobalforclass{book}
+  \testsuitelateforclass{book}
+  \testsuiteglobalforclass{letter}
+  \testsuitelateforclass{letter}
+  \testsuitelateforclass{beamer}
+}
+\endgroup
+%</ins>
+%    \end{macrocode}
+% Und dies ohne jegliche zusätzliche Pakete.
+%    \begin{macrocode}
+%<*ins>
+\ifx\tudcdbatchfilemode\undefined%
+%</ins>
+%<*0001>
+%<@@=tudcd>
+\documentclass
+%<global>[logo/language=auto]
+{
+%<article>tudcdartcl%%
+%<report>tudcdreprt%%
+%<book>tudcdbook%%
+%<beamer>beamer%%
+%<letter>tudcdlttr%%
+}
+%<beamer>\usetheme{tudcd}
+%<babel&german>\usepackage[ngerman]{babel}
+%<babel&english>\usepackage[english]{babel}
+%<*late>
+\TUDCDsetup{
+  logo/language=auto
+}
+%</late>
+
+\begin{document}
+\showoutput%
+\vfil\break%
+\START
+%<*test>
+\ExplSyntaxOn%
+\typeout{\str_use:N\l_@@_logolang_str}
+\ExplSyntaxOff%
+%</test>
+%<!test&german>\typeout{de}
+%<!test&english>\typeout{en}
+\END
+\end{document}
+%</0001>
+%<*ins>
+\fi
+%</ins>
+%    \end{macrocode}
+%
+% \end{unittest}
+%
+%    \begin{macrocode}
+%<*ins>
+\endbatchfile
+%</ins>
+%    \end{macrocode}

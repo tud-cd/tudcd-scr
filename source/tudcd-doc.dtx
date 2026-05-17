@@ -69,6 +69,7 @@
 
   \listoftests
   \DocInput{test-compile.dtx}
+  \DocInput{test-auto-options.dtx}
 
   \PrintIndex%
   \PrintChanges%
@@ -290,14 +291,24 @@
 % Um für automatisierte Tests ein extra Verzeichnis zu bekommen, wird
 % mittels \dpkg{tocbasic} ein neues Verzeichnis angelegt:
 %    \begin{macrocode}
+
 \addtotoclist[float]{lotest}
+\setuptoc{lotest}{leveldown,numberline}
+\unsettoc{lotest}{totoc}
+\addtocontents{lotest}{\protect\value{tocdepth}=0}
 \newcounter{testnumber}
 \DeclareDocumentCommand\testsection{m}{
   \refstepcounter{testnumber}
-  \minisec{Test~\thetestnumber : #1}
-  \addxcontentsline{lotest}{section}[\thetestnumber]{#1}
+  \minisec{\makebox[0ex][r]{Test~\thetestnumber :~}~#1}
+  \addtocontents{lotest}{Test~\thetestnumber :~#1 \hfill \thepage \\}%%[\thetestnumber]{#1}
+}
+% Version, Titel
+\NewDocumentEnvironment{unittest}{m m}{
+\testsection{#2}%
+}{
+\vspace{\baselineskip}%
 }
 \DeclareDocumentCommand\listoftests{}{
-  %\listoftoc[Verzeichnis der Tests]{lotest}
+  \listoftoc[Verzeichnis der Tests]{lotest}
 }
 %    \end{macrocode}

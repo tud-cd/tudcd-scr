@@ -46,7 +46,7 @@
 %</ins>
 %    \end{macrocode}
 %
-% \testsection{Kompilation der Artikelklasse}
+% \begin{unittest}{dev-version}{Kompilation der Artikelklasse}
 %
 % In dem ersten Test wird eine erfolgreiche Kompilation der Artikelklasse
 % getestet.
@@ -73,7 +73,9 @@ Hallo Welt!
 %</ins>
 %    \end{macrocode}
 %
-% \testsection{Kompilation der Reportklasse}
+% \end{unittest}
+%
+% \begin{unittest}{dev-version}{Kompilation der Reportklasse}
 %
 % In diesem Test wird eine erfolgreiche Kompilation der Reportklasse
 % getestet.
@@ -98,8 +100,9 @@ Hallo Welt!
 \fi
 %</ins>
 %    \end{macrocode}
+% \end{unittest}
 %
-% \testsection{Kompilation der Buchklasse}
+% \begin{unittest}{dev-version}{Kompilation der Buchklasse}
 %
 % In diesem Test wird eine erfolgreiche Kompilation der Buchklasse
 % getestet.
@@ -125,7 +128,9 @@ Hallo Welt!
 %</ins>
 %    \end{macrocode}
 %
-% \testsection{Kompilation der Briefklasse}
+% \end{unittest}
+%
+% \begin{unittest}{dev-version}{Kompilation der Briefklasse}
 %
 % In diesem Test wird eine erfolgreiche Kompilation der Briefklasse
 % getestet.
@@ -151,6 +156,7 @@ Hallo Welt!
 %</ins>
 %    \end{macrocode}
 %
+% \end{unittest}
 %
 % \testsection{Kompilation der Beamerklasse}
 %
@@ -172,7 +178,11 @@ Hallo Welt!
 \usetheme{tudcd}
 
 \begin{document}
-Hallo Welt!
+\begin{frame}
+  \frametitle{Beamertest}
+  \framesubtitle{Beamertest subtitle}
+  Hello World!
+\end{frame}
 \end{document}
 %</0005>
 %<*ins>

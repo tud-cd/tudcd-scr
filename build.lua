@@ -59,7 +59,8 @@ specialtypesetting["demo-article.tex"] = {  cmd = "lualatex -interaction=nonstop
 -- Testing configs
 checkengines = { "pdftex", "luatex" }
 checkconfigs = {
-  "config-compile"
+  "config-compile",
+  "config-auto-options"
 }
 
 -- Einträge für ShareLatex Zips

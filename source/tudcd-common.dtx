@@ -20,7 +20,6 @@
 %  The current maintainer and author of this work is Jochen Diepelt.
 %
 % ----------------------------------------------------------------------------
-%
 % \fi
 %
 % \iffalse ins:batch + dtx:driver
@@ -108,7 +107,6 @@
 %<book>
 %<thesis>
 %<beamer>
-%<beamerNAME>
 %<poster>
 %    \end{macrocode}
 % ausdifferenziert.
@@ -366,10 +364,10 @@
   logo/language .choices:nn =
   { de, en, auto }
   { \str_if_eq:nVTF { auto } { \l_keys_choice_tl } {
-      \hook_gput_next_code:nn{package/babel/after}{
+      \hook_gput_code:nnn{package/babel/after}{tudcd-language-detection-babel}{
         \str_set:Ne \l_@@_logolang_str { \BCPdata{main.language} }
       }
-      \hook_gput_next_code:nn{package/polyglossia/after}{
+      \hook_gput_code:nnn{package/polyglossia/after}{tudcd-language-detection-polyglossia}{
         \str_set:Ne \l_@@_logolang_str { \BCPdata{main.language} }
       }
     }{
