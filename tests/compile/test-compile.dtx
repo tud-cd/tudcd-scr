@@ -1,31 +1,29 @@
+% \iffalse meta-comment
+% LTeX: language=de-DE
 %
+%  TUDCD-Script -- Corporate Design of Technische Universität Dresden
+% ----------------------------------------------------------------------------
+%
+%  Copyright (C) TU Dresden <tudlatex@tu-dresden.de>, 2025
+%
+% ----------------------------------------------------------------------------
+%
+%  This work may be distributed and/or modified under the conditions of the
+%  LaTeX Project Public License, either version 1.3c of this license or
+%  any later version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of
+%  LaTeX version 2008-05-04 or later.
+%
+%  This work has the LPPL maintenance status "maintained".
+%
+%  The current maintainer and author of this work is Yoshi Diepelt.
+%
+% ----------------------------------------------------------------------------
+% \fi
 % \selectlanguage{ngerman}
 %
-% \section{Grundlegende Test für die Artikelklasse}
-%
-% Die Grundlegenden Tests der Artikelklasse soll gewährleisten,
-% dass diese bei Änderung von Interna oder beim testen gegen eine
-% andere TeXLive Distribution nicht mehr kompiliert.
-%
-% Dafür werden die einzelnen unterstützten Komponenten
-% der Artikelklasse in jeweils einzelnen Testdokumenten genutzt.
-%
-% \subsection{Entpacken der Tests}
-%
-% Um eine Dokumentation der Tests zu gewährleisten, werden die Tests
-% mittels \dpkg{docstrip} entpackt und erst dann getestet.
-%
-% Um die generierung der Testdatei und die Docstrip-Anweisung nah beieinander zu haben
-% wird ein Hilfsbefehl deklariert
-%
-%    \begin{macrocode}
-%<*ins>
-\input docstrip.tex
-\def\tudcdbatchfilemode{\relax}
-%</ins>
-%    \end{macrocode}
-%
-% \subsection{Kompilationstests}
+% \subsection{\texttt{test-compile}: Übersetzungstest für Fehlerhafte und korrekte Übersetzungen}
 %
 % Diese Folge an Test ist genau dann erfolgreich, wenn die Kompilation
 % ohne Fehler abbricht und eine PDF generiert.
@@ -158,7 +156,7 @@ Hallo Welt!
 %
 % \end{unittest}
 %
-% \testsection{Kompilation der Beamerklasse}
+% \begin{unittest}{dev-version}{Kompilation der Beamerklasse}
 %
 % In diesem Test wird eine erfolgreiche Kompilation der Beamerklasse
 % getestet.
@@ -189,8 +187,12 @@ Hallo Welt!
 \fi
 %</ins>
 %    \end{macrocode}
+%
+% \end{unittest}
+%
 %    \begin{macrocode}
 %<*ins>
-\endbatchfile
+\endbatchfile%
 %</ins>
 %    \end{macrocode}
+%

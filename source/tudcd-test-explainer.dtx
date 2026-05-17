@@ -1,0 +1,45 @@
+% \iffalse meta-comment
+%
+%  TUDCD-Script -- Corporate Design of Technische Universität Dresden
+% ----------------------------------------------------------------------------
+%
+%  Copyright (C) TU Dresden <tudlatex@tu-dresden.de>, 2025
+%
+% ----------------------------------------------------------------------------
+%
+%  This work may be distributed and/or modified under the conditions of the
+%  LaTeX Project Public License, either version 1.3c of this license or
+%  any later version. The latest version of this license is in
+%    http://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of
+%  LaTeX version 2008-05-04 or later.
+%
+%  This work has the LPPL maintenance status "maintained".
+%
+%  The current maintainer and author of this work is Yoshi Diepelt.
+%
+% ----------------------------------------------------------------------------
+% \fi
+%
+% \section{Ein Testsystem für das Paketbündel}
+%
+% Mit der Zeit wurde vom \LaTeX - Entwicklerteam ein Build-System zum automatisierten Erstellen und Testen von Paketen und Klassen
+% programmiert. Dieses hat auch ein Testsystem womit vorallem Regressionstests erstellt werden können.
+%
+% \subsection{Entpacken der Tests}
+%
+% Um eine Dokumentation der Tests zu gewährleisten, werden die Tests
+% mittels \dpkg{docstrip} entpackt und erst dann getestet.
+%
+% Um die generierung der Testdatei und die Docstrip-Anweisung nah beieinander zu haben
+% wird ein Hilfsbefehl deklariert
+%
+%    \begin{macrocode}
+%<*ins>
+\input docstrip.tex
+\def\tudcdbatchfilemode{\relax}
+%</ins>
+%    \end{macrocode}
+%
+%
+%
