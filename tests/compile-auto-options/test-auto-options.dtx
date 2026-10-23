@@ -141,6 +141,67 @@
 %    \end{macrocode}
 %
 % \end{unittest}
+%
+% \subsubsection{Testen der Weitergabe an \KOMAScript}
+%
+% \begin{unittest}{dev-version}{Weiterreichen unbekannter Optionen an die \KOMAScript-Klasse}
+%
+% Optionen, welche die Klassen nicht selbst verarbeiten, werden an die zugrundeliegende
+% \KOMAScript-Klasse weitergereicht.
+% Dabei müssen sowohl Optionen der Form \dcode{<Schlüssel>=<Wert>} als auch Optionen
+% ohne Wert vollständig ankommen.
+% Als erwartetes Ergebnis dient die jeweilige \KOMAScript-Klasse mit denselben Optionen.
+%
+%    \begin{macrocode}
+%<*ins>
+\begingroup
+\def\testsuitekomaforclass#1{
+  \file{\jobname-0002-komaoptions-#1.lvt}{\from{\jobname.dtx}{0002,preamble,#1,test}}
+  \file{\jobname-0002-komaoptions-#1.lve}{\from{\jobname.dtx}{0002,preamble,#1}}
+}
+\generate{
+  \testsuitekomaforclass{article}
+  \testsuitekomaforclass{report}
+  \testsuitekomaforclass{book}
+}
+\endgroup
+%</ins>
+%    \end{macrocode}
+% Die Optionen \doption{numbers}, \doption{parskip} und \doption{listof} werden mit Wert,
+% \doption{openright} ohne Wert angegeben.
+% Ausgegeben wird deren Auswirkung auf die interne Konfiguration von \KOMAScript.
+%    \begin{macrocode}
+%<*ins>
+\ifx\tudcdbatchfilemode\undefined%
+%</ins>
+%<*0002>
+\documentclass[numbers=enddot,parskip=half,listof=totoc,openright]
+{
+%<article&test>tudcdartcl%%
+%<report&test>tudcdreprt%%
+%<book&test>tudcdbook%%
+%<article&!test>scrartcl%%
+%<report&!test>scrreprt%%
+%<book&!test>scrbook%%
+}
+
+\begin{document}
+\START
+\makeatletter
+\typeout{numbers=\if@altsecnumformat enddot\else noenddot\fi}
+\typeout{parskip=\ifdim\parskip>\z@ half\else false\fi}
+\typeout{listof=\Iftocfeature{lof}{totoc}{totoc}{nototoc}}
+\typeout{openright=\@ifundefined{if@openright}{-}{\if@openright true\else false\fi}}
+\makeatother
+\END
+\end{document}
+%</0002>
+%<*ins>
+\fi
+%</ins>
+%    \end{macrocode}
+%
+% \end{unittest}
 %    \begin{macrocode}
 %<*ins>
 \endbatchfile
