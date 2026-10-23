@@ -105,13 +105,31 @@
 % Für Klassen ist es üblich, unbekannte Klassenoptionen an die Basisklasse weiterzureichen.
 % Da dies jedoch nur Sinn ergibt, wenn die entsprechende Option in \dmacro{\documentclass} geladen wird,
 % wird die entsprechende Optionenvarbeitung nach dem Verarbeiten der Optionen wieder entfernt.
+%
+% Im Code eines unbekannten Schlüssels enthält \dcode{\#1} ausschließlich den Wert der Option,
+% der Name des Schlüssels steht in \dmacro{\l_keys_key_str}.
+% Damit \KOMAScript{} Optionen der Form \dcode{<Schlüssel>=<Wert>} erhält, werden beide
+% wieder zusammengesetzt.
+% Wurde die Option ohne Wert angegeben (bspw.\@ \doption{fleqn}), so enthält \dcode{\#1} den Marker
+% \dmacro{\c_novalue_tl} und es wird nur der Name des Schlüssels weitergereicht.
 %    \begin{macrocode}
 %<*option&peri>
-  unknown .code:n ={\PassOptionsToClass{#1}
+  unknown .code:n = {
+    \tl_if_novalue:nTF {#1}
+      {
+        \PassOptionsToClass{\l_keys_key_str}
 %<article>{scrartcl}%
 %<report> {scrreprt}%
 %<book>   {scrbook}%
 %<thesis> {scrbook}%
+      }
+      {
+        \PassOptionsToClass{\l_keys_key_str=#1}
+%<article>{scrartcl}%
+%<report> {scrreprt}%
+%<book>   {scrbook}%
+%<thesis> {scrbook}%
+      }
   },
   unknown .default:V = \c_novalue_tl,
 %</option&peri>
